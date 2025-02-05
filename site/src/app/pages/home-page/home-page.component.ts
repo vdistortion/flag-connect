@@ -6,7 +6,7 @@ interface Flag {
     en: string;
     ru: string;
   };
-  flag: string;
+  flag: string | string[];
 }
 
 @Component({
@@ -17,5 +17,14 @@ interface Flag {
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class HomePageComponent {
-  public flags: Flag[] = flags;
+  public flags: Flag[] = flags.sort((a, b) => {
+    if (a.country.ru.toLowerCase() < b.country.ru.toLowerCase()) {
+      return -1;
+    }
+    if (a.country.ru.toLowerCase() > b.country.ru.toLowerCase()) {
+      return 1;
+    }
+    return 0;
+  });
+  protected readonly Array = Array;
 }
