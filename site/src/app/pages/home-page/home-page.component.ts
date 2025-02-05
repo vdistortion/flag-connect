@@ -6,7 +6,7 @@ interface Flag {
     en: string;
     ru: string;
   };
-  flag: string | string[];
+  flag: string[];
 }
 
 @Component({
@@ -17,7 +17,8 @@ interface Flag {
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class HomePageComponent {
-  public flags: Flag[] = flags.sort((a, b) => {
+  protected visibleName: boolean = true;
+  protected flags: Flag[] = flags.sort((a, b) => {
     if (a.country.ru.toLowerCase() < b.country.ru.toLowerCase()) {
       return -1;
     }
@@ -26,5 +27,8 @@ export class HomePageComponent {
     }
     return 0;
   });
-  protected readonly Array = Array;
+
+  toggleName() {
+    this.visibleName = !this.visibleName;
+  }
 }

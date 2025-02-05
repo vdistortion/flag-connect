@@ -1,19 +1,13 @@
-<div class="wrapper">
+<div class="wrapper" (click)="toggleName()">
   <div class="flags">
     @for (flag of flags; track flag) {
       <div class="flag">
-        <h2 class="flag__name">{{ flag.country.ru }}</h2>
-        @if (Array.isArray(flag.flag)) {
-          @for (img of flag.flag; track $index) {
-            <img
-              [src]="'images/flags/' + img"
-              [alt]="flag.country.en"
-              class="flag__img"
-            />
-          }
-        } @else {
+        <h2 class="flag__name" [class]="{ 'flag__name--hidden': !visibleName }">
+          {{ flag.country.ru }}
+        </h2>
+        @for (img of flag.flag; track $index) {
           <img
-            [src]="'images/flags/' + flag.flag"
+            [src]="'images/flags/' + img"
             [alt]="flag.country.en"
             class="flag__img"
           />
