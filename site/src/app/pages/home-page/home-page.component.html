@@ -2,6 +2,7 @@
   <div class="flags">
     @for (flag of flags; track flag) {
       <div class="flag">
+        <h2 class="flag__name">{{ flag.country.ru }}</h2>
         @if (Array.isArray(flag.flag)) {
           @for (img of flag.flag; track $index) {
             <img
@@ -17,7 +18,6 @@
             class="flag__img"
           />
         }
-        <h2 class="flag__name">{{ flag.country.ru }}</h2>
       </div>
     }
   </div>
