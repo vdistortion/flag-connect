@@ -1,0 +1,14 @@
+<div class="wrapper">
+  <div class="flags">
+    @for (flag of flags; track flag) {
+      <div class="flag">
+        <img
+          [src]="'images/flags/' + flag.flag"
+          [alt]="flag.country.en"
+          class="flag__img"
+        />
+        <h2 class="flag__name">{{ flag.country.en }}</h2>
+      </div>
+    }
+  </div>
+</div>
