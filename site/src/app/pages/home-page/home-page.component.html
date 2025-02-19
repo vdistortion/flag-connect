@@ -1,0 +1,25 @@
+<div class="wrapper">
+  <img
+    [src]="'images/flags/' + countries[correctAnswerIndex].flag[0]"
+    alt="Flag"
+    (click)="calcQuestion()"
+  />
+
+  <div class="countries">
+    @for (country of countries; track country; let index = $index) {
+      <div class="country">
+        <button
+          [class.success]="answerIndex > -1 && index === correctAnswerIndex"
+          [class.error]="
+            answerIndex > -1 &&
+            index === answerIndex &&
+            index !== correctAnswerIndex
+          "
+          (click)="answerIndex = index"
+        >
+          {{ country.name.ru }}
+        </button>
+      </div>
+    }
+  </div>
+</div>

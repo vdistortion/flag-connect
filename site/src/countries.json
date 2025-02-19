@@ -1,1364 +1,1364 @@
 [
   {
-    "country": {
+    "name": {
       "en": "Afghanistan",
       "ru": "Афганистан"
     },
     "flag": ["Flag_of_Afghanistan_(2013–2021).webp", "Flag_of_the_Taliban.webp"]
   },
   {
-    "country": {
+    "name": {
       "en": "Algeria",
       "ru": "Алжир"
     },
     "flag": ["Flag_of_Algeria.webp"]
   },
   {
-    "country": {
+    "name": {
       "en": "Albania",
       "ru": "Албания"
     },
     "flag": ["Flag_of_Albania.webp"]
   },
   {
-    "country": {
+    "name": {
       "en": "Andorra",
       "ru": "Андорра"
     },
     "flag": ["Flag_of_Andorra.webp", "Flag_of_Andorra_(civil).webp"]
   },
   {
-    "country": {
+    "name": {
       "en": "Angola",
       "ru": "Ангола"
     },
     "flag": ["Flag_of_Angola.webp"]
   },
   {
-    "country": {
+    "name": {
       "en": "Antigua and Barbuda",
       "ru": "Антигуа и Барбуда"
     },
     "flag": ["Flag_of_Antigua_and_Barbuda.webp"]
   },
   {
-    "country": {
+    "name": {
       "en": "Argentina",
       "ru": "Аргентина"
     },
     "flag": ["Flag_of_Argentina.webp", "Flag_of_Argentina_(civil).webp"]
   },
   {
-    "country": {
+    "name": {
       "en": "Armenia",
       "ru": "Армения"
     },
     "flag": ["Flag_of_Armenia.webp"]
   },
   {
-    "country": {
+    "name": {
       "en": "Australia",
       "ru": "Австралия"
     },
     "flag": ["Flag_of_Australia.webp"]
   },
   {
-    "country": {
+    "name": {
       "en": "Austria",
       "ru": "Австрия"
     },
     "flag": ["Flag_of_Austria.webp", "Flag_of_Austria_(state).webp"]
   },
   {
-    "country": {
+    "name": {
       "en": "Azerbaijan",
       "ru": "Азербайджан"
     },
     "flag": ["Flag_of_Azerbaijan.webp"]
   },
   {
-    "country": {
+    "name": {
       "en": "Bahrain",
       "ru": "Бахрейн"
     },
     "flag": ["Flag_of_Bahrain.webp"]
   },
   {
-    "country": {
+    "name": {
       "en": "Bangladesh",
       "ru": "Бангладеш"
     },
     "flag": ["Flag_of_Bangladesh.webp"]
   },
   {
-    "country": {
+    "name": {
       "en": "Barbados",
       "ru": "Барбадос"
     },
     "flag": ["Flag_of_Barbados.webp"]
   },
   {
-    "country": {
+    "name": {
       "en": "Belarus",
       "ru": "Беларусь"
     },
     "flag": ["Flag_of_Belarus.webp"]
   },
   {
-    "country": {
+    "name": {
       "en": "Belgium",
       "ru": "Бельгия"
     },
     "flag": ["Flag_of_Belgium.webp", "Flag_of_Belgium_(civil).webp"]
   },
   {
-    "country": {
+    "name": {
       "en": "Belize",
       "ru": "Белиз"
     },
     "flag": ["Flag_of_Belize.webp"]
   },
   {
-    "country": {
+    "name": {
       "en": "Benin",
       "ru": "Бенин"
     },
     "flag": ["Flag_of_Benin.webp"]
   },
   {
-    "country": {
+    "name": {
       "en": "Bhutan",
       "ru": "Бутан"
     },
     "flag": ["Flag_of_Bhutan.webp"]
   },
   {
-    "country": {
+    "name": {
       "en": "Bolivia",
       "ru": "Боливия"
     },
     "flag": ["Flag_of_Bolivia.webp", "Flag_of_Bolivia_(state).webp"]
   },
   {
-    "country": {
+    "name": {
       "en": "Bosnia and Herzegovina",
       "ru": "Босния и Герцеговина"
     },
     "flag": ["Flag_of_Bosnia_and_Herzegovina.webp"]
   },
   {
-    "country": {
+    "name": {
       "en": "Botswana",
       "ru": "Ботсвана"
     },
     "flag": ["Flag_of_Botswana.webp"]
   },
   {
-    "country": {
+    "name": {
       "en": "Brazil",
       "ru": "Бразилия"
     },
     "flag": ["Flag_of_Brazil.webp"]
   },
   {
-    "country": {
+    "name": {
       "en": "Brunei",
       "ru": "Бруней"
     },
     "flag": ["Flag_of_Brunei.webp"]
   },
   {
-    "country": {
+    "name": {
       "en": "Bulgaria",
       "ru": "Болгария"
     },
     "flag": ["Flag_of_Bulgaria.webp"]
   },
   {
-    "country": {
+    "name": {
       "en": "Burkina Faso",
       "ru": "Буркина-Фасо"
     },
     "flag": ["Flag_of_Burkina_Faso.webp"]
   },
   {
-    "country": {
+    "name": {
       "en": "Burundi",
       "ru": "Бурунди"
     },
     "flag": ["Flag_of_Burundi.webp"]
   },
   {
-    "country": {
+    "name": {
       "en": "Cambodia",
       "ru": "Камбоджа"
     },
     "flag": ["Flag_of_Cambodia.webp"]
   },
   {
-    "country": {
+    "name": {
       "en": "Cameroon",
       "ru": "Камерун"
     },
     "flag": ["Flag_of_Cameroon.webp"]
   },
   {
-    "country": {
+    "name": {
       "en": "Canada",
       "ru": "Канада"
     },
     "flag": ["Flag_of_Canada_(Pantone).webp"]
   },
   {
-    "country": {
+    "name": {
       "en": "Cape Verde",
       "ru": "Кабо-Верде"
     },
     "flag": ["Flag_of_Cape_Verde.webp"]
   },
   {
-    "country": {
+    "name": {
       "en": "Chad",
       "ru": "Чад"
     },
     "flag": ["Flag_of_Chad.webp"]
   },
   {
-    "country": {
+    "name": {
       "en": "Chile",
       "ru": "Чили"
     },
     "flag": ["Flag_of_Chile.webp"]
   },
   {
-    "country": {
+    "name": {
       "en": "Colombia",
       "ru": "Колумбия"
     },
     "flag": ["Flag_of_Colombia.webp"]
   },
   {
-    "country": {
+    "name": {
       "en": "Costa Rica",
       "ru": "Коста-Рика"
     },
     "flag": ["Flag_of_Costa_Rica.webp", "Flag_of_Costa_Rica_(state).webp"]
   },
   {
-    "country": {
+    "name": {
       "en": "Croatia",
       "ru": "Хорватия"
     },
     "flag": ["Flag_of_Croatia.webp"]
   },
   {
-    "country": {
+    "name": {
       "en": "Cuba",
       "ru": "Куба"
     },
     "flag": ["Flag_of_Cuba.webp"]
   },
   {
-    "country": {
+    "name": {
       "en": "Ivory Coast",
       "ru": "Кот-д`Ивуар"
     },
     "flag": ["Flag_of_Côte_d'Ivoire.webp"]
   },
   {
-    "country": {
+    "name": {
       "en": "Cyprus",
       "ru": "Кипр"
     },
     "flag": ["Flag_of_Cyprus.webp"]
   },
   {
-    "country": {
+    "name": {
       "en": "Denmark",
       "ru": "Дания"
     },
     "flag": ["Flag_of_Denmark.webp", "Flag_of_Denmark_(state).webp"]
   },
   {
-    "country": {
+    "name": {
       "en": "Djibouti",
       "ru": "Джибути"
     },
     "flag": ["Flag_of_Djibouti.webp"]
   },
   {
-    "country": {
+    "name": {
       "en": "Dominica",
       "ru": "Доминика"
     },
     "flag": ["Flag_of_Dominica.webp"]
   },
   {
-    "country": {
+    "name": {
       "en": "Timor-Leste",
       "ru": "Восточный Тимор"
     },
     "flag": ["Flag_of_East_Timor.webp"]
   },
   {
-    "country": {
+    "name": {
       "en": "Ecuador",
       "ru": "Эквадор"
     },
     "flag": ["Flag_of_Ecuador.webp", "Civil_flag_and_ensign_of_Ecuador.webp"]
   },
   {
-    "country": {
+    "name": {
       "en": "Egypt",
       "ru": "Египет"
     },
     "flag": ["Flag_of_Egypt.webp"]
   },
   {
-    "country": {
+    "name": {
       "en": "El Salvador",
       "ru": "Сальвадор"
     },
     "flag": ["Flag_of_El_Salvador.webp", "Civil_Flag_of_El_Salvador.webp"]
   },
   {
-    "country": {
+    "name": {
       "en": "Equatorial Guinea",
       "ru": "Экваториальная Гвинея"
     },
     "flag": ["Flag_of_Equatorial_Guinea.webp"]
   },
   {
-    "country": {
+    "name": {
       "en": "Eritrea",
       "ru": "Эритрея"
     },
     "flag": ["Flag_of_Eritrea.webp"]
   },
   {
-    "country": {
+    "name": {
       "en": "Estonia",
       "ru": "Эстония"
     },
     "flag": ["Flag_of_Estonia.webp"]
   },
   {
-    "country": {
+    "name": {
       "en": "Eswatini",
       "ru": "Эсватини"
     },
     "flag": ["Flag_of_Eswatini.webp"]
   },
   {
-    "country": {
+    "name": {
       "en": "Ethiopia",
       "ru": "Эфиопия"
     },
     "flag": ["Flag_of_Ethiopia.webp"]
   },
   {
-    "country": {
+    "name": {
       "en": "Fiji",
       "ru": "Фиджи"
     },
     "flag": ["Flag_of_Fiji.webp"]
   },
   {
-    "country": {
+    "name": {
       "en": "Finland",
       "ru": "Финляндия"
     },
     "flag": ["Flag_of_Finland.webp", "Flag_of_Finland_(state).webp"]
   },
   {
-    "country": {
+    "name": {
       "en": "France",
       "ru": "Франция"
     },
     "flag": ["Flag_of_France.webp"]
   },
   {
-    "country": {
+    "name": {
       "en": "Gabon",
       "ru": "Габон"
     },
     "flag": ["Flag_of_Gabon.webp"]
   },
   {
-    "country": {
+    "name": {
       "en": "Georgia",
       "ru": "Грузия"
     },
     "flag": ["Flag_of_Georgia.webp"]
   },
   {
-    "country": {
+    "name": {
       "en": "Germany",
       "ru": "Германия"
     },
     "flag": ["Flag_of_Germany.webp"]
   },
   {
-    "country": {
+    "name": {
       "en": "Ghana",
       "ru": "Гана"
     },
     "flag": ["Flag_of_Ghana.webp"]
   },
   {
-    "country": {
+    "name": {
       "en": "Greece",
       "ru": "Греция"
     },
     "flag": ["Flag_of_Greece.webp"]
   },
   {
-    "country": {
+    "name": {
       "en": "Grenada",
       "ru": "Гренада"
     },
     "flag": ["Flag_of_Grenada.webp"]
   },
   {
-    "country": {
+    "name": {
       "en": "Guatemala",
       "ru": "Гватемала"
     },
     "flag": ["Flag_of_Guatemala.webp", "Civil_ensign_of_Guatemala.webp"]
   },
   {
-    "country": {
+    "name": {
       "en": "Guinea-Bissau",
       "ru": "Гвинея-Бисау"
     },
     "flag": ["Flag_of_Guinea-Bissau.webp"]
   },
   {
-    "country": {
+    "name": {
       "en": "Guinea",
       "ru": "Гвинея"
     },
     "flag": ["Flag_of_Guinea.webp"]
   },
   {
-    "country": {
+    "name": {
       "en": "Guyana",
       "ru": "Гайана"
     },
     "flag": ["Flag_of_Guyana.webp"]
   },
   {
-    "country": {
+    "name": {
       "en": "Haiti",
       "ru": "Гаити"
     },
     "flag": ["Flag_of_Haiti.webp", "Flag_of_Haiti_(civil).webp"]
   },
   {
-    "country": {
+    "name": {
       "en": "Honduras",
       "ru": "Гондурас"
     },
     "flag": ["Flag_of_Honduras.webp"]
   },
   {
-    "country": {
+    "name": {
       "en": "Hungary",
       "ru": "Венгрия"
     },
     "flag": ["Flag_of_Hungary.webp", "Civil_Ensign_of_Hungary.webp"]
   },
   {
-    "country": {
+    "name": {
       "en": "Iceland",
       "ru": "Исландия"
     },
     "flag": ["Flag_of_Iceland.webp", "Flag_of_Iceland_(state).webp"]
   },
   {
-    "country": {
+    "name": {
       "en": "India",
       "ru": "Индия"
     },
     "flag": ["Flag_of_India.webp"]
   },
   {
-    "country": {
+    "name": {
       "en": "Indonesia",
       "ru": "Индонезия"
     },
     "flag": ["Flag_of_Indonesia.webp"]
   },
   {
-    "country": {
+    "name": {
       "en": "Iran",
       "ru": "Иран"
     },
     "flag": ["Flag_of_Iran.webp"]
   },
   {
-    "country": {
+    "name": {
       "en": "Iraq",
       "ru": "Ирак"
     },
     "flag": ["Flag_of_Iraq.webp"]
   },
   {
-    "country": {
+    "name": {
       "en": "Ireland",
       "ru": "Ирландия"
     },
     "flag": ["Flag_of_Ireland.webp"]
   },
   {
-    "country": {
+    "name": {
       "en": "Israel",
       "ru": "Израиль"
     },
     "flag": ["Flag_of_Israel.webp"]
   },
   {
-    "country": {
+    "name": {
       "en": "Italy",
       "ru": "Италия"
     },
     "flag": ["Flag_of_Italy.webp"]
   },
   {
-    "country": {
+    "name": {
       "en": "Jamaica",
       "ru": "Ямайка"
     },
     "flag": ["Flag_of_Jamaica.webp"]
   },
   {
-    "country": {
+    "name": {
       "en": "Japan",
       "ru": "Япония"
     },
     "flag": ["Flag_of_Japan.webp"]
   },
   {
-    "country": {
+    "name": {
       "en": "Jordan",
       "ru": "Иордания"
     },
     "flag": ["Flag_of_Jordan.webp"]
   },
   {
-    "country": {
+    "name": {
       "en": "Kazakhstan",
       "ru": "Казахстан"
     },
     "flag": ["Flag_of_Kazakhstan.webp"]
   },
   {
-    "country": {
+    "name": {
       "en": "Kenya",
       "ru": "Кения"
     },
     "flag": ["Flag_of_Kenya.webp"]
   },
   {
-    "country": {
+    "name": {
       "en": "Kiribati",
       "ru": "Кирибати"
     },
     "flag": ["Flag_of_Kiribati.webp"]
   },
   {
-    "country": {
+    "name": {
       "en": "Kuwait",
       "ru": "Кувейт"
     },
     "flag": ["Flag_of_Kuwait.webp"]
   },
   {
-    "country": {
+    "name": {
       "en": "Kyrgyzstan",
       "ru": "Кыргызстан"
     },
     "flag": ["Flag_of_Kyrgyzstan.webp"]
   },
   {
-    "country": {
+    "name": {
       "en": "Laos",
       "ru": "Лаос"
     },
     "flag": ["Flag_of_Laos.webp"]
   },
   {
-    "country": {
+    "name": {
       "en": "Latvia",
       "ru": "Латвия"
     },
     "flag": ["Flag_of_Latvia.webp"]
   },
   {
-    "country": {
+    "name": {
       "en": "Lebanon",
       "ru": "Ливан"
     },
     "flag": ["Flag_of_Lebanon.webp"]
   },
   {
-    "country": {
+    "name": {
       "en": "Lesotho",
       "ru": "Лесото"
     },
     "flag": ["Flag_of_Lesotho.webp"]
   },
   {
-    "country": {
+    "name": {
       "en": "Liberia",
       "ru": "Либерия"
     },
     "flag": ["Flag_of_Liberia.webp"]
   },
   {
-    "country": {
+    "name": {
       "en": "Libya",
       "ru": "Ливия"
     },
     "flag": ["Flag_of_Libya.webp"]
   },
   {
-    "country": {
+    "name": {
       "en": "Liechtenstein",
       "ru": "Лихтенштейн"
     },
     "flag": ["Flag_of_Liechtenstein.webp"]
   },
   {
-    "country": {
+    "name": {
       "en": "Lithuania",
       "ru": "Литва"
     },
     "flag": ["Flag_of_Lithuania.webp"]
   },
   {
-    "country": {
+    "name": {
       "en": "Luxembourg",
       "ru": "Люксембург"
     },
     "flag": ["Flag_of_Luxembourg.webp", "Civil_Ensign_of_Luxembourg.webp"]
   },
   {
-    "country": {
+    "name": {
       "en": "Madagascar",
       "ru": "Мадагаскар"
     },
     "flag": ["Flag_of_Madagascar.webp"]
   },
   {
-    "country": {
+    "name": {
       "en": "Malawi",
       "ru": "Малави"
     },
     "flag": ["Flag_of_Malawi.webp"]
   },
   {
-    "country": {
+    "name": {
       "en": "Malaysia",
       "ru": "Малайзия"
     },
     "flag": ["Flag_of_Malaysia.webp"]
   },
   {
-    "country": {
+    "name": {
       "en": "Maldives",
       "ru": "Мальдивы"
     },
     "flag": ["Flag_of_Maldives.webp"]
   },
   {
-    "country": {
+    "name": {
       "en": "Malta",
       "ru": "Мальта"
     },
     "flag": ["Flag_of_Malta.webp"]
   },
   {
-    "country": {
+    "name": {
       "en": "Mali",
       "ru": "Мали"
     },
     "flag": ["Flag_of_Mali.webp"]
   },
   {
-    "country": {
+    "name": {
       "en": "Mauritania",
       "ru": "Мавритания"
     },
     "flag": ["Flag_of_Mauritania.webp"]
   },
   {
-    "country": {
+    "name": {
       "en": "Mauritius",
       "ru": "Маврикий"
     },
     "flag": ["Flag_of_Mauritius.webp"]
   },
   {
-    "country": {
+    "name": {
       "en": "Mexico",
       "ru": "Мексика"
     },
     "flag": ["Flag_of_Mexico.webp", "Bandera_de_Mexico_uso_civil.webp"]
   },
   {
-    "country": {
+    "name": {
       "en": "Moldova",
       "ru": "Молдова"
     },
     "flag": ["Flag_of_Moldova.webp"]
   },
   {
-    "country": {
+    "name": {
       "en": "Monaco",
       "ru": "Монако"
     },
     "flag": ["Flag_of_Monaco.webp", "Flag_of_Monaco_(state).webp"]
   },
   {
-    "country": {
+    "name": {
       "en": "Mongolia",
       "ru": "Монголия"
     },
     "flag": ["Flag_of_Mongolia.webp"]
   },
   {
-    "country": {
+    "name": {
       "en": "Montenegro",
       "ru": "Черногория"
     },
     "flag": ["Flag_of_Montenegro.webp"]
   },
   {
-    "country": {
+    "name": {
       "en": "Morocco",
       "ru": "Марокко"
     },
     "flag": ["Flag_of_Morocco.webp"]
   },
   {
-    "country": {
+    "name": {
       "en": "Mozambique",
       "ru": "Мозамбик"
     },
     "flag": ["Flag_of_Mozambique.webp"]
   },
   {
-    "country": {
+    "name": {
       "en": "Myanmar",
       "ru": "Мьянма"
     },
     "flag": ["Flag_of_Myanmar.webp"]
   },
   {
-    "country": {
+    "name": {
       "en": "Namibia",
       "ru": "Намибия"
     },
     "flag": ["Flag_of_Namibia.webp"]
   },
   {
-    "country": {
+    "name": {
       "en": "Nauru",
       "ru": "Науру"
     },
     "flag": ["Flag_of_Nauru.webp"]
   },
   {
-    "country": {
+    "name": {
       "en": "Nepal",
       "ru": "Непал"
     },
     "flag": ["Flag_of_Nepal.webp"]
   },
   {
-    "country": {
+    "name": {
       "en": "New Zealand",
       "ru": "Новая Зеландия"
     },
     "flag": ["Flag_of_New_Zealand.webp"]
   },
   {
-    "country": {
+    "name": {
       "en": "Nicaragua",
       "ru": "Никарагуа"
     },
     "flag": ["Flag_of_Nicaragua.webp"]
   },
   {
-    "country": {
+    "name": {
       "en": "Niger",
       "ru": "Нигер"
     },
     "flag": ["Flag_of_Niger.webp"]
   },
   {
-    "country": {
+    "name": {
       "en": "North Korea",
       "ru": "Северная Корея"
     },
     "flag": ["Flag_of_North_Korea.webp"]
   },
   {
-    "country": {
+    "name": {
       "en": "Nigeria",
       "ru": "Нигерия"
     },
     "flag": ["Flag_of_Nigeria.webp"]
   },
   {
-    "country": {
+    "name": {
       "en": "North Macedonia",
       "ru": "Северная Македония"
     },
     "flag": ["Flag_of_North_Macedonia.webp"]
   },
   {
-    "country": {
+    "name": {
       "en": "Norway",
       "ru": "Норвегия"
     },
     "flag": ["Flag_of_Norway.webp", "Flag_of_Norway,_state.webp"]
   },
   {
-    "country": {
+    "name": {
       "en": "Oman",
       "ru": "Оман"
     },
     "flag": ["Flag_of_Oman.webp"]
   },
   {
-    "country": {
+    "name": {
       "en": "Pakistan",
       "ru": "Пакистан"
     },
     "flag": ["Flag_of_Pakistan.webp"]
   },
   {
-    "country": {
+    "name": {
       "en": "Palau",
       "ru": "Палау"
     },
     "flag": ["Flag_of_Palau.webp"]
   },
   {
-    "country": {
+    "name": {
       "en": "Panama",
       "ru": "Панама"
     },
     "flag": ["Flag_of_Panama.webp"]
   },
   {
-    "country": {
+    "name": {
       "en": "Paraguay",
       "ru": "Парагвай"
     },
     "flag": ["Flag_of_Paraguay.webp", "Flag_of_Paraguay_(reverse).webp"]
   },
   {
-    "country": {
+    "name": {
       "en": "Papua New Guinea",
       "ru": "Папуа — Новая Гвинея"
     },
     "flag": ["Flag_of_Papua_New_Guinea.webp"]
   },
   {
-    "country": {
+    "name": {
       "en": "Peru",
       "ru": "Перу"
     },
     "flag": ["Flag_of_Peru.webp", "Flag_of_Peru_(state).webp"]
   },
   {
-    "country": {
+    "name": {
       "en": "Poland",
       "ru": "Польша"
     },
     "flag": ["Flag_of_Poland.webp", "Flag_of_Poland_(normative).webp"]
   },
   {
-    "country": {
+    "name": {
       "en": "Portugal",
       "ru": "Португалия"
     },
     "flag": ["Flag_of_Portugal.webp"]
   },
   {
-    "country": {
+    "name": {
       "en": "Qatar",
       "ru": "Катар"
     },
     "flag": ["Flag_of_Qatar.webp"]
   },
   {
-    "country": {
+    "name": {
       "en": "Romania",
       "ru": "Румыния"
     },
     "flag": ["Flag_of_Romania.webp"]
   },
   {
-    "country": {
+    "name": {
       "en": "Russia",
       "ru": "Россия"
     },
     "flag": ["Flag_of_Russia.webp"]
   },
   {
-    "country": {
+    "name": {
       "en": "Rwanda",
       "ru": "Руанда"
     },
     "flag": ["Flag_of_Rwanda.webp"]
   },
   {
-    "country": {
+    "name": {
       "en": "Saint Kitts and Nevis",
       "ru": "Сент-Китс и Невис"
     },
     "flag": ["Flag_of_Saint_Kitts_and_Nevis.webp"]
   },
   {
-    "country": {
+    "name": {
       "en": "Saint Lucia",
       "ru": "Сент-Люсия"
     },
     "flag": ["Flag_of_Saint_Lucia.webp"]
   },
   {
-    "country": {
+    "name": {
       "en": "San Marino",
       "ru": "Сан-Марино"
     },
     "flag": ["Flag_of_San_Marino.webp", "Flag_of_San_Marino_(civil).webp"]
   },
   {
-    "country": {
+    "name": {
       "en": "Samoa",
       "ru": "Самоа"
     },
     "flag": ["Flag_of_Samoa.webp"]
   },
   {
-    "country": {
+    "name": {
       "en": "Saudi Arabia",
       "ru": "Саудовская Аравия"
     },
     "flag": ["Flag_of_Saudi_Arabia.webp"]
   },
   {
-    "country": {
+    "name": {
       "en": "Senegal",
       "ru": "Сенегал"
     },
     "flag": ["Flag_of_Senegal.webp"]
   },
   {
-    "country": {
+    "name": {
       "en": "Serbia",
       "ru": "Сербия"
     },
     "flag": ["Flag_of_Serbia.webp", "Civil_flag_of_Serbia.webp"]
   },
   {
-    "country": {
+    "name": {
       "en": "Saint Vincent and the Grenadines",
       "ru": "Сент-Винсент и Гренадины"
     },
     "flag": ["Flag_of_Saint_Vincent_and_the_Grenadines.webp"]
   },
   {
-    "country": {
+    "name": {
       "en": "Seychelles",
       "ru": "Сейшельские Острова"
     },
     "flag": ["Flag_of_Seychelles.webp"]
   },
   {
-    "country": {
+    "name": {
       "en": "Sierra Leone",
       "ru": "Сьерра-Леоне"
     },
     "flag": ["Flag_of_Sierra_Leone.webp"]
   },
   {
-    "country": {
+    "name": {
       "en": "Singapore",
       "ru": "Сингапур"
     },
     "flag": ["Flag_of_Singapore.webp"]
   },
   {
-    "country": {
+    "name": {
       "en": "Slovakia",
       "ru": "Словакия"
     },
     "flag": ["Flag_of_Slovakia.webp"]
   },
   {
-    "country": {
+    "name": {
       "en": "Slovenia",
       "ru": "Словения"
     },
     "flag": ["Flag_of_Slovenia.webp"]
   },
   {
-    "country": {
+    "name": {
       "en": "Somalia",
       "ru": "Сомали"
     },
     "flag": ["Flag_of_Somalia.webp"]
   },
   {
-    "country": {
+    "name": {
       "en": "Somaliland",
       "ru": "Сомалиленд"
     },
     "flag": ["Flag_of_Somaliland.webp"]
   },
   {
-    "country": {
+    "name": {
       "en": "South Africa",
       "ru": "ЮАР"
     },
     "flag": ["Flag_of_South_Africa.webp"]
   },
   {
-    "country": {
+    "name": {
       "en": "South Korea",
       "ru": "Южная Корея"
     },
     "flag": ["Flag_of_South_Korea.webp"]
   },
   {
-    "country": {
+    "name": {
       "en": "South Sudan",
       "ru": "Южный Судан"
     },
     "flag": ["Flag_of_South_Sudan.webp"]
   },
   {
-    "country": {
+    "name": {
       "en": "Spain",
       "ru": "Испания"
     },
     "flag": ["Flag_of_Spain.webp", "Flag_of_Spain_(civil).webp"]
   },
   {
-    "country": {
+    "name": {
       "en": "Sri Lanka",
       "ru": "Шри-Ланка"
     },
     "flag": ["Flag_of_Sri_Lanka.webp"]
   },
   {
-    "country": {
+    "name": {
       "en": "Sudan",
       "ru": "Судан"
     },
     "flag": ["Flag_of_Sudan.webp"]
   },
   {
-    "country": {
+    "name": {
       "en": "Suriname",
       "ru": "Суринам"
     },
     "flag": ["Flag_of_Suriname.webp"]
   },
   {
-    "country": {
+    "name": {
       "en": "Sweden",
       "ru": "Швеция"
     },
     "flag": ["Flag_of_Sweden.webp"]
   },
   {
-    "country": {
+    "name": {
       "en": "Switzerland",
       "ru": "Швейцария"
     },
     "flag": ["Flag_of_Switzerland.webp"]
   },
   {
-    "country": {
+    "name": {
       "en": "São Tomé and Príncipe",
       "ru": "Сан-Томе и Принсипи"
     },
     "flag": ["Flag_of_São_Tomé_and_Príncipe.webp"]
   },
   {
-    "country": {
+    "name": {
       "en": "Tajikistan",
       "ru": "Таджикистан"
     },
     "flag": ["Flag_of_Tajikistan.webp"]
   },
   {
-    "country": {
+    "name": {
       "en": "Tanzania",
       "ru": "Танзания"
     },
     "flag": ["Flag_of_Tanzania.webp"]
   },
   {
-    "country": {
+    "name": {
       "en": "Thailand",
       "ru": "Таиланд"
     },
     "flag": ["Flag_of_Thailand.webp"]
   },
   {
-    "country": {
+    "name": {
       "en": "The Gambia",
       "ru": "Гамбия"
     },
     "flag": ["Flag_of_The_Gambia.webp"]
   },
   {
-    "country": {
+    "name": {
       "en": "Togo",
       "ru": "Того"
     },
     "flag": ["Flag_of_Togo.webp"]
   },
   {
-    "country": {
+    "name": {
       "en": "Tonga",
       "ru": "Тонга"
     },
     "flag": ["Flag_of_Tonga.webp"]
   },
   {
-    "country": {
+    "name": {
       "en": "Transnistria",
       "ru": "Приднестровье"
     },
     "flag": ["Flag_of_Transnistria_(state).webp"]
   },
   {
-    "country": {
+    "name": {
       "en": "Trinidad and Tobago",
       "ru": "Тринидад и Тобаго"
     },
     "flag": ["Flag_of_Trinidad_and_Tobago.webp"]
   },
   {
-    "country": {
+    "name": {
       "en": "Tunisia",
       "ru": "Тунис"
     },
     "flag": ["Flag_of_Tunisia.webp"]
   },
   {
-    "country": {
+    "name": {
       "en": "Turkey",
       "ru": "Турция"
     },
     "flag": ["Flag_of_Turkey.webp"]
   },
   {
-    "country": {
+    "name": {
       "en": "Turkmenistan",
       "ru": "Туркменистан"
     },
     "flag": ["Flag_of_Turkmenistan.webp"]
   },
   {
-    "country": {
+    "name": {
       "en": "Tuvalu",
       "ru": "Тувалу"
     },
     "flag": ["Flag_of_Tuvalu.webp"]
   },
   {
-    "country": {
+    "name": {
       "en": "Uganda",
       "ru": "Уганда"
     },
     "flag": ["Flag_of_Uganda.webp"]
   },
   {
-    "country": {
+    "name": {
       "en": "Ukraine",
       "ru": "Украина"
     },
     "flag": ["Flag_of_Ukraine.webp"]
   },
   {
-    "country": {
+    "name": {
       "en": "Uruguay",
       "ru": "Уругвай"
     },
     "flag": ["Flag_of_Uruguay.webp"]
   },
   {
-    "country": {
+    "name": {
       "en": "Uzbekistan",
       "ru": "Узбекистан"
     },
     "flag": ["Flag_of_Uzbekistan.webp"]
   },
   {
-    "country": {
+    "name": {
       "en": "Vanuatu",
       "ru": "Вануату"
     },
     "flag": ["Flag_of_Vanuatu.webp"]
   },
   {
-    "country": {
+    "name": {
       "en": "Vatican",
       "ru": "Ватикан"
     },
     "flag": ["Flag_of_Vatican_City_(2023–present).webp"]
   },
   {
-    "country": {
+    "name": {
       "en": "Venezuela",
       "ru": "Венесуэла"
     },
     "flag": ["Flag_of_Venezuela.webp", "Flag_of_Venezuela_(state).webp"]
   },
   {
-    "country": {
+    "name": {
       "en": "Vietnam",
       "ru": "Вьетнам"
     },
     "flag": ["Flag_of_Vietnam.webp"]
   },
   {
-    "country": {
+    "name": {
       "en": "Yemen",
       "ru": "Йемен"
     },
     "flag": ["Flag_of_Yemen.webp"]
   },
   {
-    "country": {
+    "name": {
       "en": "Zambia",
       "ru": "Замбия"
     },
     "flag": ["Flag_of_Zambia.webp"]
   },
   {
-    "country": {
+    "name": {
       "en": "Zimbabwe",
       "ru": "Зимбабве"
     },
     "flag": ["Flag_of_Zimbabwe.webp"]
   },
   {
-    "country": {
+    "name": {
       "en": "The Bahamas",
       "ru": "Багамские Острова"
     },
     "flag": ["Flag_of_the_Bahamas.webp"]
   },
   {
-    "country": {
+    "name": {
       "en": "Central African Republic",
       "ru": "Центральноафриканская Республика"
     },
     "flag": ["Flag_of_the_Central_African_Republic.webp"]
   },
   {
-    "country": {
+    "name": {
       "en": "Comoros",
       "ru": "Коморы"
     },
     "flag": ["Flag_of_the_Comoros.webp"]
   },
   {
-    "country": {
+    "name": {
       "en": "Czech Republic",
       "ru": "Чехия"
     },
     "flag": ["Flag_of_the_Czech_Republic.webp"]
   },
   {
-    "country": {
+    "name": {
       "en": "Democratic Republic of the Congo",
       "ru": "Демократическая Республика Конго"
     },
     "flag": ["Flag_of_the_Democratic_Republic_of_the_Congo.webp"]
   },
   {
-    "country": {
+    "name": {
       "en": "Dominican Republic",
       "ru": "Доминиканская Республика"
     },
     "flag": ["Flag_of_the_Dominican_Republic.webp"]
   },
   {
-    "country": {
+    "name": {
       "en": "Marshall Islands",
       "ru": "Маршалловы Острова"
     },
     "flag": ["Flag_of_the_Marshall_Islands.webp"]
   },
   {
-    "country": {
+    "name": {
       "en": "Federated States of Micronesia",
       "ru": "Федеративные Штаты Микронезии"
     },
     "flag": ["Flag_of_the_Federated_States_of_Micronesia.webp"]
   },
   {
-    "country": {
+    "name": {
       "en": "Netherlands",
       "ru": "Нидерланды"
     },
     "flag": ["Flag_of_the_Netherlands.webp"]
   },
   {
-    "country": {
+    "name": {
       "en": "China",
       "ru": "Китай"
     },
     "flag": ["Flag_of_the_People's_Republic_of_China.webp"]
   },
   {
-    "country": {
+    "name": {
       "en": "Philippines",
       "ru": "Филиппины"
     },
     "flag": ["Flag_of_the_Philippines.webp"]
   },
   {
-    "country": {
+    "name": {
       "en": "Abkhazia",
       "ru": "Абхазия"
     },
     "flag": ["Flag_of_the_Republic_of_Abkhazia.webp"]
   },
   {
-    "country": {
+    "name": {
       "en": "Republic of the Congo",
       "ru": "Республика Конго"
     },
     "flag": ["Flag_of_the_Republic_of_the_Congo.webp"]
   },
   {
-    "country": {
+    "name": {
       "en": "Solomon Islands",
       "ru": "Соломоновы Острова"
     },
     "flag": ["Flag_of_the_Solomon_Islands.webp"]
   },
   {
-    "country": {
+    "name": {
       "en": "United Arab Emirates",
       "ru": "ОАЭ"
     },
     "flag": ["Flag_of_the_United_Arab_Emirates.webp"]
   },
   {
-    "country": {
+    "name": {
       "en": "Syria",
       "ru": "Сирия"
     },
@@ -1368,14 +1368,14 @@
     ]
   },
   {
-    "country": {
+    "name": {
       "en": "United Kingdom",
       "ru": "Великобритания"
     },
     "flag": ["Flag_of_the_United_Kingdom_(3-5).webp"]
   },
   {
-    "country": {
+    "name": {
       "en": "United States",
       "ru": "США"
     },
