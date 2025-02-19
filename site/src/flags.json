@@ -260,7 +260,7 @@
   },
   {
     "country": {
-      "en": "Côte d'Ivoire",
+      "en": "Ivory Coast",
       "ru": "Кот-д`Ивуар"
     },
     "flag": ["Flag_of_Côte_d'Ivoire.webp"]
@@ -295,8 +295,8 @@
   },
   {
     "country": {
-      "en": "East Timor",
-      "ru": "Тимор-Лешти"
+      "en": "Timor-Leste",
+      "ru": "Восточный Тимор"
     },
     "flag": ["Flag_of_East_Timor.webp"]
   },
@@ -1254,15 +1254,15 @@
   },
   {
     "country": {
-      "en": "Bahamas",
-      "ru": "Багамские острова"
+      "en": "The Bahamas",
+      "ru": "Багамские Острова"
     },
     "flag": ["Flag_of_the_Bahamas.webp"]
   },
   {
     "country": {
       "en": "Central African Republic",
-      "ru": "ЦАР"
+      "ru": "Центральноафриканская Республика"
     },
     "flag": ["Flag_of_the_Central_African_Republic.webp"]
   },
@@ -1304,7 +1304,7 @@
   {
     "country": {
       "en": "Federated States of Micronesia",
-      "ru": "Микронезия"
+      "ru": "Федеративные Штаты Микронезии"
     },
     "flag": ["Flag_of_the_Federated_States_of_Micronesia.webp"]
   },
@@ -1317,7 +1317,7 @@
   },
   {
     "country": {
-      "en": "People's Republic of China",
+      "en": "China",
       "ru": "Китай"
     },
     "flag": ["Flag_of_the_People's_Republic_of_China.webp"]
@@ -1331,7 +1331,7 @@
   },
   {
     "country": {
-      "en": "Republic of Abkhazia",
+      "en": "Abkhazia",
       "ru": "Абхазия"
     },
     "flag": ["Flag_of_the_Republic_of_Abkhazia.webp"]
