@@ -1,13 +1,6 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
-import flags from './../../../flags.json';
-
-interface Flag {
-  country: {
-    en: string;
-    ru: string;
-  };
-  flag: string[];
-}
+import countries from '../../../countries.json';
+import { ICountry } from '../../flag.interface';
 
 @Component({
   selector: 'app-list-page',
@@ -18,11 +11,11 @@ interface Flag {
 })
 export class ListPageComponent {
   protected visibleName: boolean = true;
-  protected flags: Flag[] = flags.sort((a, b) => {
-    if (a.country.ru.toLowerCase() < b.country.ru.toLowerCase()) {
+  protected countries: ICountry[] = countries.sort((a, b) => {
+    if (a.name.ru.toLowerCase() < b.name.ru.toLowerCase()) {
       return -1;
     }
-    if (a.country.ru.toLowerCase() > b.country.ru.toLowerCase()) {
+    if (a.name.ru.toLowerCase() > b.name.ru.toLowerCase()) {
       return 1;
     }
     return 0;
