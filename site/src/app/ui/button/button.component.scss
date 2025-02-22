@@ -1,5 +1,9 @@
 @use '../../../colors' as *;
 
+:host {
+  display: block;
+}
+
 button {
   width: 100%;
   padding: 20px;
@@ -7,6 +11,7 @@ button {
   font-size: 20px;
   font-weight: 700;
   text-transform: uppercase;
+  cursor: pointer;
 
   &.success {
     background-color: var(--success-color);

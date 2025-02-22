@@ -1,3 +1,4 @@
+@use 'grid' as *;
 @use 'colors' as *;
 
 body {
@@ -8,4 +9,8 @@ body {
 
 img {
   max-width: 100%;
+}
+
+.wrapper {
+  @include wrapper();
 }
