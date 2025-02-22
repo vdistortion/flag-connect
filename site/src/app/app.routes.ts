@@ -1,6 +1,8 @@
 import { Routes } from '@angular/router';
 import { HomePageComponent } from './pages/home-page/home-page.component';
 import { ListPageComponent } from './pages/list-page/list-page.component';
+import { QuizFlagPageComponent } from './pages/quiz-flag-page/quiz-flag-page.component';
+import { QuizCountryPageComponent } from './pages/quiz-country-page/quiz-country-page.component';
 
 export const routes: Routes = [
   {
@@ -10,5 +12,13 @@ export const routes: Routes = [
   {
     path: 'list',
     component: ListPageComponent,
+  },
+  {
+    path: 'quiz/flag',
+    component: QuizFlagPageComponent,
+  },
+  {
+    path: 'quiz/country',
+    component: QuizCountryPageComponent,
   },
 ];
