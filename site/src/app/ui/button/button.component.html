@@ -1,6 +1,7 @@
 <button
   [class.success]="success"
   [class.error]="error"
+  [disabled]="disabled"
   (click)="onClick.emit()"
 >
   <ng-content></ng-content>

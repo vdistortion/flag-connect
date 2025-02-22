@@ -1,0 +1,19 @@
+@use '../../../grid' as *;
+
+img {
+  margin-top: 40px;
+}
+
+.countries {
+  @include row-flex();
+}
+
+.country {
+  @include col();
+  @include size(12);
+  @include size-w480(24);
+
+  & {
+    margin-top: 20px;
+  }
+}

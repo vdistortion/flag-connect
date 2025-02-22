@@ -5,7 +5,6 @@
       quizService.countries[quizService.correctAnswerIndex].flag[0]
     "
     alt="Flag"
-    (click)="quizService.calcQuestion()"
   />
 
   <div class="countries">
@@ -25,6 +24,12 @@
         >
           {{ country.name.ru }}
         </app-button>
+      </div>
+    }
+
+    @if (quizService.answerIndex > -1) {
+      <div class="country">
+        <app-button (click)="quizService.calcQuestion()"> Далее </app-button>
       </div>
     }
   </div>

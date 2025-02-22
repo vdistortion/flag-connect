@@ -1,9 +1,5 @@
 @use '../../../grid' as *;
 
-.wrapper {
-  @include wrapper();
-}
-
 .flags {
   @include row-flex();
 }

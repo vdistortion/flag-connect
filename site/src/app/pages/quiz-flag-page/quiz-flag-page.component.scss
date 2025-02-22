@@ -1,22 +1,23 @@
 @use '../../../grid' as *;
 
-.wrapper {
-  @include wrapper();
+img {
+  margin-top: 40px;
+}
 
-  img {
-    margin-top: 40px;
-  }
+.countries {
+  @include row-flex();
+}
 
-  .countries {
-    @include row-flex();
-  }
+.country + .country {
+  margin-top: 20px;
+}
 
-  .country {
-    @include col();
-    @include size(24);
+.country {
+  @include col();
+  @include size(12);
+  @include size-w768(24);
 
-    & {
-      margin-top: 20px;
-    }
+  & {
+    margin-top: 20px;
   }
 }
