@@ -1,5 +1,4 @@
 @use '../../../grid' as *;
-@use '../../../colors' as *;
 
 .wrapper {
   @include wrapper();
@@ -18,25 +17,6 @@
 
     & {
       margin-top: 20px;
-    }
-  }
-
-  button {
-    width: 100%;
-    padding: 20px;
-    border: none;
-    font-size: 20px;
-    font-weight: 700;
-    text-transform: uppercase;
-
-    &.success {
-      background-color: var(--success-color);
-      color: var(--text-color);
-    }
-
-    &.error {
-      background-color: var(--error-color);
-      color: var(--text-color);
     }
   }
 }

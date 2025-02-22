@@ -11,12 +11,12 @@
   <div class="countries">
     @for (country of quizService.countries; track country; let index = $index) {
       <div class="country">
-        <button
-          [class.success]="
+        <app-button
+          [success]="
             quizService.answerIndex > -1 &&
             index === quizService.correctAnswerIndex
           "
-          [class.error]="
+          [error]="
             quizService.answerIndex > -1 &&
             index === quizService.answerIndex &&
             index !== quizService.correctAnswerIndex
@@ -24,7 +24,7 @@
           (click)="quizService.answerIndex = index"
         >
           {{ country.name.ru }}
-        </button>
+        </app-button>
       </div>
     }
   </div>
