@@ -1,10 +1,11 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import countries from '../../../countries.json';
 import { ICountry } from '../../flag.interface';
+import { FlagComponent } from '../../ui/flag/flag.component';
 
 @Component({
   selector: 'app-list-page',
-  imports: [],
+  imports: [FlagComponent],
   templateUrl: './list-page.component.html',
   styleUrl: './list-page.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,

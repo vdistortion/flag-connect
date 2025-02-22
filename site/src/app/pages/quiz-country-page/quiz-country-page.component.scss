@@ -1,7 +1,10 @@
 @use '../../../grid' as *;
 
-img {
-  margin-top: 40px;
+.name {
+  font-size: 20px;
+  text-align: center;
+  text-transform: uppercase;
+  font-weight: 700;
 }
 
 .countries {

@@ -4,11 +4,13 @@
 body {
   margin: 0;
   background-color: var(--bg-color);
+  //background-image: url('/images/golden-pattern-with-lines-squares_1017-7468.webp');
   font-family: sans-serif;
 }
 
 img {
   max-width: 100%;
+  height: auto;
 }
 
 .wrapper {

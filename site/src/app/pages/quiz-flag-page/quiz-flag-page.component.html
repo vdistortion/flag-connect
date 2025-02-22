@@ -1,11 +1,7 @@
-<div class="wrapper">
-  <img
-    [src]="
-      'images/flags/' +
-      quizService.countries[quizService.correctAnswerIndex].flag[0]
-    "
-    alt="Flag"
-  />
+<div class="wrapper" style="margin-top: 40px">
+  <app-flag
+    [image]="quizService.countries[quizService.correctAnswerIndex].flag"
+  ></app-flag>
 
   <div class="countries">
     @for (country of quizService.countries; track country; let index = $index) {

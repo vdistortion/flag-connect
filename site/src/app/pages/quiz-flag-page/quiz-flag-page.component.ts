@@ -6,10 +6,11 @@ import {
 } from '@angular/core';
 import { QuizService } from '../../quiz.service';
 import { ButtonComponent } from '../../ui/button/button.component';
+import { FlagComponent } from '../../ui/flag/flag.component';
 
 @Component({
   selector: 'app-quiz-flag-page',
-  imports: [ButtonComponent],
+  imports: [ButtonComponent, FlagComponent],
   templateUrl: './quiz-flag-page.component.html',
   styleUrl: './quiz-flag-page.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,

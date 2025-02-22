@@ -1,10 +1,12 @@
-<div class="wrapper">
-  <div>{{ quizService.countries[quizService.correctAnswerIndex].name.ru }}</div>
+<div class="wrapper" style="margin-top: 40px">
+  <div class="name">
+    {{ quizService.countries[quizService.correctAnswerIndex].name.ru }}
+  </div>
 
   <div class="countries">
     @for (country of quizService.countries; track country; let index = $index) {
       <div class="country">
-        <app-button
+        <app-flag
           [success]="
             quizService.answerIndex > -1 &&
             index === quizService.correctAnswerIndex
@@ -14,14 +16,15 @@
             index === quizService.answerIndex &&
             index !== quizService.correctAnswerIndex
           "
+          [image]="country.flag"
           (click)="quizService.answerIndex = index"
-        >
-          <img
-            [src]="'images/flags/' + country.flag[0]"
-            alt="Flag"
-            (click)="quizService.calcQuestion()"
-          />
-        </app-button>
+        ></app-flag>
+      </div>
+    }
+
+    @if (quizService.answerIndex > -1) {
+      <div class="country">
+        <app-button (click)="quizService.calcQuestion()"> Далее </app-button>
       </div>
     }
   </div>
