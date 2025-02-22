@@ -1,6 +1,8 @@
+@use 'colors' as *;
+
 body {
   margin: 0;
-  background-color: #adbac0;
+  background-color: var(--bg-color);
   font-family: sans-serif;
 }
 
