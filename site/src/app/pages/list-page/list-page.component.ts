@@ -11,7 +11,7 @@ import { FlagComponent } from '../../ui/flag/flag.component';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ListPageComponent {
-  protected visibleName: boolean = true;
+  protected lang: 'ru' | 'en' = 'ru';
   protected countries: ICountry[] = countries.sort((a, b) => {
     if (a.name.ru.toLowerCase() < b.name.ru.toLowerCase()) {
       return -1;
@@ -23,6 +23,6 @@ export class ListPageComponent {
   });
 
   toggleName() {
-    this.visibleName = !this.visibleName;
+    this.lang === 'ru' ? (this.lang = 'en') : (this.lang = 'ru');
   }
 }

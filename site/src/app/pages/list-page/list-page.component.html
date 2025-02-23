@@ -2,8 +2,8 @@
   <div class="flags">
     @for (country of countries; track country) {
       <div class="flag">
-        <h2 class="flag__name" [class]="{ 'flag__name--hidden': !visibleName }">
-          {{ country.name.ru }}
+        <h2 class="flag__name">
+          {{ country.name[lang] }}
         </h2>
         <app-flag
           [image]="country.flag"
