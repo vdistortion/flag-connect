@@ -1,18 +1,43 @@
 @use '../../../colors' as *;
 
+:host {
+  display: block;
+}
+
 .flag {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 20px;
-  border: 1px solid;
-  aspect-ratio: 3 / 2;
+  position: relative;
+  overflow: hidden;
+  height: 0;
+  padding-top: 56.25%;
+  background-color: var(--flag-color);
+  background-image: url('/images/texture-1075992_960_720.webp');
+  background-position: center;
+  background-size: cover;
+
+  &__wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-sizing: border-box;
+    padding: 20px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+  }
+
+  img {
+    max-height: 100%;
+  }
 
   &.success {
     background-color: var(--success-color);
+    background-image: none;
   }
 
   &.error {
     background-color: var(--error-color);
+    background-image: none;
   }
 }
