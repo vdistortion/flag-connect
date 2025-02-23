@@ -1,0 +1,9 @@
+@import '../../../colors';
+
+path {
+  fill: var(--text-color);
+}
+
+svg:hover path {
+  fill: var(--text-color-hover) !important;
+}
