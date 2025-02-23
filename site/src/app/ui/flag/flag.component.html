@@ -1,5 +1,17 @@
 <div class="flag" [class.success]="success" [class.error]="error">
   <div class="flag__wrapper">
-    <img [src]="'images/flags/' + image[0]" [alt]="name" />
+    @if (image.length > 1) {
+      <div class="flag__icon">
+        <app-icon
+          icon="mdiImageMultipleOutline"
+          (click)="nextFlag($event)"
+        ></app-icon>
+      </div>
+    }
+    <img
+      class="flag__image"
+      [src]="'images/flags/' + image[index]"
+      [alt]="name"
+    />
   </div>
 </div>

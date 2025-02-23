@@ -16,7 +16,9 @@
             index === quizService.answerIndex &&
             index !== quizService.correctAnswerIndex
           "
-          (click)="quizService.answerIndex = index"
+          (click)="
+            quizService.answerIndex < 0 && (quizService.answerIndex = index)
+          "
         >
           {{ country.name.ru }}
         </app-button>

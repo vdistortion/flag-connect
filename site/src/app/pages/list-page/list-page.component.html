@@ -1,8 +1,8 @@
-<div class="wrapper" (click)="toggleName()">
+<div class="wrapper">
   <div class="flags">
     @for (country of countries; track country) {
       <div class="flag">
-        <h2 class="flag__name">
+        <h2 class="flag__name" (click)="toggleName()">
           {{ country.name[lang] }}
         </h2>
         <app-flag

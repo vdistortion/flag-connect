@@ -7,6 +7,7 @@
     @for (country of quizService.countries; track country; let index = $index) {
       <div class="country">
         <app-flag
+          class="flag"
           [success]="
             quizService.answerIndex > -1 &&
             index === quizService.correctAnswerIndex
@@ -17,7 +18,9 @@
             index !== quizService.correctAnswerIndex
           "
           [image]="country.flag"
-          (click)="quizService.answerIndex = index"
+          (click)="
+            quizService.answerIndex < 0 && (quizService.answerIndex = index)
+          "
         ></app-flag>
       </div>
     }
