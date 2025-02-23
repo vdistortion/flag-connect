@@ -10,7 +10,6 @@
   height: 0;
   padding-top: 56.25%;
   background-color: var(--flag-color);
-  background-image: url('/images/texture-1075992_960_720.webp');
   background-position: center;
   background-size: cover;
 
@@ -27,7 +26,15 @@
     height: 100%;
   }
 
-  img {
+  &__icon {
+    position: absolute;
+    top: 0;
+    right: 0;
+    padding: 10px;
+    cursor: pointer;
+  }
+
+  &__image {
     max-height: 100%;
   }
 
