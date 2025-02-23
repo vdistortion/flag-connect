@@ -1,0 +1,3 @@
+<svg viewBox="0 0 24 24" [attr.width]="size" [attr.height]="size">
+  <path [attr.d]="icons[icon]" [style.fill]="color"></path>
+</svg>
