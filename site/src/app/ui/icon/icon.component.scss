@@ -1,4 +1,4 @@
-@import '../../../colors';
+@use '../../../colors' as *;
 
 path {
   fill: var(--text-color);

@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
-import { mdiImageMultipleOutline } from '@mdi/js';
+import { mdiImageMultipleOutline, mdiCloseCircleOutline } from '@mdi/js';
 
 @Component({
   selector: 'app-icon',
@@ -15,5 +15,6 @@ export class IconComponent {
 
   public icons: any = {
     mdiImageMultipleOutline,
+    mdiCloseCircleOutline,
   };
 }

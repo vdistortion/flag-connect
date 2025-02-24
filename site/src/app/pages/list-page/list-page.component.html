@@ -9,8 +9,14 @@
           [image]="country.flag"
           [name]="country.name.en"
           class="flag__img"
+          (onClick)="showPopup($event)"
         ></app-flag>
       </div>
     }
   </div>
+  @if (isPopupVisible) {
+    <app-popup (close)="hidePopup()">
+      <img [src]="srcFlag" alt="Flag" />
+    </app-popup>
+  }
 </div>
