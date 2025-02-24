@@ -1,4 +1,10 @@
-import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  EventEmitter,
+  Input,
+  Output,
+} from '@angular/core';
 import { IconComponent } from '../icon/icon.component';
 
 @Component({
@@ -13,6 +19,7 @@ export class FlagComponent {
   @Input() public success = false;
   @Input() image: string[] = [];
   @Input() name: string = 'Flag';
+  @Output() onClick: EventEmitter<string> = new EventEmitter<string>();
   protected index: number = 0;
 
   nextFlag(e: Event) {
