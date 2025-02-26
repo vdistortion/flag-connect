@@ -1,3 +1,4 @@
+@use '../../../grid' as *;
 @use '../../../colors' as *;
 
 .popup {
@@ -16,9 +17,12 @@
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    width: 100%;
     max-height: 100%;
     max-width: 80%;
+
+    @include w992-block() {
+      width: 100%;
+    }
   }
 
   &__close {
