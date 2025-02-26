@@ -1,12 +1,10 @@
 {
   "name": "flag-connect-bot",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "description": "Flag Connect Bot",
   "main": "src/index.ts",
   "private": true,
-  "license": "MIT",
-  "author": "Example <example@gmail.com> (https://github.com/example)",
-  "homepage": "https://github.com/example/example",
+  "license": "GPL",
   "keywords": [
     "telegram",
     "bot"
