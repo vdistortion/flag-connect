@@ -6,10 +6,9 @@
 
 .flag {
   @include col();
-  @include size(6);
-  @include size_w992(8);
-  @include size_w768(12);
-  @include size_w480(24);
+  @include size(8);
+  @include size_w992(12);
+  @include size_w768(24);
 
   & {
     padding: 10px;
