@@ -1,4 +1,9 @@
-<div class="flag" [class.success]="success" [class.error]="error">
+<div
+  class="flag"
+  [class.aspect-ratio-75]="aspectRatio === 75"
+  [class.success]="success"
+  [class.error]="error"
+>
   <div class="flag__wrapper">
     @if (image.length > 1) {
       <div class="flag__icon">

@@ -13,6 +13,10 @@
   background-position: center;
   background-size: cover;
 
+  &.aspect-ratio-75 {
+    padding-top: 75%;
+  }
+
   &__wrapper {
     display: flex;
     align-items: center;

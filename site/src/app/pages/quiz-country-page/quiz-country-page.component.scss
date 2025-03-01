@@ -9,15 +9,12 @@
 
 .countries {
   @include row-flex();
-  @include w480-block() {
-    justify-content: center;
-  }
 }
 
 .country {
   @include col();
   @include size(12);
-  @include size-w480(19);
+  @include size-w320(24);
 
   & {
     margin-top: 20px;
