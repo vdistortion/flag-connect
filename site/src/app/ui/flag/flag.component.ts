@@ -19,6 +19,7 @@ export class FlagComponent {
   @Input() public success = false;
   @Input() image: string[] = [];
   @Input() name: string = 'Flag';
+  @Input() aspectRatio: number = 0;
   @Output() onClick: EventEmitter<string> = new EventEmitter<string>();
   protected index: number = 0;
 

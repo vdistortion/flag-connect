@@ -8,6 +8,7 @@
       <div class="country">
         <app-flag
           class="flag"
+          [aspectRatio]="75"
           [success]="
             quizService.answerIndex > -1 &&
             index === quizService.correctAnswerIndex
