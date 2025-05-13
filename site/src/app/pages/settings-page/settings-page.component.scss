@@ -1,0 +1,21 @@
+@use '../../../grid' as *;
+
+.settings {
+  @include row-flex();
+
+  table {
+    width: 100%;
+    max-width: 400px;
+    margin: 0 auto;
+
+    caption {
+      text-transform: uppercase;
+      font-weight: bold;
+      margin: 40px 0;
+    }
+
+    td:first-child {
+      //width: 100px;
+    }
+  }
+}

@@ -7,10 +7,7 @@
   <div class="flag__wrapper">
     @if (image.length > 1) {
       <div class="flag__icon">
-        <app-icon
-          icon="mdiImageMultipleOutline"
-          (click)="nextFlag($event)"
-        ></app-icon>
+        <app-icon icon="mdiImageMultipleOutline" (click)="nextFlag($event)"></app-icon>
       </div>
     }
     <img

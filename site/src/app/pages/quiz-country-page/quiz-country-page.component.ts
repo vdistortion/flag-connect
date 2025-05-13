@@ -1,10 +1,5 @@
-import {
-  ChangeDetectionStrategy,
-  Component,
-  inject,
-  OnInit,
-} from '@angular/core';
-import { QuizService } from '../../quiz.service';
+import { ChangeDetectionStrategy, Component, inject, OnInit } from '@angular/core';
+import { QuizService } from '../../services/quiz.service';
 import { FlagComponent } from '../../ui/flag/flag.component';
 import { ButtonComponent } from '../../ui/button/button.component';
 

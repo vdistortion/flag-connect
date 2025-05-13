@@ -9,11 +9,11 @@ import { mdiImageMultipleOutline, mdiCloseCircleOutline } from '@mdi/js';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class IconComponent {
-  @Input({ required: true }) public icon!: string;
-  @Input() public size: number = 24;
-  @Input() public color: string = '';
+  @Input({ required: true }) icon!: string;
+  @Input() size = 24;
+  @Input() color = '';
 
-  public icons: any = {
+  icons: Record<string, string> = {
     mdiImageMultipleOutline,
     mdiCloseCircleOutline,
   };
