@@ -14,6 +14,7 @@
     "public:gh": "gh-pages -d dist/flag-connect/browser",
     "public": "npm run build && npm run public:gh"
   },
+  "license": "GPL",
   "dependencies": {
     "@angular/animations": "^19.0.0",
     "@angular/common": "^19.0.0",

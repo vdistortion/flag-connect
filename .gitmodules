@@ -1,0 +1,3 @@
+[submodule "client"]
+  path = bot
+  url = git@github.com:vdistortion/imp-telegram-bot.git
