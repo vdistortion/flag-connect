@@ -1,4 +1,4 @@
-import { Context } from 'telegraf';
+import type { Context } from 'telegraf';
 import createDebug from 'debug';
 
 const debug = createDebug('bot:greeting_text');
