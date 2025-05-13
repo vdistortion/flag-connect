@@ -1,10 +1,4 @@
-import {
-  ChangeDetectionStrategy,
-  Component,
-  EventEmitter,
-  Input,
-  Output,
-} from '@angular/core';
+import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from '@angular/core';
 import { IconComponent } from '../icon/icon.component';
 
 @Component({
@@ -15,13 +9,13 @@ import { IconComponent } from '../icon/icon.component';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class FlagComponent {
-  @Input() public error = false;
-  @Input() public success = false;
+  @Input() error = false;
+  @Input() success = false;
   @Input() image: string[] = [];
-  @Input() name: string = 'Flag';
-  @Input() aspectRatio: number = 0;
-  @Output() onClick: EventEmitter<string> = new EventEmitter<string>();
-  protected index: number = 0;
+  @Input() name = 'Flag';
+  @Input() aspectRatio = 0;
+  @Output() onClick = new EventEmitter<string>();
+  protected index = 0;
 
   nextFlag(e: Event) {
     if (this.image.length > 0) {

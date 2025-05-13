@@ -1,11 +1,7 @@
 <div class="popup">
   <div class="popup__overlay" (click)="close.emit()"></div>
   <div class="popup__content">
-    <app-icon
-      class="popup__close"
-      icon="mdiCloseCircleOutline"
-      (click)="close.emit()"
-    ></app-icon>
+    <app-icon class="popup__close" icon="mdiCloseCircleOutline" (click)="close.emit()"></app-icon>
     <ng-content></ng-content>
   </div>
 </div>

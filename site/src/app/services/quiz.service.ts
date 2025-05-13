@@ -1,13 +1,20 @@
-import { Injectable } from '@angular/core';
-import type { ICountry } from './flag.interface';
-import countries from '../countries.json';
+import { inject, Injectable } from '@angular/core';
+import type { ICountry } from '../flag.interface';
+import countries from '../../countries.json';
+import { SettingsService } from './settings.service';
 
 @Injectable()
 export class QuizService {
-  count: number = 4;
+  settingsService = inject(SettingsService);
+  count = this.settingsService.count;
   countries: ICountry[] = [];
-  correctAnswerIndex: number = -1;
-  answerIndex: number = -1;
+  correctAnswerIndex = -1;
+  answerIndex = -1;
+
+  setCount(count: number) {
+    this.count = count;
+    this.settingsService.count = count;
+  }
 
   calcQuestion() {
     const indexes: number[] = [];

@@ -12,8 +12,8 @@ import { PopupComponent } from '../../ui/popup/popup.component';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ListPageComponent {
-  protected srcFlag: string = '';
-  protected isPopupVisible: boolean = false;
+  protected srcFlag = '';
+  protected isPopupVisible = false;
   protected lang: 'ru' | 'en' = 'ru';
   protected countries: ICountry[] = countries.sort((a, b) => {
     if (a.name.ru.toLowerCase() < b.name.ru.toLowerCase()) {
