@@ -1,6 +1,6 @@
 import { inject, Injectable } from '@angular/core';
 import type { ICountry } from '../flag.interface';
-import countries from '../../../bot/src/countries.json';
+import countries from '../../../public/countries.json';
 import { SettingsService } from './settings.service';
 
 @Injectable()
