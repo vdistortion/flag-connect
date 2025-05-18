@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
-import countries from '../../../../bot/src/countries.json';
+import countries from '../../../../public/countries.json';
 import { ICountry } from '../../flag.interface';
 import { FlagComponent } from '../../ui/flag/flag.component';
 import { PopupComponent } from '../../ui/popup/popup.component';
