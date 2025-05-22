@@ -1,0 +1,29 @@
+@use '../../../grid' as *;
+
+.header {
+  @include row-flex();
+
+  &__item {
+    @include col();
+    @include size(24);
+  }
+
+  a {
+    text-decoration: none;
+    text-transform: uppercase;
+    color: var(--text-color);
+
+    &:hover {
+      color: var(--text-color-hover);
+    }
+
+    h1 {
+      margin: 40px 0 0;
+
+      app-icon {
+        position: relative;
+        top: 5px;
+      }
+    }
+  }
+}
