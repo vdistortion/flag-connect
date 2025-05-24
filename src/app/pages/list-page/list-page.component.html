@@ -1,14 +1,13 @@
 <div class="wrapper">
   <div class="flags">
     @for (country of countries; track country) {
-      <div class="flag">
-        <h2 class="flag__name" (click)="toggleName()">
+      <div>
+        <h2 class="name" (click)="toggleName()">
           {{ country.name[lang] }}
         </h2>
         <app-flag
           [image]="country.flag"
           [name]="country.name.en"
-          class="flag__img"
           (onClick)="showPopup($event)"
         ></app-flag>
       </div>

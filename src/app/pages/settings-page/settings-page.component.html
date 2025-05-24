@@ -1,18 +1,16 @@
 <div class="wrapper">
-  <div class="settings">
-    <table>
-      <caption>
-        Настройки
-      </caption>
-      <tbody>
-        <tr>
-          <td>Количество вариантов</td>
-          <td>{{ value }}</td>
-          <td>
-            <input type="range" [value]="value" min="2" max="6" (input)="setCount($event)" />
-          </td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
+  <table>
+    <caption>
+      Настройки
+    </caption>
+    <tbody>
+      <tr>
+        <td>Количество вариантов</td>
+        <td>{{ value }}</td>
+        <td>
+          <input type="range" [value]="value" min="2" max="6" (input)="setCount($event)" />
+        </td>
+      </tr>
+    </tbody>
+  </table>
 </div>

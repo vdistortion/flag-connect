@@ -1,4 +1,3 @@
-@use 'grid' as *;
 @use 'colors' as *;
 
 body {
@@ -15,5 +14,11 @@ img {
 }
 
 .wrapper {
-  @include wrapper();
+  max-width: 1196px;
+  margin: 0 auto;
+  padding: 0 40px;
+
+  @media (max-width: 768px) {
+    padding: 0 20px;
+  }
 }
