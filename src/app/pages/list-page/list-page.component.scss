@@ -1,21 +1,18 @@
-@use '../../../grid' as *;
-
 .flags {
-  @include row-flex();
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-gap: 20px;
+
+  @media (max-width: 992px) {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  @media (max-width: 768px) {
+    grid-template-columns: repeat(1, 1fr);
+  }
 }
 
-.flag {
-  @include col();
-  @include size(8);
-  @include size_w992(12);
-  @include size_w768(24);
-
-  & {
-    padding: 10px;
-  }
-
-  &__name {
-    font-size: 16px;
-    margin-bottom: 5px;
-  }
+.name {
+  font-size: 16px;
+  margin-bottom: 5px;
 }

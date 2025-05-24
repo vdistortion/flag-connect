@@ -1,12 +1,5 @@
-@use '../../../grid' as *;
-
 .header {
-  @include row-flex();
-
-  &__item {
-    @include col();
-    @include size(24);
-  }
+  margin-bottom: 20px;
 
   a {
     text-decoration: none;

@@ -1,23 +1,10 @@
-@use '../../../grid' as *;
-
-img {
-  margin-top: 40px;
-}
-
 .countries {
-  @include row-flex();
-}
-
-.country + .country {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-gap: 20px;
   margin-top: 20px;
-}
 
-.country {
-  @include col();
-  @include size(12);
-  @include size-w768(24);
-
-  & {
-    margin-top: 20px;
+  @media (max-width: 320px) {
+    grid-template-columns: repeat(1, 1fr);
   }
 }
