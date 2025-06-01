@@ -1,2 +1,4 @@
-<app-header></app-header>
+@if (!tg.isMiniApp$.value) {
+  <app-header></app-header>
+}
 <router-outlet />

@@ -1,4 +1,5 @@
 import { inject, Injectable } from '@angular/core';
+import { Location } from '@angular/common';
 import { Router } from '@angular/router';
 import { BehaviorSubject } from 'rxjs';
 import {
@@ -37,6 +38,7 @@ import {
   providedIn: 'root',
 })
 export class TelegramApiService {
+  private location = inject(Location);
   private router = inject(Router);
   private listeners: VoidFunction[] = [];
   public isMiniApp$ = new BehaviorSubject(false);
@@ -72,6 +74,7 @@ export class TelegramApiService {
   }
 
   showMainButton(text: string): void {
+    if (!this.isMiniApp$.value) return;
     setMainButtonParams({
       text,
       isEnabled: true,
@@ -80,6 +83,7 @@ export class TelegramApiService {
   }
 
   hideMainButton(): void {
+    if (!this.isMiniApp$.value) return;
     setMainButtonParams({
       isEnabled: false,
       isVisible: false,
@@ -87,6 +91,7 @@ export class TelegramApiService {
   }
 
   showSecondaryButton(text: string): void {
+    if (!this.isMiniApp$.value) return;
     setSecondaryButtonParams({
       text,
       isEnabled: true,
@@ -95,6 +100,7 @@ export class TelegramApiService {
   }
 
   hideSecondaryButton(): void {
+    if (!this.isMiniApp$.value) return;
     setSecondaryButtonParams({
       isEnabled: false,
       isVisible: false,
@@ -102,63 +108,69 @@ export class TelegramApiService {
   }
 
   showSettingsButton(): void {
+    if (!this.isMiniApp$.value) return;
     showSettingsButton();
   }
 
   hideSettingsButton(): void {
+    if (!this.isMiniApp$.value) return;
     hideSettingsButton();
   }
 
   showBackButton(): void {
+    if (!this.isMiniApp$.value) return;
     showBackButton();
   }
 
   hideBackButton(): void {
+    if (!this.isMiniApp$.value) return;
     hideBackButton();
   }
 
-  onMainButtonClick() {
-    const listener = onMainButtonClick(() => {
-      this.router.navigateByUrl('/list').catch(console.error);
+  onMainButtonClick(cb?: Function): VoidFunction {
+    if (!this.isMiniApp$.value) return () => {};
+    return onMainButtonClick(() => {
+      cb ? cb() : this.goBack();
     });
-
-    this.listeners.push(listener);
   }
 
-  onSecondaryButtonClick() {
+  private onSecondaryButtonClick() {
     const listener = onSecondaryButtonClick(closeMiniApp);
-
     this.listeners.push(listener);
   }
 
-  onSettingsButtonClick() {
-    const listener = onSettingsButtonClick(() => {
-      this.router.navigateByUrl('/settings').catch(console.error);
-    });
-
+  private onSettingsButtonClick() {
+    const listener = onSettingsButtonClick(() => this.navigate('/settings'));
     this.listeners.push(listener);
   }
 
-  onBackButtonClick() {
-    const listener = onBackButtonClick(() => {
-      this.router.navigateByUrl('/').catch(console.error);
-    });
-
+  private onBackButtonClick() {
+    const listener = onBackButtonClick(() => this.goBack());
     this.listeners.push(listener);
   }
 
-  on() {
-    this.onMainButtonClick();
+  private on() {
     this.onSecondaryButtonClick();
     this.onSettingsButtonClick();
     this.onBackButtonClick();
   }
 
-  off() {
+  private off() {
     this.listeners.forEach((listener) => listener());
   }
 
+  private navigate(url: string): void {
+    this.router.navigateByUrl(url).catch(console.error);
+  }
+
+  private goBack() {
+    if (window.history.length > 1) this.location.back();
+    else this.navigate('/');
+  }
+
   destroy() {
+    if (!this.isMiniApp$.value) return;
+
     this.off();
     unmountViewport();
     unmountSwipeBehavior();
