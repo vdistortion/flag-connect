@@ -1,6 +1,7 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { ButtonComponent } from '../../ui/button/button.component';
+import { TelegramApiService } from '../../services/telegram-api.service';
 
 @Component({
   selector: 'app-home-page',
@@ -9,4 +10,6 @@ import { ButtonComponent } from '../../ui/button/button.component';
   styleUrl: './home-page.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class HomePageComponent {}
+export class HomePageComponent {
+  protected tg = inject(TelegramApiService);
+}
