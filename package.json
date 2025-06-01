@@ -9,6 +9,7 @@
     "build-only": "ng build --base-href /flag-connect/ && cd dist/flag-connect/browser && cp index.html 404.html",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
+    "https": "ngrok http --host-header=rewrite 4200",
     "grep": "sh grep.sh",
     "format": "prettier . --write",
     "public:gh": "gh-pages -d dist/flag-connect/browser",
@@ -25,6 +26,7 @@
     "@angular/platform-browser-dynamic": "^19.0.0",
     "@angular/router": "^19.0.0",
     "@mdi/js": "^7.4.47",
+    "@telegram-apps/sdk": "^3.10.0",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0",
     "zone.js": "~0.15.0"
@@ -42,6 +44,7 @@
     "karma-coverage": "~2.2.0",
     "karma-jasmine": "~5.1.0",
     "karma-jasmine-html-reporter": "~2.1.0",
+    "ngrok": "^5.0.0-beta.2",
     "prettier": "3.5.3",
     "typescript": "~5.6.2"
   }
