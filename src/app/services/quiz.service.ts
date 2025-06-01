@@ -3,7 +3,9 @@ import type { ICountry } from '../flag.interface';
 import countries from '../../../public/countries.json';
 import { SettingsService } from './settings.service';
 
-@Injectable()
+@Injectable({
+  providedIn: 'root',
+})
 export class QuizService {
   settingsService = inject(SettingsService);
   count = this.settingsService.count;

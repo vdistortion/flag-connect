@@ -15,12 +15,12 @@
           index !== quizService.correctAnswerIndex
         "
         [image]="country.flag"
-        (click)="quizService.answerIndex < 0 && (quizService.answerIndex = index)"
+        (click)="onAnswer(index)"
       ></app-flag>
     }
 
-    @if (quizService.answerIndex > -1) {
-      <app-button (click)="quizService.calcQuestion()">Далее</app-button>
+    @if (!tg.isMiniApp$.value && quizService.answerIndex > -1) {
+      <app-button (click)="onNext()">Далее</app-button>
     }
   </div>
 </div>

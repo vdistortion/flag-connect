@@ -1,5 +1,6 @@
-import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, OnDestroy, OnInit } from '@angular/core';
 import { QuizService } from '../../services/quiz.service';
+import { TelegramApiService } from '../../services/telegram-api.service';
 
 @Component({
   selector: 'app-settings-page',
@@ -9,9 +10,21 @@ import { QuizService } from '../../services/quiz.service';
   changeDetection: ChangeDetectionStrategy.OnPush,
   providers: [QuizService],
 })
-export class SettingsPageComponent {
+export class SettingsPageComponent implements OnInit, OnDestroy {
+  private tg = inject(TelegramApiService);
   quizService = inject(QuizService);
   value = this.quizService.count;
+  private listeners: VoidFunction[] = [];
+
+  ngOnInit(): void {
+    this.listeners.push(this.tg.onMainButtonClick());
+    this.tg.showMainButton('Назад');
+  }
+
+  ngOnDestroy(): void {
+    this.listeners.forEach((listener) => listener());
+    this.tg.hideMainButton();
+  }
 
   setCount(e: Event) {
     const el = e.target as HTMLInputElement;
