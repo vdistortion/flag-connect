@@ -3,6 +3,7 @@ import { Location } from '@angular/common';
 import { Router } from '@angular/router';
 import { BehaviorSubject } from 'rxjs';
 import {
+  bindThemeParamsCssVars,
   closeMiniApp,
   disableVerticalSwipes,
   hideBackButton,
@@ -68,6 +69,7 @@ export class TelegramApiService {
     return this.install().then(() => {
       disableVerticalSwipes.ifAvailable();
       miniAppReady.ifAvailable();
+      bindThemeParamsCssVars();
       this.on();
       this.isMiniApp$.subscribe();
     });
