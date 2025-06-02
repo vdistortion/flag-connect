@@ -16,7 +16,7 @@ export class AppComponent implements OnInit, OnDestroy {
     this.tg
       .init()
       .then(() => this.tg.showSettingsButton())
-      .catch(() => console.info('browser'));
+      .catch(() => document.body.classList.add('bg'));
   }
 
   ngOnDestroy(): void {

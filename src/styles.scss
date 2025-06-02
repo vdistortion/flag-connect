@@ -4,8 +4,11 @@ body {
   margin: 40px 0 0;
   color: var(--text-color);
   background-color: var(--bg-color);
-  background-image: url('assets/dark-fibres-texture_1100-94.avif');
   font-family: sans-serif;
+
+  &.bg {
+    background-image: url('assets/dark-fibres-texture_1100-94.avif');
+  }
 }
 
 img {

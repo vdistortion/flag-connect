@@ -33,7 +33,6 @@ export class QuizCountryPageComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.listeners.forEach((listener) => listener());
-    this.tg.hideMainButton();
   }
 
   onAnswer(index: number) {

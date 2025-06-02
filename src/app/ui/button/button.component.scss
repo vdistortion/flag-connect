@@ -10,14 +10,19 @@ button {
   font-weight: 700;
   text-transform: uppercase;
   cursor: pointer;
+  background-color: var(--button-color);
+  color: var(--button-text-color);
+
+  &.country {
+    background-color: var(--flag-color);
+    color: var(--text-color);
+  }
 
   &.success {
     background-color: var(--success-color);
-    color: var(--text-color);
   }
 
   &.error {
     background-color: var(--error-color);
-    color: var(--text-color);
   }
 }

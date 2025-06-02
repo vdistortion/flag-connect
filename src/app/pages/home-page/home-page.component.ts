@@ -24,7 +24,6 @@ export class HomePageComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.listeners.forEach((listener) => listener());
-    this.tg.hideMainButton();
     this.tg.showBackButton();
   }
 }
