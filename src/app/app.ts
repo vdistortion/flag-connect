@@ -6,10 +6,10 @@ import { TelegramApiService } from './services/telegram-api.service';
 @Component({
   selector: 'app-root',
   imports: [RouterOutlet, HeaderComponent],
-  templateUrl: './app.component.html',
+  templateUrl: './app.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class AppComponent implements OnInit, OnDestroy {
+export class App implements OnInit, OnDestroy {
   protected tg = inject(TelegramApiService);
 
   async ngOnInit() {

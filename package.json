@@ -2,29 +2,23 @@
   "name": "flag-connect",
   "version": "0.1.0",
   "scripts": {
-    "prepare": "cp -n src/environments/environment.ts src/environments/environment.development.ts",
     "ng": "ng",
     "start": "ng serve --host 0.0.0.0",
-    "build": "npm run format && npm run build-only",
-    "build-only": "ng build --base-href /flag-connect/ && cd dist/flag-connect/browser && cp index.html 404.html",
+    "build": "ng build",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
     "https": "ngrok http --host-header=rewrite 4200",
-    "grep": "sh grep.sh",
     "format": "prettier . --write",
-    "public:gh": "gh-pages -d dist/flag-connect/browser",
-    "public": "npm run build && npm run public:gh"
+    "public": "ng build --base-href /flag-connect/ && cd dist/flag-connect/browser && cp index.html 404.html && gh-pages -d ."
   },
   "license": "GPL",
   "dependencies": {
-    "@angular/animations": "^19.0.0",
-    "@angular/common": "^19.0.0",
-    "@angular/compiler": "^19.0.0",
-    "@angular/core": "^19.0.0",
-    "@angular/forms": "^19.0.0",
-    "@angular/platform-browser": "^19.0.0",
-    "@angular/platform-browser-dynamic": "^19.0.0",
-    "@angular/router": "^19.0.0",
+    "@angular/common": "^20.0.0",
+    "@angular/compiler": "^20.0.0",
+    "@angular/core": "^20.0.0",
+    "@angular/forms": "^20.0.0",
+    "@angular/platform-browser": "^20.0.0",
+    "@angular/router": "^20.0.0",
     "@mdi/js": "^7.4.47",
     "@telegram-apps/sdk": "^3.10.0",
     "rxjs": "~7.8.0",
@@ -32,13 +26,12 @@
     "zone.js": "~0.15.0"
   },
   "devDependencies": {
-    "@angular-devkit/build-angular": "^19.0.4",
-    "@angular/cli": "^19.0.4",
-    "@angular/compiler-cli": "^19.0.0",
-    "@ngx-env/builder": "^19.0.4",
+    "@angular/build": "^20.0.1",
+    "@angular/cli": "^20.0.1",
+    "@angular/compiler-cli": "^20.0.0",
     "@types/jasmine": "~5.1.0",
     "gh-pages": "^6.3.0",
-    "jasmine-core": "~5.4.0",
+    "jasmine-core": "~5.7.0",
     "karma": "~6.4.0",
     "karma-chrome-launcher": "~3.2.0",
     "karma-coverage": "~2.2.0",
@@ -46,6 +39,6 @@
     "karma-jasmine-html-reporter": "~2.1.0",
     "ngrok": "^5.0.0-beta.2",
     "prettier": "3.5.3",
-    "typescript": "~5.6.2"
+    "typescript": "~5.8.2"
   }
 }
