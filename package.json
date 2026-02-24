@@ -9,7 +9,7 @@
     "test": "ng test",
     "https": "ngrok http --host-header=rewrite 4200",
     "format": "prettier . --write",
-    "public": "ng build --base-href /flag-connect/ && cd dist/flag-connect/browser && cp index.html 404.html && gh-pages -d ."
+    "public": "ng build && cd dist/flag-connect/browser && cp index.html 404.html && gh-pages -d . --cname flag-connect.zvalentin.ru"
   },
   "license": "GPL",
   "dependencies": {
