@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component, inject, OnDestroy, OnInit } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
+import { TelegramApiService } from '@verse-bot/miniapp/angular';
 import { ButtonComponent } from '../../ui/button/button.component';
-import { TelegramApiService } from '../../services/telegram-api.service';
 
 @Component({
   selector: 'app-home-page',
@@ -16,14 +16,14 @@ export class HomePageComponent implements OnInit, OnDestroy {
   private listeners: VoidFunction[] = [];
 
   ngOnInit(): void {
-    const offClick = this.tg.onMainButtonClick(() => this.router.navigateByUrl('/list'));
+    const offClick = this.tg.api.onMainButtonClick(() => this.router.navigateByUrl('/list'));
     this.listeners.push(offClick);
-    this.tg.showMainButton('Все флаги');
-    this.tg.hideBackButton();
+    this.tg.api.showMainButton('Все флаги');
+    this.tg.api.hideBackButton();
   }
 
   ngOnDestroy(): void {
     this.listeners.forEach((listener) => listener());
-    this.tg.showBackButton();
+    this.tg.api.showBackButton();
   }
 }

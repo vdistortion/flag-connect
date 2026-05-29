@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, inject, OnDestroy, OnInit } from '@angular/core';
+import { TelegramApiService } from '@verse-bot/miniapp/angular';
 import { QuizService } from '../../services/quiz.service';
-import { TelegramApiService } from '../../services/telegram-api.service';
 
 @Component({
   selector: 'app-settings-page',
@@ -17,8 +17,8 @@ export class SettingsPageComponent implements OnInit, OnDestroy {
   private listeners: VoidFunction[] = [];
 
   ngOnInit(): void {
-    this.listeners.push(this.tg.onMainButtonClick());
-    this.tg.showMainButton('Назад');
+    this.listeners.push(this.tg.api.onMainButtonClick(() => {}));
+    this.tg.api.showMainButton('Назад');
   }
 
   ngOnDestroy(): void {

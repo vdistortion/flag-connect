@@ -1,9 +1,9 @@
 import { ChangeDetectionStrategy, Component, inject, OnDestroy, OnInit } from '@angular/core';
+import { TelegramApiService } from '@verse-bot/miniapp/angular';
 import countries from '../../../../public/countries.json';
 import { ICountry } from '../../flag.interface';
 import { FlagComponent } from '../../ui/flag/flag.component';
 import { PopupComponent } from '../../ui/popup/popup.component';
-import { TelegramApiService } from '../../services/telegram-api.service';
 
 @Component({
   selector: 'app-list-page',
@@ -29,8 +29,8 @@ export class ListPageComponent implements OnInit, OnDestroy {
   });
 
   ngOnInit(): void {
-    this.listeners.push(this.tg.onMainButtonClick());
-    this.tg.showMainButton('Назад');
+    this.listeners.push(this.tg.api.onMainButtonClick(() => {}));
+    this.tg.api.showMainButton('Назад');
   }
 
   ngOnDestroy(): void {

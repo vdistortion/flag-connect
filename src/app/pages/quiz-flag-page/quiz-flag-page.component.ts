@@ -6,10 +6,10 @@ import {
   OnDestroy,
   OnInit,
 } from '@angular/core';
+import { TelegramApiService } from '@verse-bot/miniapp/angular';
 import { QuizService } from '../../services/quiz.service';
 import { ButtonComponent } from '../../ui/button/button.component';
 import { FlagComponent } from '../../ui/flag/flag.component';
-import { TelegramApiService } from '../../services/telegram-api.service';
 
 @Component({
   selector: 'app-quiz-flag-page',
@@ -26,7 +26,7 @@ export class QuizFlagPageComponent implements OnInit, OnDestroy {
   private listeners: VoidFunction[] = [];
 
   ngOnInit() {
-    const offClick = this.tg.onMainButtonClick(() => this.onNext());
+    const offClick = this.tg.api.onMainButtonClick(() => this.onNext());
     this.listeners.push(offClick);
     this.onNext();
   }
@@ -38,13 +38,13 @@ export class QuizFlagPageComponent implements OnInit, OnDestroy {
   onAnswer(index: number) {
     if (this.quizService.answerIndex < 0) {
       this.quizService.answerIndex = index;
-      this.tg.showMainButton('Продолжить');
+      this.tg.api.showMainButton('Продолжить');
     }
   }
 
   onNext() {
     this.quizService.calcQuestion();
-    this.tg.hideMainButton();
+    this.tg.api.hideMainButton();
     this.cdr.markForCheck();
   }
 }
