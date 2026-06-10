@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { IconComponent } from '../icon/icon.component';
 
 @Component({
@@ -6,7 +6,6 @@ import { IconComponent } from '../icon/icon.component';
   imports: [IconComponent],
   templateUrl: './flag.component.html',
   styleUrl: './flag.component.scss',
-  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class FlagComponent {
   @Input() error = false;

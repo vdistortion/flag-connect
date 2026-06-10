@@ -1,7 +1,7 @@
-import { ChangeDetectionStrategy, Component, inject, OnDestroy, OnInit } from '@angular/core';
+import { Component, inject, OnDestroy, OnInit } from '@angular/core';
 import { TelegramApiService } from '@verse-bot/miniapp/angular';
 import countries from '../../../../public/countries.json';
-import { ICountry } from '../../flag.interface';
+import { Country } from '../../flag.interface';
 import { FlagComponent } from '../../ui/flag/flag.component';
 import { PopupComponent } from '../../ui/popup/popup.component';
 
@@ -10,7 +10,6 @@ import { PopupComponent } from '../../ui/popup/popup.component';
   imports: [FlagComponent, PopupComponent],
   templateUrl: './list-page.component.html',
   styleUrl: './list-page.component.scss',
-  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ListPageComponent implements OnInit, OnDestroy {
   private tg = inject(TelegramApiService);
@@ -18,7 +17,7 @@ export class ListPageComponent implements OnInit, OnDestroy {
   protected srcFlag = '';
   protected isPopupVisible = false;
   protected lang: 'ru' | 'en' = 'ru';
-  protected countries: ICountry[] = countries.sort((a, b) => {
+  protected countries: Country[] = countries.sort((a, b) => {
     if (a.name.ru.toLowerCase() < b.name.ru.toLowerCase()) {
       return -1;
     }

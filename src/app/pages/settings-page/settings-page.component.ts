@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, inject, OnDestroy, OnInit } from '@angular/core';
+import { Component, inject, OnDestroy, OnInit } from '@angular/core';
 import { TelegramApiService } from '@verse-bot/miniapp/angular';
 import { QuizService } from '../../services/quiz.service';
 
@@ -7,7 +7,6 @@ import { QuizService } from '../../services/quiz.service';
   imports: [],
   templateUrl: './settings-page.component.html',
   styleUrl: './settings-page.component.scss',
-  changeDetection: ChangeDetectionStrategy.OnPush,
   providers: [QuizService],
 })
 export class SettingsPageComponent implements OnInit, OnDestroy {
