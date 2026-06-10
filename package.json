@@ -1,44 +1,46 @@
 {
   "name": "flag-connect",
-  "version": "0.1.0",
+  "version": "0.2.0",
+  "author": "Valentin <https://github.com/vdistortion>",
+  "homepage": "https://flag-connect.zvalentin.ru",
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:vdistortion/flag-connect.git"
+  },
   "scripts": {
     "ng": "ng",
     "start": "ng serve --host 0.0.0.0",
-    "build": "ng build",
+    "build": "ng build --configuration production",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
-    "https": "ngrok http --host-header=rewrite 4200",
-    "format": "prettier . --write",
-    "public": "ng build && cd dist/flag-connect/browser && cp index.html 404.html && gh-pages -d . --cname flag-connect.zvalentin.ru"
+    "serve:ssr:flag-connect": "node dist/flag-connect/server/server.mjs",
+    "format": "prettier . --write"
   },
-  "license": "GPL",
+  "private": true,
+  "license": "Apache-2.0",
+  "packageManager": "npm@10.9.8",
   "dependencies": {
-    "@angular/common": "^20.0.0",
-    "@angular/compiler": "^20.0.0",
-    "@angular/core": "^20.0.0",
-    "@angular/forms": "^20.0.0",
-    "@angular/platform-browser": "^20.0.0",
-    "@angular/router": "^20.0.0",
+    "@angular/common": "^22.0.0",
+    "@angular/compiler": "^22.0.0",
+    "@angular/core": "^22.0.0",
+    "@angular/forms": "^22.0.0",
+    "@angular/platform-browser": "^22.0.0",
+    "@angular/platform-server": "^22.0.0",
+    "@angular/router": "^22.0.0",
+    "@angular/ssr": "^22.0.0",
     "@mdi/js": "^7.4.47",
     "@verse-bot/miniapp": "^0.2.1",
+    "express": "^5.1.0",
     "rxjs": "~7.8.0",
-    "tslib": "^2.3.0",
-    "zone.js": "~0.15.0"
+    "tslib": "^2.3.0"
   },
   "devDependencies": {
-    "@angular/build": "^20.0.1",
-    "@angular/cli": "^20.0.1",
-    "@angular/compiler-cli": "^20.0.0",
-    "@types/jasmine": "~5.1.0",
-    "gh-pages": "^6.3.0",
-    "jasmine-core": "~5.7.0",
-    "karma": "~6.4.0",
-    "karma-chrome-launcher": "~3.2.0",
-    "karma-coverage": "~2.2.0",
-    "karma-jasmine": "~5.1.0",
-    "karma-jasmine-html-reporter": "~2.1.0",
-    "ngrok": "^5.0.0-beta.2",
-    "prettier": "3.5.3",
-    "typescript": "~5.8.2"
+    "@angular/build": "^22.0.0",
+    "@angular/cli": "^22.0.0",
+    "@angular/compiler-cli": "^22.0.0",
+    "@types/express": "^5.0.1",
+    "@types/node": "^20.17.19",
+    "prettier": "^3.8.1",
+    "typescript": "~6.0.2"
   }
 }

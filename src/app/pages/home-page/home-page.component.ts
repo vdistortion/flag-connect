@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, inject, OnDestroy, OnInit } from '@angular/core';
+import { Component, inject, OnDestroy, OnInit } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
 import { TelegramApiService } from '@verse-bot/miniapp/angular';
 import { ButtonComponent } from '../../ui/button/button.component';
@@ -8,7 +8,6 @@ import { ButtonComponent } from '../../ui/button/button.component';
   imports: [ButtonComponent, RouterLink],
   templateUrl: './home-page.component.html',
   styleUrl: './home-page.component.scss',
-  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class HomePageComponent implements OnInit, OnDestroy {
   private router = inject(Router);

@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { mdiImageMultipleOutline, mdiCloseCircleOutline, mdiHome } from '@mdi/js';
 
 @Component({
@@ -6,7 +6,6 @@ import { mdiImageMultipleOutline, mdiCloseCircleOutline, mdiHome } from '@mdi/js
   imports: [],
   templateUrl: './icon.component.svg',
   styleUrl: './icon.component.scss',
-  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class IconComponent {
   @Input({ required: true }) icon!: string;

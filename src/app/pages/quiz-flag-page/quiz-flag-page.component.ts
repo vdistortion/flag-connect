@@ -1,11 +1,4 @@
-import {
-  ChangeDetectionStrategy,
-  ChangeDetectorRef,
-  Component,
-  inject,
-  OnDestroy,
-  OnInit,
-} from '@angular/core';
+import { ChangeDetectorRef, Component, inject, OnDestroy, OnInit } from '@angular/core';
 import { TelegramApiService } from '@verse-bot/miniapp/angular';
 import { QuizService } from '../../services/quiz.service';
 import { ButtonComponent } from '../../ui/button/button.component';
@@ -16,7 +9,6 @@ import { FlagComponent } from '../../ui/flag/flag.component';
   imports: [ButtonComponent, FlagComponent],
   templateUrl: './quiz-flag-page.component.html',
   styleUrl: './quiz-flag-page.component.scss',
-  changeDetection: ChangeDetectionStrategy.OnPush,
   providers: [QuizService],
 })
 export class QuizFlagPageComponent implements OnInit, OnDestroy {

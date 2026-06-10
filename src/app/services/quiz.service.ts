@@ -1,5 +1,5 @@
 import { inject, Injectable } from '@angular/core';
-import type { ICountry } from '../flag.interface';
+import type { Country } from '../flag.interface';
 import countries from '../../../public/countries.json';
 import { SettingsService } from './settings.service';
 
@@ -9,7 +9,7 @@ import { SettingsService } from './settings.service';
 export class QuizService {
   settingsService = inject(SettingsService);
   count = this.settingsService.count;
-  countries: ICountry[] = [];
+  countries: Country[] = [];
   correctAnswerIndex = -1;
   answerIndex = -1;
 
@@ -35,11 +35,11 @@ export class QuizService {
     this.correctAnswerIndex = this.randomIndex(this.countries);
   }
 
-  randomIndex(array: any[]): number {
+  randomIndex(array: Country[]): number {
     return Math.floor(Math.random() * array.length);
   }
 
-  shuffle(array: any[]) {
+  shuffle(array: Country[]) {
     array.sort(() => Math.random() - 0.5);
   }
 }
