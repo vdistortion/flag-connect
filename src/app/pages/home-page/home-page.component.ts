@@ -11,18 +11,18 @@ import { ButtonComponent } from '../../ui/button/button.component';
 })
 export class HomePageComponent implements OnInit, OnDestroy {
   private router = inject(Router);
-  protected tg = inject(TelegramApiService);
+  protected readonly tg = inject(TelegramApiService);
   private listeners: VoidFunction[] = [];
 
   ngOnInit(): void {
-    const offClick = this.tg.api.onMainButtonClick(() => this.router.navigateByUrl('/list'));
+    const offClick = this.tg.mainButton.onClick(() => this.router.navigateByUrl('/list'));
     this.listeners.push(offClick);
-    this.tg.api.showMainButton('Все флаги');
-    this.tg.api.hideBackButton();
+    this.tg.mainButton.show('Все флаги');
+    this.tg.backButton.hide();
   }
 
   ngOnDestroy(): void {
     this.listeners.forEach((listener) => listener());
-    this.tg.api.showBackButton();
+    this.tg.backButton.show();
   }
 }

@@ -19,7 +19,7 @@
       ></app-flag>
     }
 
-    @if (!tg.isMiniApp$.value && quizService.answerIndex > -1) {
+    @if (!tg.isApp() && quizService.answerIndex > -1) {
       <app-button [country]="true" (click)="onNext()">Далее</app-button>
     }
   </div>

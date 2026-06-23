@@ -13,12 +13,12 @@ import { FlagComponent } from '../../ui/flag/flag.component';
 })
 export class QuizFlagPageComponent implements OnInit, OnDestroy {
   private cdr = inject(ChangeDetectorRef);
-  protected tg = inject(TelegramApiService);
+  protected readonly tg = inject(TelegramApiService);
   protected quizService = inject(QuizService);
   private listeners: VoidFunction[] = [];
 
   ngOnInit() {
-    const offClick = this.tg.api.onMainButtonClick(() => this.onNext());
+    const offClick = this.tg.mainButton.onClick(() => this.onNext());
     this.listeners.push(offClick);
     this.onNext();
   }
@@ -30,13 +30,13 @@ export class QuizFlagPageComponent implements OnInit, OnDestroy {
   onAnswer(index: number) {
     if (this.quizService.answerIndex < 0) {
       this.quizService.answerIndex = index;
-      this.tg.api.showMainButton('Продолжить');
+      this.tg.mainButton.show('Продолжить');
     }
   }
 
   onNext() {
     this.quizService.calcQuestion();
-    this.tg.api.hideMainButton();
+    this.tg.mainButton.hide();
     this.cdr.markForCheck();
   }
 }
