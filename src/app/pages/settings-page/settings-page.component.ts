@@ -10,14 +10,14 @@ import { QuizService } from '../../services/quiz.service';
   providers: [QuizService],
 })
 export class SettingsPageComponent implements OnInit, OnDestroy {
-  private tg = inject(TelegramApiService);
+  private readonly tg = inject(TelegramApiService);
   quizService = inject(QuizService);
   value = this.quizService.count;
   private listeners: VoidFunction[] = [];
 
   ngOnInit(): void {
-    this.listeners.push(this.tg.api.onMainButtonClick(() => {}));
-    this.tg.api.showMainButton('Назад');
+    this.listeners.push(this.tg.mainButton.onClick(() => {}));
+    this.tg.mainButton.show('Назад');
   }
 
   ngOnDestroy(): void {

@@ -9,10 +9,11 @@ import { HeaderComponent } from './ui/header/header.component';
   templateUrl: './app.html',
 })
 export class App implements OnInit, OnDestroy {
-  protected tg = inject(TelegramApiService);
+  protected readonly tg = inject(TelegramApiService);
 
   async ngOnInit() {
-    this.tg.init().then(() => this.tg.api.showSettingsButton());
+    await this.tg.init();
+    this.tg.settingsButton.show();
   }
 
   ngOnDestroy(): void {

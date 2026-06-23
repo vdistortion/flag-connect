@@ -12,7 +12,7 @@ import { PopupComponent } from '../../ui/popup/popup.component';
   styleUrl: './list-page.component.scss',
 })
 export class ListPageComponent implements OnInit, OnDestroy {
-  private tg = inject(TelegramApiService);
+  private readonly tg = inject(TelegramApiService);
   private listeners: VoidFunction[] = [];
   protected srcFlag = '';
   protected isPopupVisible = false;
@@ -28,8 +28,8 @@ export class ListPageComponent implements OnInit, OnDestroy {
   });
 
   ngOnInit(): void {
-    this.listeners.push(this.tg.api.onMainButtonClick(() => {}));
-    this.tg.api.showMainButton('Назад');
+    this.listeners.push(this.tg.mainButton.onClick(() => {}));
+    this.tg.mainButton.show('Назад');
   }
 
   ngOnDestroy(): void {
