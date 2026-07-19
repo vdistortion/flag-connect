@@ -1,7 +1,4 @@
-path {
-  fill: var(--text-color);
-}
-
-svg:hover path {
-  fill: var(--text-color-hover) !important;
+:host {
+  display: inline-flex;
+  color: inherit;
 }

@@ -1,20 +1,20 @@
-import { Component, Input } from '@angular/core';
-import { mdiImageMultipleOutline, mdiCloseCircleOutline, mdiHome } from '@mdi/js';
+import { Component, computed, CUSTOM_ELEMENTS_SCHEMA, input } from '@angular/core';
+import 'iconify-icon';
 
+// https://icon-sets.iconify.design/
 @Component({
   selector: 'app-icon',
   imports: [],
-  templateUrl: './icon.component.svg',
+  templateUrl: './icon.component.html',
   styleUrl: './icon.component.scss',
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
 export class IconComponent {
-  @Input({ required: true }) icon!: string;
-  @Input() size = 24;
-  @Input() color = '';
+  icon = input.required<string>();
+  size = input<number>();
+  width = input<number>();
+  height = input<number>();
 
-  icons: Record<string, string> = {
-    mdiImageMultipleOutline,
-    mdiCloseCircleOutline,
-    mdiHome,
-  };
+  effectiveWidth = computed(() => this.width() ?? this.size() ?? null);
+  effectiveHeight = computed(() => this.height() ?? this.size() ?? null);
 }

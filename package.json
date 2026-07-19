@@ -10,7 +10,7 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve --host 0.0.0.0",
-    "build": "ng build --configuration production",
+    "build": "ng build",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
     "serve:ssr:flag-connect": "node dist/flag-connect/server/server.mjs",
@@ -27,20 +27,20 @@
     "@angular/platform-browser": "^22.0.0",
     "@angular/platform-server": "^22.0.0",
     "@angular/router": "^22.0.0",
-    "@angular/ssr": "^22.0.0",
-    "@mdi/js": "^7.4.47",
+    "@angular/ssr": "^22.0.7",
     "@verse-bot/miniapp": "^0.3.0",
     "express": "^5.1.0",
+    "iconify-icon": "^3.0.2",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0"
   },
   "devDependencies": {
-    "@angular/build": "^22.0.0",
-    "@angular/cli": "^22.0.0",
+    "@angular/build": "^22.0.7",
+    "@angular/cli": "^22.0.7",
     "@angular/compiler-cli": "^22.0.0",
     "@types/express": "^5.0.1",
     "@types/node": "^20.17.19",
-    "prettier": "^3.8.1",
+    "prettier": "^3.9.5",
     "typescript": "~6.0.2"
   }
 }
