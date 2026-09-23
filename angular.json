@@ -7,7 +7,7 @@
   },
   "newProjectRoot": "projects",
   "projects": {
-    "flag-connect": {
+    "miniapp": {
       "projectType": "application",
       "schematics": {
         "@schematics/angular:component": {
@@ -36,30 +36,30 @@
           "skipTests": true
         }
       },
-      "root": "",
-      "sourceRoot": "src",
+      "root": "projects/miniapp",
+      "sourceRoot": "projects/miniapp/src",
       "prefix": "app",
       "architect": {
         "build": {
           "builder": "@angular/build:application",
           "options": {
-            "browser": "src/main.ts",
-            "tsConfig": "tsconfig.app.json",
+            "browser": "projects/miniapp/src/main.ts",
+            "tsConfig": "projects/miniapp/tsconfig.app.json",
             "inlineStyleLanguage": "scss",
             "assets": [
               {
                 "glob": "**/*",
-                "input": "public"
+                "input": "projects/miniapp/public"
               }
             ],
-            "styles": ["src/styles.scss"],
-            "server": "src/main.server.ts",
+            "styles": ["projects/miniapp/src/styles.scss"],
+            "server": "projects/miniapp/src/main.server.ts",
             "outputMode": "static",
             "security": {
               "allowedHosts": []
             },
             "ssr": {
-              "entry": "src/server.ts"
+              "entry": "projects/miniapp/src/server.ts"
             }
           },
           "configurations": {
@@ -89,14 +89,14 @@
         "serve": {
           "builder": "@angular/build:dev-server",
           "options": {
-            "allowedHosts": ["localhost"]
+            "allowedHosts": ["localhost", "0.0.0.0"]
           },
           "configurations": {
             "production": {
-              "buildTarget": "flag-connect:build:production"
+              "buildTarget": "miniapp:build:production"
             },
             "development": {
-              "buildTarget": "flag-connect:build:development"
+              "buildTarget": "miniapp:build:development"
             }
           },
           "defaultConfiguration": "development"

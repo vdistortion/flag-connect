@@ -22,7 +22,7 @@
   "files": [],
   "references": [
     {
-      "path": "./tsconfig.app.json"
+      "path": "./projects/miniapp/tsconfig.app.json"
     }
   ]
 }
