@@ -4,26 +4,44 @@ import { Injectable } from '@angular/core';
   providedIn: 'root',
 })
 export class WebStorageService {
-  get(key: string) {
-    if (typeof window === 'undefined') {
-      return null; // или другое значение по умолчанию
+  get<T>(key: string): T | null {
+    const value = this.storage()?.getItem(key);
+    if (value == null) return null;
+
+    try {
+      return JSON.parse(value) as T;
+    } catch {
+      return null;
     }
-    const value = window.localStorage.getItem(key);
-    return value ? JSON.parse(value) : value;
   }
 
   set<T>(key: string, data: T) {
-    if (typeof window === 'undefined') {
-      return;
+    const storage = this.storage();
+    if (!storage) return;
+
+    try {
+      const value = JSON.stringify(data);
+      if (value !== undefined) storage.setItem(key, value);
+    } catch {
+      // Storage may be unavailable or full; callers retain their in-memory state.
     }
-    const value = JSON.stringify(data);
-    window.localStorage.setItem(key, value);
   }
 
   delete(key: string) {
-    if (typeof window === 'undefined') {
-      return;
+    try {
+      this.storage()?.removeItem(key);
+    } catch {
+      // Storage may be unavailable.
     }
-    window.localStorage.removeItem(key);
+  }
+
+  private storage(): Storage | null {
+    if (typeof window === 'undefined') return null;
+
+    try {
+      return window.localStorage;
+    } catch {
+      return null;
+    }
   }
 }

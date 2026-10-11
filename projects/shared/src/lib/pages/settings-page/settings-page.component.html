@@ -5,10 +5,18 @@
     </caption>
     <tbody>
       <tr>
-        <td>Количество вариантов</td>
-        <td>{{ value }}</td>
+        <th scope="row">Количество вариантов</th>
+        <td>{{ settings.count() }}</td>
         <td>
-          <input type="range" [value]="value" min="2" max="6" (input)="setCount($event)" />
+          <label class="visually-hidden" for="answer-count">Количество вариантов ответа</label>
+          <input
+            id="answer-count"
+            type="range"
+            [value]="settings.count()"
+            [min]="minCount"
+            [max]="maxCount"
+            (input)="setCount($event)"
+          />
         </td>
       </tr>
     </tbody>

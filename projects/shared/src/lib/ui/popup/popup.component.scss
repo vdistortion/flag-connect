@@ -7,6 +7,9 @@
     height: 100%;
     background-color: var(--flag-color);
     z-index: 0;
+    border: 0;
+    padding: 0;
+    cursor: default;
   }
 
   &__content {
@@ -14,8 +17,8 @@
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    max-height: 100%;
-    max-width: 80%;
+    width: min(90vw, 1200px);
+    height: min(85dvh, 900px);
 
     @media (max-width: 992px) {
       width: 100%;
@@ -27,5 +30,9 @@
     top: -24px;
     right: -24px;
     cursor: pointer;
+    border: 0;
+    padding: 0;
+    color: inherit;
+    background: transparent;
   }
 }

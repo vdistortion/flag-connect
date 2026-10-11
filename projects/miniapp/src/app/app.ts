@@ -11,9 +11,8 @@ import { HeaderComponent } from 'shared';
 export class App implements OnInit, OnDestroy {
   protected readonly tg = inject(TelegramApiService);
 
-  async ngOnInit() {
+  async ngOnInit(): Promise<void> {
     await this.tg.init();
-    this.tg.settingsButton.show();
   }
 
   ngOnDestroy(): void {

@@ -1,22 +1,41 @@
-import { inject, Injectable } from '@angular/core';
+import { inject, Injectable, signal } from '@angular/core';
 import { WebStorageService } from './webstorage.service';
 
-const DEFAULT_VALUES = {
-  COUNT: 4,
-};
+export const QUIZ_SETTINGS = {
+  defaultCount: 4,
+  minCount: 2,
+  maxCount: 6,
+} as const;
+const STORAGE_KEY = 'fc-count';
 
 @Injectable({
   providedIn: 'root',
 })
 export class SettingsService {
-  private storageService = inject(WebStorageService);
+  private readonly storage = inject(WebStorageService);
+  readonly count = signal(this.readCount());
 
-  set count(value: number) {
-    if (value === DEFAULT_VALUES.COUNT) this.storageService.delete('fc-count');
-    else this.storageService.set('fc-count', value);
+  setCount(value: number): void {
+    if (
+      !Number.isInteger(value) ||
+      value < QUIZ_SETTINGS.minCount ||
+      value > QUIZ_SETTINGS.maxCount
+    ) {
+      return;
+    }
+
+    this.count.set(value);
+    if (value === QUIZ_SETTINGS.defaultCount) this.storage.delete(STORAGE_KEY);
+    else this.storage.set(STORAGE_KEY, value);
   }
 
-  get count() {
-    return this.storageService.get('fc-count') || DEFAULT_VALUES.COUNT;
+  private readCount(): number {
+    const value = this.storage.get<unknown>(STORAGE_KEY);
+    return typeof value === 'number' &&
+      Number.isInteger(value) &&
+      value >= QUIZ_SETTINGS.minCount &&
+      value <= QUIZ_SETTINGS.maxCount
+      ? value
+      : QUIZ_SETTINGS.defaultCount;
   }
 }

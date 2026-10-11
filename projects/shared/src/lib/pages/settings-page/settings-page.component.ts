@@ -1,20 +1,21 @@
 import { Component, inject } from '@angular/core';
-import { QuizService } from '../../services/quiz.service';
+import { QUIZ_SETTINGS, SettingsService } from '../../services/settings.service';
 
 @Component({
   selector: 'app-settings-page',
-  imports: [],
   templateUrl: './settings-page.component.html',
   styleUrl: './settings-page.component.scss',
-  providers: [QuizService],
 })
 export class SettingsPageComponent {
-  quizService = inject(QuizService);
-  value = this.quizService.count;
-  setCount(e: Event) {
-    const el = e.target as HTMLInputElement;
-    const value = Number(el.value);
-    this.quizService.setCount(value);
-    this.value = value;
+  protected readonly settings = inject(SettingsService);
+  protected readonly minCount = QUIZ_SETTINGS.minCount;
+  protected readonly maxCount = QUIZ_SETTINGS.maxCount;
+
+  setCount(event: Event): void {
+    const input = event.target;
+    if (!(input instanceof HTMLInputElement)) return;
+
+    const value = Number(input.value);
+    this.settings.setCount(value);
   }
 }

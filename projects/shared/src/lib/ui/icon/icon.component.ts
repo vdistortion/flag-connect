@@ -4,7 +4,6 @@ import 'iconify-icon';
 // https://icon-sets.iconify.design/
 @Component({
   selector: 'app-icon',
-  imports: [],
   templateUrl: './icon.component.html',
   styleUrl: './icon.component.scss',
   schemas: [CUSTOM_ELEMENTS_SCHEMA],

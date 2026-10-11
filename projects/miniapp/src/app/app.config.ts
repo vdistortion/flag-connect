@@ -11,9 +11,6 @@ export const appConfig: ApplicationConfig = {
     provideClientHydration(),
     provideTelegramApi({
       onBack: () => window.history.back(),
-      onSettings: () => {
-        // router.push('/settings');
-      },
     }),
   ],
 };

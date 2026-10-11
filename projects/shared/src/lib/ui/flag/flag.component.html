@@ -1,20 +1,36 @@
 <div
   class="flag"
-  [class.aspect-ratio-75]="aspectRatio === 75"
-  [class.success]="success"
-  [class.error]="error"
+  [class.aspect-ratio-75]="aspectRatio() === 75"
+  [class.success]="success()"
+  [class.error]="error()"
 >
   <div class="flag__wrapper">
-    @if (image.length > 1) {
+    @if (image().length > 1) {
       <div class="flag__icon">
-        <app-icon icon="mdi/image-multiple-outline" (click)="nextFlag($event)"></app-icon>
+        <button
+          class="flag__variant-button"
+          type="button"
+          [attr.aria-label]="'Показать другой вариант флага: ' + name()"
+          (click)="nextFlag()"
+        >
+          <app-icon icon="mdi/image-multiple-outline"></app-icon>
+        </button>
       </div>
     }
-    <img
-      class="flag__image"
-      [src]="'/images/flags/' + image[index]"
-      [alt]="name"
-      (click)="onClick.emit('/images/flags/' + image[index])"
-    />
+    @if (imageSource(); as source) {
+      @if (selectable()) {
+        <button
+          class="flag__image-button"
+          type="button"
+          [disabled]="disabled()"
+          [attr.aria-label]="'Выбрать флаг: ' + name()"
+          (click)="selectFlag()"
+        >
+          <img class="flag__image" [ngSrc]="source" [alt]="''" [priority]="priority()" fill />
+        </button>
+      } @else {
+        <img class="flag__image" [ngSrc]="source" [alt]="name()" [priority]="priority()" fill />
+      }
+    }
   </div>
 </div>

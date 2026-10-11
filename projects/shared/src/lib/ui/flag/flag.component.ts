@@ -1,26 +1,36 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { NgOptimizedImage } from '@angular/common';
+import { Component, computed, input, output, signal } from '@angular/core';
 import { IconComponent } from '../icon/icon.component';
 
 @Component({
   selector: 'app-flag',
-  imports: [IconComponent],
+  imports: [IconComponent, NgOptimizedImage],
   templateUrl: './flag.component.html',
   styleUrl: './flag.component.scss',
 })
 export class FlagComponent {
-  @Input() error = false;
-  @Input() success = false;
-  @Input() image: readonly string[] = [];
-  @Input() name = 'Flag';
-  @Input() aspectRatio = 0;
-  @Output() onClick = new EventEmitter<string>();
-  protected index = 0;
+  readonly error = input(false);
+  readonly success = input(false);
+  readonly image = input<readonly string[]>([]);
+  readonly name = input('Flag');
+  readonly aspectRatio = input(0);
+  readonly priority = input(false);
+  readonly selectable = input(false);
+  readonly disabled = input(false);
+  readonly selected = output<string>();
+  protected readonly index = signal(0);
+  protected readonly imageSource = computed(() => {
+    const filename = this.image()[this.index()];
+    return filename ? `/images/flags/${filename}` : null;
+  });
 
-  nextFlag(e: Event) {
-    if (this.image.length > 0) {
-      e.stopPropagation();
-      if (this.index > this.image.length - 2) this.index = 0;
-      else this.index++;
-    }
+  nextFlag() {
+    const imageCount = this.image().length;
+    if (imageCount > 1) this.index.update((index) => (index + 1) % imageCount);
+  }
+
+  selectFlag() {
+    const source = this.imageSource();
+    if (source) this.selected.emit(source);
   }
 }

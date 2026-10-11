@@ -8,6 +8,7 @@ describe('flagConnectRoutes', () => {
       'quiz/flag',
       'quiz/country',
       'settings',
+      '**',
     ]);
   });
 });

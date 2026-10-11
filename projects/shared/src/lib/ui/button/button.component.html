@@ -1,9 +1,9 @@
 <button
-  [class.country]="country"
-  [class.success]="success"
-  [class.error]="error"
-  [disabled]="disabled"
-  (click)="onClick.emit()"
+  [class.country]="country()"
+  [class.success]="success()"
+  [class.error]="error()"
+  [disabled]="disabled()"
+  (click)="clicked.emit()"
 >
   <ng-content></ng-content>
 </button>

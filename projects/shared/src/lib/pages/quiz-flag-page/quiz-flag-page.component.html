@@ -1,24 +1,27 @@
 <div class="wrapper">
-  <app-flag [image]="quizService.countries[quizService.correctAnswerIndex].flag"></app-flag>
+  @if (quizService.correctCountry(); as country) {
+    <app-flag [image]="country.flag" [name]="country.name.ru" [priority]="true"></app-flag>
+  }
 
   <div class="countries">
-    @for (country of quizService.countries; track country; let index = $index) {
+    @for (country of quizService.countries(); track country.name.en; let index = $index) {
       <app-button
         [country]="true"
-        [success]="quizService.answerIndex > -1 && index === quizService.correctAnswerIndex"
+        [success]="quizService.hasAnswered() && index === quizService.correctAnswerIndex()"
         [error]="
-          quizService.answerIndex > -1 &&
-          index === quizService.answerIndex &&
-          index !== quizService.correctAnswerIndex
+          quizService.hasAnswered() &&
+          index === quizService.answerIndex() &&
+          index !== quizService.correctAnswerIndex()
         "
-        (click)="onAnswer(index)"
+        [disabled]="quizService.hasAnswered()"
+        (clicked)="quizService.selectAnswer(index)"
       >
         {{ country.name.ru }}
       </app-button>
     }
 
-    @if (quizService.answerIndex > -1) {
-      <app-button [country]="true" (click)="onNext()">Далее</app-button>
+    @if (quizService.hasAnswered()) {
+      <app-button [country]="true" (clicked)="quizService.nextQuestion()">Далее</app-button>
     }
   </div>
 </div>

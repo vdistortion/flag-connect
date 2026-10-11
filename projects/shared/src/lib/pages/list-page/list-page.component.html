@@ -1,21 +1,26 @@
 <div class="wrapper">
   <div class="flags">
-    @for (country of countries; track country) {
+    @for (country of countries; track country.name.en) {
       <div>
-        <h2 class="name" (click)="toggleName()">
-          {{ country.name[lang] }}
+        <h2 class="name">
+          <button type="button" (click)="toggleName()">
+            {{ country.name[lang()] }}
+          </button>
         </h2>
         <app-flag
           [image]="country.flag"
-          [name]="country.name.en"
-          (onClick)="showPopup($event)"
+          [name]="country.name[lang()]"
+          [selectable]="true"
+          (selected)="showPopup($event, country.name[lang()])"
         ></app-flag>
       </div>
     }
   </div>
-  @if (isPopupVisible) {
+  @if (popup(); as preview) {
     <app-popup (close)="hidePopup()">
-      <img [src]="srcFlag" alt="Flag" />
+      <div class="flag-preview">
+        <img [ngSrc]="preview.src" [alt]="preview.alt" fill />
+      </div>
     </app-popup>
   }
 </div>

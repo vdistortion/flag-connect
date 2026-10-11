@@ -1,11 +1,22 @@
 <div class="popup">
-  <div class="popup__overlay" (click)="close.emit()"></div>
-  <div class="popup__content">
-    <app-icon
+  <button
+    class="popup__overlay"
+    type="button"
+    tabindex="-1"
+    aria-hidden="true"
+    aria-label="Закрыть изображение"
+    (click)="close.emit()"
+  ></button>
+  <section class="popup__content" role="dialog" aria-modal="true" aria-label="Флаг страны">
+    <button
+      #closeButton
       class="popup__close"
-      icon="mdi/close-circle-outline"
+      type="button"
+      aria-label="Закрыть"
       (click)="close.emit()"
-    ></app-icon>
+    >
+      <app-icon icon="mdi/close-circle-outline"></app-icon>
+    </button>
     <ng-content></ng-content>
-  </div>
+  </section>
 </div>

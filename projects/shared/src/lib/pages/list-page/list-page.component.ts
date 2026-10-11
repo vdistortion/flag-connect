@@ -1,39 +1,31 @@
-import { Component } from '@angular/core';
+import { NgOptimizedImage } from '@angular/common';
+import { Component, signal } from '@angular/core';
 import { countries, type Country } from '@flag-connect/flag-domain';
 import { FlagComponent } from '../../ui/flag/flag.component';
 import { PopupComponent } from '../../ui/popup/popup.component';
 
 @Component({
   selector: 'app-list-page',
-  imports: [FlagComponent, PopupComponent],
+  imports: [FlagComponent, NgOptimizedImage, PopupComponent],
   templateUrl: './list-page.component.html',
   styleUrl: './list-page.component.scss',
 })
 export class ListPageComponent {
-  protected srcFlag = '';
-  protected isPopupVisible = false;
-  protected lang: 'ru' | 'en' = 'ru';
-  protected countries: Country[] = [...countries].sort((a, b) => {
-    if (a.name.ru.toLowerCase() < b.name.ru.toLowerCase()) {
-      return -1;
-    }
-    if (a.name.ru.toLowerCase() > b.name.ru.toLowerCase()) {
-      return 1;
-    }
-    return 0;
-  });
+  protected readonly lang = signal<'ru' | 'en'>('ru');
+  protected readonly popup = signal<{ src: string; alt: string } | null>(null);
+  protected readonly countries: readonly Country[] = [...countries].sort((a, b) =>
+    a.name.ru.localeCompare(b.name.ru, 'ru'),
+  );
 
-  toggleName() {
-    this.lang === 'ru' ? (this.lang = 'en') : (this.lang = 'ru');
+  toggleName(): void {
+    this.lang.update((language) => (language === 'ru' ? 'en' : 'ru'));
   }
 
-  showPopup(src: string) {
-    this.srcFlag = src;
-    this.isPopupVisible = true;
+  showPopup(src: string, alt: string): void {
+    this.popup.set({ src, alt });
   }
 
-  hidePopup() {
-    this.srcFlag = '';
-    this.isPopupVisible = false;
+  hidePopup(): void {
+    this.popup.set(null);
   }
 }

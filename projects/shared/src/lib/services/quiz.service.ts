@@ -1,4 +1,4 @@
-import { inject, Injectable } from '@angular/core';
+import { computed, inject, Injectable, signal } from '@angular/core';
 import { createQuestion, type Country } from '@flag-connect/flag-domain';
 import { SettingsService } from './settings.service';
 
@@ -6,21 +6,23 @@ import { SettingsService } from './settings.service';
   providedIn: 'root',
 })
 export class QuizService {
-  settingsService = inject(SettingsService);
-  count = this.settingsService.count;
-  countries: Country[] = [];
-  correctAnswerIndex = -1;
-  answerIndex = -1;
+  private readonly settings = inject(SettingsService);
+  readonly count = computed(() => this.settings.count());
+  readonly countries = signal<readonly Country[]>([]);
+  readonly correctAnswerIndex = signal(-1);
+  readonly answerIndex = signal(-1);
+  readonly hasAnswered = computed(() => this.answerIndex() >= 0);
+  readonly correctCountry = computed(() => this.countries()[this.correctAnswerIndex()] ?? null);
 
-  setCount(count: number) {
-    this.count = count;
-    this.settingsService.count = count;
+  selectAnswer(index: number): void {
+    if (this.hasAnswered() || index < 0 || index >= this.countries().length) return;
+    this.answerIndex.set(index);
   }
 
-  calcQuestion() {
-    const question = createQuestion(this.count);
-    this.countries = question.countries;
-    this.correctAnswerIndex = question.correctAnswerIndex;
-    this.answerIndex = -1;
+  nextQuestion(): void {
+    const question = createQuestion(this.count());
+    this.countries.set(question.countries);
+    this.correctAnswerIndex.set(question.correctAnswerIndex);
+    this.answerIndex.set(-1);
   }
 }

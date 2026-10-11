@@ -1,26 +1,29 @@
 <div class="wrapper">
-  <div class="name">
-    {{ quizService.countries[quizService.correctAnswerIndex].name.ru }}
-  </div>
+  @if (quizService.correctCountry(); as correctCountry) {
+    <h1 class="name">{{ correctCountry.name.ru }}</h1>
+  }
 
   <div class="countries">
-    @for (country of quizService.countries; track country; let index = $index) {
+    @for (country of quizService.countries(); track country.name.en; let index = $index) {
       <app-flag
         class="flag"
         [aspectRatio]="75"
-        [success]="quizService.answerIndex > -1 && index === quizService.correctAnswerIndex"
+        [success]="quizService.hasAnswered() && index === quizService.correctAnswerIndex()"
         [error]="
-          quizService.answerIndex > -1 &&
-          index === quizService.answerIndex &&
-          index !== quizService.correctAnswerIndex
+          quizService.hasAnswered() &&
+          index === quizService.answerIndex() &&
+          index !== quizService.correctAnswerIndex()
         "
         [image]="country.flag"
-        (click)="onAnswer(index)"
+        [name]="country.name.ru"
+        [selectable]="true"
+        [disabled]="quizService.hasAnswered()"
+        (selected)="quizService.selectAnswer(index)"
       ></app-flag>
     }
 
-    @if (quizService.answerIndex > -1) {
-      <app-button [country]="true" (click)="onNext()">Далее</app-button>
+    @if (quizService.hasAnswered()) {
+      <app-button [country]="true" (clicked)="quizService.nextQuestion()">Далее</app-button>
     }
   </div>
 </div>

@@ -33,11 +33,31 @@
     top: 0;
     right: 0;
     padding: 10px;
+  }
+
+  &__variant-button {
+    display: grid;
+    place-items: center;
+    padding: 8px;
+    border: 0;
+    color: inherit;
+    background: var(--flag-color);
+    cursor: pointer;
+  }
+
+  &__image-button {
+    position: relative;
+    display: block;
+    width: 100%;
+    height: 100%;
+    padding: 0;
+    border: 0;
+    background: transparent;
     cursor: pointer;
   }
 
   &__image {
-    max-height: 100%;
+    object-fit: contain;
   }
 
   &.success {
