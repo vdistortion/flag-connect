@@ -17,7 +17,7 @@
       </app-button>
     }
 
-    @if (!tg.isApp() && quizService.answerIndex > -1) {
+    @if (quizService.answerIndex > -1) {
       <app-button [country]="true" (click)="onNext()">Далее</app-button>
     }
   </div>

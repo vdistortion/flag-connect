@@ -11,6 +11,9 @@
     "isolatedModules": true,
     "experimentalDecorators": true,
     "importHelpers": true,
+    "paths": {
+      "shared": ["./dist/shared"]
+    },
     "target": "ES2022",
     "module": "preserve"
   },
@@ -23,6 +26,15 @@
   "references": [
     {
       "path": "./projects/miniapp/tsconfig.app.json"
+    },
+    {
+      "path": "./projects/web/tsconfig.app.json"
+    },
+    {
+      "path": "./projects/shared/tsconfig.lib.json"
+    },
+    {
+      "path": "./projects/shared/tsconfig.spec.json"
     }
   ]
 }

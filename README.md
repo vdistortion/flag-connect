@@ -21,11 +21,19 @@ MINIAPP_URL=обязательный_HTTPS-адрес
 npm start
 ```
 
-Сборка:
+## Сайт
+
+```bash
+npm run web:dev
+```
+
+## Сборка
 
 ```bash
 npm run build
 ```
+
+Команда собирает общий Angular-пакет и оба приложения.
 
 ## Telegram-бот
 
@@ -42,10 +50,11 @@ npm run bot:start
 
 ## Общий пакет
 
-`packages/flag-domain` содержит каталог стран, типы и общую функцию создания вопроса для бота и Mini App.
+`projects/shared` содержит общие страницы, UI и сервисы для сайта и Mini App. `packages/flag-domain` содержит каталог стран, типы и общую логику вопросов для Angular-приложений и бота.
 
-Проверка пакета:
+Проверки:
 
 ```bash
+npm test
 npm run test:domain
 ```

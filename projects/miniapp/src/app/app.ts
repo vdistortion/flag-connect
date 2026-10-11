@@ -1,7 +1,7 @@
 import { Component, inject, OnDestroy, OnInit } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { TelegramApiService } from '@verse-bot/miniapp/angular';
-import { HeaderComponent } from './ui/header/header.component';
+import { HeaderComponent } from 'shared';
 
 @Component({
   selector: 'app-root',

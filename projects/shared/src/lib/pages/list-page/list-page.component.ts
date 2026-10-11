@@ -1,5 +1,4 @@
-import { Component, inject, OnDestroy, OnInit } from '@angular/core';
-import { TelegramApiService } from '@verse-bot/miniapp/angular';
+import { Component } from '@angular/core';
 import { countries, type Country } from '@flag-connect/flag-domain';
 import { FlagComponent } from '../../ui/flag/flag.component';
 import { PopupComponent } from '../../ui/popup/popup.component';
@@ -10,9 +9,7 @@ import { PopupComponent } from '../../ui/popup/popup.component';
   templateUrl: './list-page.component.html',
   styleUrl: './list-page.component.scss',
 })
-export class ListPageComponent implements OnInit, OnDestroy {
-  private readonly tg = inject(TelegramApiService);
-  private listeners: VoidFunction[] = [];
+export class ListPageComponent {
   protected srcFlag = '';
   protected isPopupVisible = false;
   protected lang: 'ru' | 'en' = 'ru';
@@ -25,15 +22,6 @@ export class ListPageComponent implements OnInit, OnDestroy {
     }
     return 0;
   });
-
-  ngOnInit(): void {
-    this.listeners.push(this.tg.mainButton.onClick(() => {}));
-    this.tg.mainButton.show('Назад');
-  }
-
-  ngOnDestroy(): void {
-    this.listeners.forEach((listener) => listener());
-  }
 
   toggleName() {
     this.lang === 'ru' ? (this.lang = 'en') : (this.lang = 'ru');

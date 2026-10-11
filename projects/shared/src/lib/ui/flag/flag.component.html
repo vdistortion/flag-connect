@@ -12,9 +12,9 @@
     }
     <img
       class="flag__image"
-      [src]="'images/flags/' + image[index]"
+      [src]="'/images/flags/' + image[index]"
       [alt]="name"
-      (click)="onClick.emit('images/flags/' + image[index])"
+      (click)="onClick.emit('/images/flags/' + image[index])"
     />
   </div>
 </div>
