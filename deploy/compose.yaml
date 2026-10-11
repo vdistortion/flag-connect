@@ -1,0 +1,42 @@
+name: flag-connect
+
+services:
+  miniapp:
+    build:
+      context: ..
+      dockerfile: deploy/Dockerfile
+      target: miniapp
+    restart: unless-stopped
+    networks:
+      - caddy
+    labels:
+      caddy: miniapp.flag-connect.zvalentin.com
+      caddy.reverse_proxy: '{{upstreams 80}}'
+
+  web:
+    build:
+      context: ..
+      dockerfile: deploy/Dockerfile
+      target: web
+    restart: unless-stopped
+    environment:
+      NODE_ENV: production
+      PORT: '4000'
+    networks:
+      - caddy
+    labels:
+      caddy: flag-connect.zvalentin.com
+      caddy.reverse_proxy: '{{upstreams 4000}}'
+
+  bot:
+    build:
+      context: ..
+      dockerfile: deploy/Dockerfile
+      target: bot
+    restart: unless-stopped
+    env_file:
+      - .env
+
+networks:
+  caddy:
+    external: true
