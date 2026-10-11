@@ -1,7 +1,6 @@
 import { Component, inject, OnDestroy, OnInit } from '@angular/core';
 import { TelegramApiService } from '@verse-bot/miniapp/angular';
-import countries from '../../../../public/countries.json';
-import { Country } from '../../flag.interface';
+import { countries, type Country } from '@flag-connect/flag-domain';
 import { FlagComponent } from '../../ui/flag/flag.component';
 import { PopupComponent } from '../../ui/popup/popup.component';
 
@@ -17,7 +16,7 @@ export class ListPageComponent implements OnInit, OnDestroy {
   protected srcFlag = '';
   protected isPopupVisible = false;
   protected lang: 'ru' | 'en' = 'ru';
-  protected countries: Country[] = countries.sort((a, b) => {
+  protected countries: Country[] = [...countries].sort((a, b) => {
     if (a.name.ru.toLowerCase() < b.name.ru.toLowerCase()) {
       return -1;
     }

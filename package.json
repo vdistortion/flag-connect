@@ -10,14 +10,29 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve --host 0.0.0.0",
+    "prestart": "npm run build --workspace=@flag-connect/flag-domain",
     "build": "ng build",
+    "prebuild": "npm run build --workspace=@flag-connect/flag-domain",
     "watch": "ng build --watch --configuration development",
+    "prewatch": "npm run build --workspace=@flag-connect/flag-domain",
     "test": "ng test",
+    "test:domain": "npm test --workspace=@flag-connect/flag-domain",
+    "prepare": "cp -n bot/.env.example bot/.env",
+    "bot:dev": "npm run dev --workspace=flag-connect-bot",
+    "prebot:dev": "npm run build --workspace=@flag-connect/flag-domain",
+    "bot:build": "npm run build --workspace=flag-connect-bot",
+    "prebot:build": "npm run build --workspace=@flag-connect/flag-domain",
+    "bot:start": "npm run start --workspace=flag-connect-bot",
+    "prebot:start": "npm run build --workspace=@flag-connect/flag-domain",
     "format": "prettier . --write"
   },
   "private": true,
   "license": "Apache-2.0",
   "packageManager": "npm@11.19.0",
+  "workspaces": [
+    "bot",
+    "packages/*"
+  ],
   "dependencies": {
     "@angular/common": "^22.1.0",
     "@angular/compiler": "^22.1.0",
@@ -39,7 +54,10 @@
     "@angular/compiler-cli": "^22.1.0",
     "@types/express": "^5.0.1",
     "@types/node": "^20.17.19",
+    "jsdom": "^28.0.0",
+    "ng-packagr": "^22.1.0",
     "prettier": "^3.9.9",
-    "typescript": "~6.0.2"
+    "typescript": "~6.0.2",
+    "vitest": "^4.0.8"
   }
 }

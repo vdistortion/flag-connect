@@ -10,7 +10,7 @@ import { IconComponent } from '../icon/icon.component';
 export class FlagComponent {
   @Input() error = false;
   @Input() success = false;
-  @Input() image: string[] = [];
+  @Input() image: readonly string[] = [];
   @Input() name = 'Flag';
   @Input() aspectRatio = 0;
   @Output() onClick = new EventEmitter<string>();

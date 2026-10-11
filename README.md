@@ -1,59 +1,51 @@
 # FlagConnect
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 22.1.8.
+Проект включает Telegram Mini App, Telegram-бота и общий пакет `@flag-connect/flag-domain` с данными стран и логикой викторины.
 
-## Development server
-
-To start a local development server, run:
+## Установка
 
 ```bash
-ng serve
+npm install
 ```
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+При установке создаётся `bot/.env` из шаблона:
 
-## Code scaffolding
+```dotenv
+TELEGRAM_BOT_TOKEN=токен_бота
+MINIAPP_URL=обязательный_HTTPS-адрес
+```
 
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
+## Mini App
 
 ```bash
-ng generate component component-name
+npm start
 ```
 
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
+Сборка:
 
 ```bash
-ng generate --help
+npm run build
 ```
 
-## Building
-
-To build the project run:
+## Telegram-бот
 
 ```bash
-ng build
+npm run bot:dev
 ```
 
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
-
-## Running unit tests
-
-To execute unit tests with the [Vitest](https://vitest.dev/) test runner, use the following command:
+Сборка и production-запуск:
 
 ```bash
-ng test
+npm run bot:build
+npm run bot:start
 ```
 
-## Running end-to-end tests
+## Общий пакет
 
-For end-to-end (e2e) testing, run:
+`packages/flag-domain` содержит каталог стран, типы и общую функцию создания вопроса для бота и Mini App.
+
+Проверка пакета:
 
 ```bash
-ng e2e
+npm run test:domain
 ```
-
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
-
-## Additional Resources
-
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
