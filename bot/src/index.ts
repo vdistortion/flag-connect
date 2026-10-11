@@ -2,7 +2,24 @@ import 'dotenv/config';
 import { createUniversalTelegramBot } from '@verse-bot/telegram';
 import type { UniversalContext, UniversalKeyboardButton } from '@verse-bot/core';
 import { countries, createQuestion } from '@flag-connect/flag-domain';
-import { bold, doc, paragraph } from 'tg-rich-messages';
+import {
+  bold,
+  button,
+  buttonRow,
+  collage,
+  doc,
+  list,
+  paragraph,
+  photo,
+  type InputRichMessage,
+  type RichDocument,
+} from 'tg-rich-messages';
+
+type QuizMode = 'flag' | 'country';
+
+interface TelegramRichApi {
+  sendRichMessage(chatId: number, message: InputRichMessage): Promise<unknown>;
+}
 
 const token = process.env.TELEGRAM_BOT_TOKEN;
 if (!token) throw new Error('TELEGRAM_BOT_TOKEN is required');
@@ -22,80 +39,153 @@ const inline = (label: string, callbackData: string): UniversalKeyboardButton =>
   command: callbackData,
 });
 
-async function askFlag(ctx: UniversalContext) {
-  const count = countFor(ctx);
-  const question = createQuestion(count);
-  const correct = question.countries[question.correctAnswerIndex];
-  const options = question.countries.map((country, index) => ({
-    label: count === 1 ? 'Показать ответ' : country.name.ru,
-    command: `answer:${question.countryIndexes[index]}:${question.countryIndexes[question.correctAnswerIndex]}:${count}`,
-  }));
+function isQuizMode(value: string | undefined): value is QuizMode {
+  return value === 'flag' || value === 'country';
+}
 
-  if (!ctx.replyWithPhoto) throw new Error('Telegram photo replies are unavailable');
-  await ctx.replyWithPhoto(
-    `${flagsUrl}${encodeURIComponent(correct.flag[0])}`,
-    'Какая это страна?',
-    {
-      inlineKeyboard: [options.slice(0, 5), options.slice(5)].filter((row) => row.length > 0),
-    },
+function richChoiceRows(mode: QuizMode, indexes: number[], correctIndex: number, count: number) {
+  const buttons = indexes.map((countryIndex, choiceIndex) =>
+    button(String(choiceIndex + 1), {
+      type: 'callback_data',
+      data: `answer:${mode}:${countryIndex}:${correctIndex}:${count}`,
+      style: 'primary',
+    }),
+  );
+
+  return Array.from({ length: Math.ceil(buttons.length / 5) }, (_, row) =>
+    buttonRow(buttons.slice(row * 5, row * 5 + 5)),
   );
 }
 
-async function handleCallback(ctx: UniversalContext, data: string) {
-  const [action, a, b, c] = data.split(':');
+async function replyRich(ctx: UniversalContext, message: RichDocument): Promise<void> {
+  const api = ctx.platformApi as TelegramRichApi | undefined;
+  if (!api || typeof api.sendRichMessage !== 'function') {
+    throw new Error('Telegram Rich Messages API is unavailable');
+  }
+
+  await api.sendRichMessage(ctx.peerId, message.toInputRichMessage({ skipEntityDetection: true }));
+}
+
+async function askQuestion(ctx: UniversalContext, mode: QuizMode): Promise<void> {
+  const count = countFor(ctx);
+  const question = createQuestion(count);
+  const correctCountry = question.countries[question.correctAnswerIndex];
+  const correctCountryIndex = question.countryIndexes[question.correctAnswerIndex];
+  const choices =
+    mode === 'flag'
+      ? [
+          photo(`${flagsUrl}${encodeURIComponent(correctCountry.flag[0])}`, {
+            caption: 'Как называется страна на флаге?',
+          }),
+          list(
+            question.countries.map((country) => country.name.ru),
+            { ordered: true },
+          ),
+        ]
+      : [
+          paragraph([bold('Найди флаг страны: '), correctCountry.name.ru]),
+          collage(
+            question.countries.map((country) => ({
+              url: `${flagsUrl}${encodeURIComponent(country.flag[0])}`,
+            })),
+            { caption: 'Нумерация флагов — слева направо, сверху вниз.' },
+          ),
+        ];
+
+  await replyRich(
+    ctx,
+    doc(...choices, ...richChoiceRows(mode, question.countryIndexes, correctCountryIndex, count)),
+  );
+}
+
+async function showSettings(ctx: UniversalContext, mode: QuizMode): Promise<void> {
+  const countsButtons = [
+    ...Array.from({ length: 9 }, (_, index) =>
+      inline(String(index + 2), `count:${mode}:${index + 2}`),
+    ),
+    inline('Без вариантов (1)', `count:${mode}:1`),
+    inline('10', `count:${mode}:10`),
+  ];
+
+  await ctx.reply('Сколько должно быть вариантов ответа?', {
+    inlineKeyboard: [countsButtons.slice(0, 9), countsButtons.slice(9)],
+  });
+}
+
+async function handleCallback(ctx: UniversalContext, data: string): Promise<void> {
+  const [action, ...parts] = data.split(':');
+
   if (action === 'answer') {
-    const chosen = Number(a);
-    const answer = Number(b);
-    const count = Number(c);
+    const [modeValue, chosenValue, correctValue, countValue] = parts;
+    const mode = isQuizMode(modeValue) ? modeValue : undefined;
+    const chosen = Number(chosenValue);
+    const correct = Number(correctValue);
+    const count = Number(countValue);
     if (
+      !mode ||
       !Number.isInteger(chosen) ||
       !countries[chosen] ||
-      !Number.isInteger(answer) ||
-      !countries[answer]
+      !Number.isInteger(correct) ||
+      !countries[correct] ||
+      !Number.isInteger(count) ||
+      count < 1 ||
+      count > 10
     ) {
-      await ctx.reply('Вопрос устарел. Запусти новый раунд через /flags.');
+      await ctx.reply('Вопрос устарел. Начни новый раунд через /flags или /country.');
       return;
     }
 
-    const correctName = countries[answer].name.ru;
+    const correctName = countries[correct].name.ru;
     const chosenName = countries[chosen].name.ru;
     const result =
-      chosen === answer
+      chosen === correct
         ? count === 1
           ? `Это ${correctName}`
           : `☑️ Правильно, это ${correctName}`
-        : `Вы ответили ${chosenName}.\n❌ Неправильно, это ${correctName}`;
-    await ctx.reply(doc(paragraph(result)), {
-      inlineKeyboard: [[inline('⚙️ Настройки', 'settings'), inline('Продолжить', 'more')]],
-    });
-    return;
-  }
+        : mode === 'flag'
+          ? `Вы ответили ${chosenName}.\n❌ Неправильно, это ${correctName}`
+          : `Вы выбрали другой флаг.\n❌ Правильный флаг — ${correctName}`;
 
-  if (action === 'more') {
-    await askFlag(ctx);
-    return;
-  }
-
-  if (action === 'settings') {
-    const buttons = Array.from({ length: 9 }, (_, index) =>
-      inline(String(index + 2), `count:${index + 2}`),
+    await replyRich(
+      ctx,
+      doc(
+        paragraph(result),
+        buttonRow([
+          button('⚙️ Настройки', {
+            type: 'callback_data',
+            data: `settings:${mode}`,
+          }),
+          button('Продолжить', { type: 'callback_data', data: `more:${mode}` }),
+        ]),
+      ),
     );
-    buttons.push(inline('Без вариантов (1)', 'count:1'), inline('10', 'count:10'));
-    await ctx.reply('Сколько должно быть вариантов ответа?', {
-      inlineKeyboard: [buttons.slice(0, 9), buttons.slice(9)],
-    });
+    return;
+  }
+
+  if (action === 'more' || action === 'settings') {
+    const mode = isQuizMode(parts[0]) ? parts[0] : undefined;
+    if (!mode) {
+      await ctx.reply('Вопрос устарел. Начни новый раунд через /flags или /country.');
+      return;
+    }
+
+    if (action === 'more') await askQuestion(ctx, mode);
+    else await showSettings(ctx, mode);
     return;
   }
 
   if (action === 'count') {
-    const count = Number(a);
-    if (!Number.isInteger(count) || count < 1 || count > 10) return;
+    const [modeValue, countValue] = parts;
+    const mode = isQuizMode(modeValue) ? modeValue : undefined;
+    const count = Number(countValue);
+    if (!mode || !Number.isInteger(count) || count < 1 || count > 10) return;
+
     counts.set(ctx.userId, count);
-    await askFlag(ctx);
+    await askQuestion(ctx, mode);
     return;
   }
 
-  await ctx.reply('Не удалось обработать нажатие. Начни новый раунд: /flags.');
+  await ctx.reply('Не удалось обработать нажатие. Начни новый раунд через /flags или /country.');
 }
 
 const bot = createUniversalTelegramBot({
@@ -105,24 +195,27 @@ const bot = createUniversalTelegramBot({
       await ctx.reply(
         doc(
           paragraph([bold('FlagConnect'), ' — викторина по флагам.']),
-          paragraph(
-            'Используй /flags, чтобы начать. Mini App открывается через кнопку меню Telegram.',
-          ),
+          paragraph('Используй /flags или /country, чтобы начать.'),
+          paragraph('Mini App открывается через кнопку меню Telegram.'),
         ),
       );
     },
-    flags: askFlag,
+    flags: (ctx) => askQuestion(ctx, 'flag'),
+    country: (ctx) => askQuestion(ctx, 'country'),
     help: async (ctx) =>
-      ctx.reply('Команды: /start — приветствие, /flags — угадать флаг, /help — справка.'),
+      ctx.reply('Команды: /flags — угадать страну по флагу; /country — угадать флаг по стране.'),
   },
-  buttons: [{ command: 'flags', label: '🌍 Флаги' }],
+  buttons: [
+    { command: 'flags', label: '🌍 По флагу' },
+    { command: 'country', label: '🏳️ По стране' },
+  ],
   onCallback: async (ctx, data) => {
-    // Verse's published adapter acknowledges callbacks after this handler returns.
-    // Run network operations in the background so Telegram stops showing the spinner promptly.
+    // The published Verse adapter acknowledges callbacks after this handler returns.
+    // Send the rich-message response in the background to stop Telegram's spinner promptly.
     void handleCallback(ctx, data).catch((error: unknown) => {
       console.error('Flag callback failed:', error);
       void ctx
-        .reply('Не удалось обработать ответ. Попробуй ещё раз или начни /flags.')
+        .reply('Не удалось обработать ответ. Попробуй ещё раз или начни новый раунд.')
         .catch(console.error);
     });
   },
@@ -131,7 +224,8 @@ const bot = createUniversalTelegramBot({
 const api = bot.api;
 await api.setMyCommands([
   { command: 'start', description: 'Запустить бота' },
-  { command: 'flags', description: 'Угадать флаг' },
+  { command: 'flags', description: 'Угадать страну по флагу' },
+  { command: 'country', description: 'Угадать флаг по стране' },
   { command: 'help', description: 'Справка' },
 ]);
 await api.setChatMenuButton({

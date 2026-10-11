@@ -41,6 +41,8 @@ npm run build
 npm run bot:dev
 ```
 
+В боте доступны `/flags` (угадать страну по флагу) и `/country` (угадать флаг по стране).
+
 Сборка и production-запуск:
 
 ```bash
