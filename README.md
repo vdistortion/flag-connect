@@ -54,26 +54,17 @@ npm run bot:start
 
 Используется общий Caddy из [`vps-infra`](https://github.com/vdistortion/vps-infra); конфигурация проекта находится в `deploy/`. Направь DNS-записи `A` (и `AAAA`, если IPv6 настроен) для `flag-connect.zvalentin.com` и `miniapp.flag-connect.zvalentin.com` на VPS.
 
-На VPS один раз создай каталог и клонируй репозиторий:
+На VPS должны быть установлены Docker Compose и общий Caddy из [`vps-infra/caddy`](https://github.com/vdistortion/vps-infra/tree/main/caddy); DNS-записи обоих доменов должны указывать на этот VPS. Пользователь `VPS_USER` должен иметь доступ к Docker.
 
-```bash
-sudo mkdir -p /srv/flag-connect
-sudo chown "$USER" /srv/flag-connect
-git clone https://github.com/vdistortion/flag-connect.git /srv/flag-connect
-cd /srv/flag-connect
-cp deploy/.env.example deploy/.env
-```
+В GitHub Actions добавь secrets:
 
-Заполни `deploy/.env` значениями Telegram-бота, затем проверь, что Docker-сеть `caddy` создана по инструкции [`vps-infra/caddy`](../vps-infra/caddy/README.md), и запусти:
+- `VPS_HOST`, `VPS_USER` — адрес и пользователь VPS;
+- `VPS_SSH_PRIVATE_KEY` — приватный SSH-ключ; соответствующий публичный ключ добавь в `authorized_keys` пользователя VPS;
+- `VPS_SSH_KNOWN_HOSTS` — проверенный host key VPS;
+- `TELEGRAM_BOT_TOKEN` — токен Telegram-бота;
+- `MINIAPP_URL` — `https://miniapp.flag-connect.zvalentin.com`.
 
-```bash
-docker compose --parallel 1 -f deploy/compose.yaml build
-docker compose -f deploy/compose.yaml up -d --no-build
-```
-
-Caddy автоматически настроит HTTPS и проксирование на сайт, Mini App и бота. Последовательная сборка позволяет повторно использовать Angular build stage для всех образов. Файл `deploy/.env` содержит секреты и не коммитится.
-
-Для деплоя из GitHub Actions настрой secrets `VPS_HOST`, `VPS_USER`, `VPS_SSH_PRIVATE_KEY` и `VPS_SSH_KNOWN_HOSTS`. Workflow **Deploy to VPS** обновляет `/srv/flag-connect` из `main` и пересобирает контейнеры. В `VPS_SSH_KNOWN_HOSTS` добавь проверенный ключ хоста VPS, а SSH-публичный ключ добавь пользователю VPS в `authorized_keys`.
+Workflow **Deploy to VPS** создаёт `~/projects`, клонирует репозиторий в `~/projects/flag-connect` или обновляет существующую `main`, передаёт runtime-настройки в защищённый `deploy/.env` и пересобирает контейнеры. При переписывании GitHub-истории workflow обновит чистый checkout; если на VPS есть незакоммиченные изменения, он остановится, не затирая их. Не редактируй файлы проекта вручную на VPS. Вручную заполнять `.env` на VPS не нужно. Последовательная сборка повторно использует Angular build stage; Caddy автоматически настраивает HTTPS для сайта и Mini App, бот работает через polling без публичных портов.
 
 ## Общий пакет
 

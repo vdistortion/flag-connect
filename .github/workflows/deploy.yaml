@@ -6,6 +6,10 @@ on:
 permissions:
   contents: read
 
+concurrency:
+  group: flag-connect-vps-deploy
+  cancel-in-progress: false
+
 jobs:
   deploy:
     if: github.ref == 'refs/heads/main'
@@ -22,7 +26,7 @@ jobs:
           printf '%s\n' "$VPS_SSH_KNOWN_HOSTS" > ~/.ssh/known_hosts
           chmod 600 ~/.ssh/id_ed25519 ~/.ssh/known_hosts
 
-      - name: Update and deploy on VPS
+      - name: Prepare project checkout on VPS
         env:
           VPS_HOST: ${{ secrets.VPS_HOST }}
           VPS_USER: ${{ secrets.VPS_USER }}
@@ -31,4 +35,78 @@ jobs:
           test -n "$VPS_HOST"
           test -n "$VPS_USER"
           ssh -i ~/.ssh/id_ed25519 -o IdentitiesOnly=yes "$VPS_USER@$VPS_HOST" \
-            'cd /srv/flag-connect && git pull --ff-only origin main && docker compose --parallel 1 -f deploy/compose.yaml build && docker compose -f deploy/compose.yaml up -d --no-build --remove-orphans'
+            'bash -se' <<'DEPLOY'
+          set -euo pipefail
+          project_dir="$HOME/projects/flag-connect"
+          mkdir -p "$HOME/projects"
+
+          if [ ! -e "$project_dir/.git" ]; then
+            if [ -d "$project_dir" ] && [ -n "$(ls -A "$project_dir")" ]; then
+              echo "$project_dir exists but is not a Git checkout; refusing to overwrite it." >&2
+              exit 1
+            fi
+            git clone --branch main --single-branch \
+              https://github.com/vdistortion/flag-connect.git "$project_dir"
+          else
+            cd "$project_dir"
+            if [ "$(git branch --show-current)" != main ]; then
+              echo "Deploy requires the main branch in $project_dir." >&2
+              exit 1
+            fi
+            if [ -n "$(git status --porcelain)" ]; then
+              echo "Checkout has local changes; refusing to update it." >&2
+              exit 1
+            fi
+            git fetch --prune origin
+            remote_commit="$(git rev-parse refs/remotes/origin/main)"
+            if git merge-base --is-ancestor HEAD "$remote_commit"; then
+              git merge --ff-only "$remote_commit"
+            elif [ -z "$(git status --porcelain)" ]; then
+              echo "Upstream history was rewritten; updating the clean checkout." >&2
+              git reset --hard "$remote_commit"
+              git reflog expire --expire=now --all
+              git gc --prune=now
+            else
+              echo "Checkout has local changes; refusing to replace it after upstream history rewrite." >&2
+              exit 1
+            fi
+          fi
+
+          if ! docker network inspect caddy >/dev/null 2>&1; then
+            echo "Start vps-infra/caddy and its Docker network before deploying FlagConnect." >&2
+            exit 1
+          fi
+          DEPLOY
+
+      - name: Write runtime settings to VPS
+        env:
+          VPS_HOST: ${{ secrets.VPS_HOST }}
+          VPS_USER: ${{ secrets.VPS_USER }}
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          MINIAPP_URL: ${{ secrets.MINIAPP_URL }}
+        run: |
+          set -euo pipefail
+          test -n "$TELEGRAM_BOT_TOKEN"
+          test -n "$MINIAPP_URL"
+          case "$MINIAPP_URL" in
+            https://*) ;;
+            *) echo "MINIAPP_URL must start with https://" >&2; exit 1 ;;
+          esac
+          case "$TELEGRAM_BOT_TOKEN$MINIAPP_URL" in
+            *$'\n'*|*$'\r'*) echo "Runtime settings must be single-line values." >&2; exit 1 ;;
+          esac
+
+          {
+            printf 'TELEGRAM_BOT_TOKEN=%s\n' "$TELEGRAM_BOT_TOKEN"
+            printf 'MINIAPP_URL=%s\n' "$MINIAPP_URL"
+          } | ssh -i ~/.ssh/id_ed25519 -o IdentitiesOnly=yes "$VPS_USER@$VPS_HOST" \
+            'umask 077 && cat > "$HOME/projects/flag-connect/deploy/.env"'
+
+      - name: Build and start services on VPS
+        env:
+          VPS_HOST: ${{ secrets.VPS_HOST }}
+          VPS_USER: ${{ secrets.VPS_USER }}
+        run: |
+          set -euo pipefail
+          ssh -i ~/.ssh/id_ed25519 -o IdentitiesOnly=yes "$VPS_USER@$VPS_HOST" \
+            'cd "$HOME/projects/flag-connect" && docker compose --parallel 1 -f deploy/compose.yaml build && docker compose -f deploy/compose.yaml up -d --no-build --remove-orphans'
