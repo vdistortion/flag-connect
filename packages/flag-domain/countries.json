@@ -4,7 +4,7 @@
       "en": "Afghanistan",
       "ru": "Афганистан"
     },
-    "flag": ["Flag_of_Afghanistan_(2013–2021).webp", "Flag_of_the_Taliban.webp"]
+    "flag": ["Flag_of_Afghanistan_(2013–2021).webp"]
   },
   {
     "name": {
@@ -1016,10 +1016,10 @@
   },
   {
     "name": {
-      "en": "Somaliland",
-      "ru": "Сомалиленд"
+      "en": "Palestine",
+      "ru": "Палестина"
     },
-    "flag": ["Flag_of_Somaliland.webp"]
+    "flag": ["Flag_of_Palestine.webp"]
   },
   {
     "name": {
@@ -1135,10 +1135,10 @@
   },
   {
     "name": {
-      "en": "Transnistria",
-      "ru": "Приднестровье"
+      "en": "Kosovo",
+      "ru": "Косово"
     },
-    "flag": ["Flag_of_Transnistria_(state).webp"]
+    "flag": ["Flag_of_Kosovo.webp"]
   },
   {
     "name": {
@@ -1331,10 +1331,10 @@
   },
   {
     "name": {
-      "en": "Abkhazia",
-      "ru": "Абхазия"
+      "en": "Taiwan",
+      "ru": "Тайвань"
     },
-    "flag": ["Flag_of_the_Republic_of_Abkhazia.webp"]
+    "flag": ["Flag_of_the_Republic_of_China.webp"]
   },
   {
     "name": {
