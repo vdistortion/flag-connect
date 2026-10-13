@@ -7,4 +7,6 @@ dist
 **/dist
 coverage
 **/.env
+**/.env.bot
+**/.env.garage
 *.log

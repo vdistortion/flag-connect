@@ -7,6 +7,8 @@ services:
       dockerfile: deploy/Dockerfile
       target: miniapp
     restart: unless-stopped
+    volumes:
+      - flag-connect-flags:/usr/share/nginx/html/images/flags:ro
     networks:
       - caddy
     labels:
@@ -22,6 +24,8 @@ services:
     environment:
       NODE_ENV: production
       PORT: '4000'
+    volumes:
+      - flag-connect-flags:/app/dist/web/browser/images/flags:ro
     networks:
       - caddy
     labels:
@@ -35,8 +39,28 @@ services:
       target: bot
     restart: unless-stopped
     env_file:
-      - .env
+      - .env.bot
+
+  flags-sync:
+    image: rclone/rclone:latest
+    profiles:
+      - asset-sync
+    restart: 'no'
+    entrypoint: ['rclone']
+    command: ['sync', 'garage:flag-connect-assets', '/flags', '--delete-before']
+    env_file:
+      - .env.garage
+    volumes:
+      - flag-connect-flags:/flags
+    networks:
+      - garage
 
 networks:
   caddy:
     external: true
+  garage:
+    external: true
+
+volumes:
+  flag-connect-flags:
+    name: flag-connect-flags

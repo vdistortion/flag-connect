@@ -76,6 +76,14 @@ jobs:
             echo "Start vps-infra/caddy and its Docker network before deploying FlagConnect." >&2
             exit 1
           fi
+          if ! docker network inspect garage >/dev/null 2>&1; then
+            echo "Start vps-infra/garage and its Docker network before deploying FlagConnect." >&2
+            exit 1
+          fi
+          if [ ! -s "$project_dir/deploy/.env.garage" ]; then
+            echo "Create $project_dir/deploy/.env.garage with a Garage read-only key before deploying." >&2
+            exit 1
+          fi
           DEPLOY
 
       - name: Write runtime settings to VPS
@@ -100,7 +108,7 @@ jobs:
             printf 'TELEGRAM_BOT_TOKEN=%s\n' "$TELEGRAM_BOT_TOKEN"
             printf 'MINIAPP_URL=%s\n' "$MINIAPP_URL"
           } | ssh -i ~/.ssh/id_ed25519 -o IdentitiesOnly=yes "$VPS_USER@$VPS_HOST" \
-            'umask 077 && cat > "$HOME/projects/flag-connect/deploy/.env"'
+            'umask 077 && cat > "$HOME/projects/flag-connect/deploy/.env.bot"'
 
       - name: Build and start services on VPS
         env:
@@ -109,4 +117,4 @@ jobs:
         run: |
           set -euo pipefail
           ssh -i ~/.ssh/id_ed25519 -o IdentitiesOnly=yes "$VPS_USER@$VPS_HOST" \
-            'cd "$HOME/projects/flag-connect" && docker compose --parallel 1 -f deploy/compose.yaml build && docker compose -f deploy/compose.yaml up -d --no-build --remove-orphans'
+            'cd "$HOME/projects/flag-connect" && docker compose --parallel 1 -f deploy/compose.yaml build && docker compose --profile asset-sync -f deploy/compose.yaml pull flags-sync && docker compose --profile asset-sync -f deploy/compose.yaml run --rm --no-deps flags-sync && docker compose -f deploy/compose.yaml up -d --no-build --remove-orphans'

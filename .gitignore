@@ -9,6 +9,8 @@ dist
 # Node
 node_modules
 .env
+/deploy/.env.bot
+/deploy/.env.garage
 npm-debug.log
 yarn-error.log
 

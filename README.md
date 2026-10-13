@@ -64,7 +64,31 @@ npm run bot:start
 - `TELEGRAM_BOT_TOKEN` — токен Telegram-бота;
 - `MINIAPP_URL` — `https://miniapp.flag-connect.zvalentin.com`.
 
-Workflow **Deploy to VPS** создаёт `~/projects`, клонирует репозиторий в `~/projects/flag-connect` или обновляет существующую `main`, передаёт runtime-настройки в защищённый `deploy/.env` и пересобирает контейнеры. При переписывании GitHub-истории workflow обновит чистый checkout; если на VPS есть незакоммиченные изменения, он остановится, не затирая их. Не редактируй файлы проекта вручную на VPS. Вручную заполнять `.env` на VPS не нужно. Последовательная сборка повторно использует Angular build stage; Caddy автоматически настраивает HTTPS для сайта и Mini App, бот работает через polling без публичных портов.
+Workflow **Deploy to VPS** создаёт `~/projects`, клонирует репозиторий в `~/projects/flag-connect` или обновляет существующую `main`, передаёт Telegram-настройки в защищённый `deploy/.env.bot` и пересобирает контейнеры. При переписывании GitHub-истории workflow обновит чистый checkout; если на VPS есть незакоммиченные изменения, он остановится, не затирая их. Не редактируй файлы проекта вручную на VPS. Последовательная сборка повторно использует Angular build stage; Caddy автоматически настраивает HTTPS для сайта и Mini App, бот работает через polling без публичных портов.
+
+### Флаги в Garage
+
+Картинки хранятся в bucket `flag-connect-assets` общего Garage. Для первой настройки на VPS создай bucket и отдельный **read-only** ключ:
+
+```bash
+docker exec garage /garage bucket create flag-connect-assets
+docker exec garage /garage key create flag-connect-assets-read
+docker exec garage /garage bucket allow flag-connect-assets --key flag-connect-assets-read --read
+```
+
+Сохрани показанные `Key ID` и `Secret key` в `~/projects/flag-connect/deploy/.env.garage`:
+
+```dotenv
+RCLONE_CONFIG_GARAGE_TYPE=s3
+RCLONE_CONFIG_GARAGE_PROVIDER=Other
+RCLONE_CONFIG_GARAGE_ACCESS_KEY_ID=...
+RCLONE_CONFIG_GARAGE_SECRET_ACCESS_KEY=...
+RCLONE_CONFIG_GARAGE_ENDPOINT=http://garage:3900
+RCLONE_CONFIG_GARAGE_REGION=garage
+RCLONE_CONFIG_GARAGE_FORCE_PATH_STYLE=true
+```
+
+Ограничь доступ к файлу: `chmod 600 ~/projects/flag-connect/deploy/.env.garage`. Он не коммитится и не передаётся в GitHub Actions. Actions запускает Rclone для синхронизации bucket в Docker volume; Nginx раздаёт картинки по `MINIAPP_URL/images/flags/`, откуда их получает бот.
 
 ## Общий пакет
 
