@@ -1,6 +1,16 @@
 import { describe, expect, it } from 'vitest';
 import { countries, createQuestion } from './dist/index.js';
 
+describe('countries', () => {
+  it('has a unique two-letter country code for every entry', () => {
+    const codes = countries.map(({ code }) => code);
+
+    expect(new Set(codes).size).toBe(countries.length);
+    expect(codes.every((code) => /^[A-Z]{2}$/.test(code))).toBe(true);
+    expect(countries.find(({ name }) => name.en === 'Kosovo')?.code).toBe('XK');
+  });
+});
+
 describe('createQuestion', () => {
   it('creates a question with unique countries and a valid correct answer', () => {
     const question = createQuestion(5, () => 0.5);

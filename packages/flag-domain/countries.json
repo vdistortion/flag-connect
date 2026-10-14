@@ -4,6 +4,7 @@
       "en": "Afghanistan",
       "ru": "Афганистан"
     },
+    "code": "AF",
     "flag": ["Flag_of_Afghanistan_(2013–2021).webp"]
   },
   {
@@ -11,6 +12,7 @@
       "en": "Algeria",
       "ru": "Алжир"
     },
+    "code": "DZ",
     "flag": ["Flag_of_Algeria.webp"]
   },
   {
@@ -18,6 +20,7 @@
       "en": "Albania",
       "ru": "Албания"
     },
+    "code": "AL",
     "flag": ["Flag_of_Albania.webp"]
   },
   {
@@ -25,6 +28,7 @@
       "en": "Andorra",
       "ru": "Андорра"
     },
+    "code": "AD",
     "flag": ["Flag_of_Andorra.webp"]
   },
   {
@@ -32,6 +36,7 @@
       "en": "Angola",
       "ru": "Ангола"
     },
+    "code": "AO",
     "flag": ["Flag_of_Angola.webp"]
   },
   {
@@ -39,6 +44,7 @@
       "en": "Antigua and Barbuda",
       "ru": "Антигуа и Барбуда"
     },
+    "code": "AG",
     "flag": ["Flag_of_Antigua_and_Barbuda.webp"]
   },
   {
@@ -46,6 +52,7 @@
       "en": "Argentina",
       "ru": "Аргентина"
     },
+    "code": "AR",
     "flag": ["Flag_of_Argentina.webp"]
   },
   {
@@ -53,6 +60,7 @@
       "en": "Armenia",
       "ru": "Армения"
     },
+    "code": "AM",
     "flag": ["Flag_of_Armenia.webp"]
   },
   {
@@ -60,6 +68,7 @@
       "en": "Australia",
       "ru": "Австралия"
     },
+    "code": "AU",
     "flag": ["Flag_of_Australia.webp"]
   },
   {
@@ -67,6 +76,7 @@
       "en": "Austria",
       "ru": "Австрия"
     },
+    "code": "AT",
     "flag": ["Flag_of_Austria.webp"]
   },
   {
@@ -74,6 +84,7 @@
       "en": "Azerbaijan",
       "ru": "Азербайджан"
     },
+    "code": "AZ",
     "flag": ["Flag_of_Azerbaijan.webp"]
   },
   {
@@ -81,6 +92,7 @@
       "en": "Bahrain",
       "ru": "Бахрейн"
     },
+    "code": "BH",
     "flag": ["Flag_of_Bahrain.webp"]
   },
   {
@@ -88,6 +100,7 @@
       "en": "Bangladesh",
       "ru": "Бангладеш"
     },
+    "code": "BD",
     "flag": ["Flag_of_Bangladesh.webp"]
   },
   {
@@ -95,6 +108,7 @@
       "en": "Barbados",
       "ru": "Барбадос"
     },
+    "code": "BB",
     "flag": ["Flag_of_Barbados.webp"]
   },
   {
@@ -102,6 +116,7 @@
       "en": "Belarus",
       "ru": "Беларусь"
     },
+    "code": "BY",
     "flag": ["Flag_of_Belarus.webp"]
   },
   {
@@ -109,6 +124,7 @@
       "en": "Belgium",
       "ru": "Бельгия"
     },
+    "code": "BE",
     "flag": ["Flag_of_Belgium.webp"]
   },
   {
@@ -116,6 +132,7 @@
       "en": "Belize",
       "ru": "Белиз"
     },
+    "code": "BZ",
     "flag": ["Flag_of_Belize.webp"]
   },
   {
@@ -123,6 +140,7 @@
       "en": "Benin",
       "ru": "Бенин"
     },
+    "code": "BJ",
     "flag": ["Flag_of_Benin.webp"]
   },
   {
@@ -130,6 +148,7 @@
       "en": "Bhutan",
       "ru": "Бутан"
     },
+    "code": "BT",
     "flag": ["Flag_of_Bhutan.webp"]
   },
   {
@@ -137,6 +156,7 @@
       "en": "Bolivia",
       "ru": "Боливия"
     },
+    "code": "BO",
     "flag": ["Flag_of_Bolivia.webp"]
   },
   {
@@ -144,6 +164,7 @@
       "en": "Bosnia and Herzegovina",
       "ru": "Босния и Герцеговина"
     },
+    "code": "BA",
     "flag": ["Flag_of_Bosnia_and_Herzegovina.webp"]
   },
   {
@@ -151,6 +172,7 @@
       "en": "Botswana",
       "ru": "Ботсвана"
     },
+    "code": "BW",
     "flag": ["Flag_of_Botswana.webp"]
   },
   {
@@ -158,6 +180,7 @@
       "en": "Brazil",
       "ru": "Бразилия"
     },
+    "code": "BR",
     "flag": ["Flag_of_Brazil.webp"]
   },
   {
@@ -165,6 +188,7 @@
       "en": "Brunei",
       "ru": "Бруней"
     },
+    "code": "BN",
     "flag": ["Flag_of_Brunei.webp"]
   },
   {
@@ -172,6 +196,7 @@
       "en": "Bulgaria",
       "ru": "Болгария"
     },
+    "code": "BG",
     "flag": ["Flag_of_Bulgaria.webp"]
   },
   {
@@ -179,6 +204,7 @@
       "en": "Burkina Faso",
       "ru": "Буркина-Фасо"
     },
+    "code": "BF",
     "flag": ["Flag_of_Burkina_Faso.webp"]
   },
   {
@@ -186,6 +212,7 @@
       "en": "Burundi",
       "ru": "Бурунди"
     },
+    "code": "BI",
     "flag": ["Flag_of_Burundi.webp"]
   },
   {
@@ -193,6 +220,7 @@
       "en": "Cambodia",
       "ru": "Камбоджа"
     },
+    "code": "KH",
     "flag": ["Flag_of_Cambodia.webp"]
   },
   {
@@ -200,6 +228,7 @@
       "en": "Cameroon",
       "ru": "Камерун"
     },
+    "code": "CM",
     "flag": ["Flag_of_Cameroon.webp"]
   },
   {
@@ -207,13 +236,15 @@
       "en": "Canada",
       "ru": "Канада"
     },
+    "code": "CA",
     "flag": ["Flag_of_Canada_(Pantone).webp"]
   },
   {
     "name": {
-      "en": "Cape Verde",
+      "en": "Cabo Verde",
       "ru": "Кабо-Верде"
     },
+    "code": "CV",
     "flag": ["Flag_of_Cape_Verde.webp"]
   },
   {
@@ -221,6 +252,7 @@
       "en": "Chad",
       "ru": "Чад"
     },
+    "code": "TD",
     "flag": ["Flag_of_Chad.webp"]
   },
   {
@@ -228,6 +260,7 @@
       "en": "Chile",
       "ru": "Чили"
     },
+    "code": "CL",
     "flag": ["Flag_of_Chile.webp"]
   },
   {
@@ -235,6 +268,7 @@
       "en": "Colombia",
       "ru": "Колумбия"
     },
+    "code": "CO",
     "flag": ["Flag_of_Colombia.webp"]
   },
   {
@@ -242,6 +276,7 @@
       "en": "Costa Rica",
       "ru": "Коста-Рика"
     },
+    "code": "CR",
     "flag": ["Flag_of_Costa_Rica.webp"]
   },
   {
@@ -249,6 +284,7 @@
       "en": "Croatia",
       "ru": "Хорватия"
     },
+    "code": "HR",
     "flag": ["Flag_of_Croatia.webp"]
   },
   {
@@ -256,13 +292,15 @@
       "en": "Cuba",
       "ru": "Куба"
     },
+    "code": "CU",
     "flag": ["Flag_of_Cuba.webp"]
   },
   {
     "name": {
-      "en": "Ivory Coast",
-      "ru": "Кот-д`Ивуар"
+      "en": "Côte d’Ivoire",
+      "ru": "Кот-д’Ивуар"
     },
+    "code": "CI",
     "flag": ["Flag_of_Côte_d'Ivoire.webp"]
   },
   {
@@ -270,6 +308,7 @@
       "en": "Cyprus",
       "ru": "Кипр"
     },
+    "code": "CY",
     "flag": ["Flag_of_Cyprus.webp"]
   },
   {
@@ -277,6 +316,7 @@
       "en": "Denmark",
       "ru": "Дания"
     },
+    "code": "DK",
     "flag": ["Flag_of_Denmark.webp"]
   },
   {
@@ -284,6 +324,7 @@
       "en": "Djibouti",
       "ru": "Джибути"
     },
+    "code": "DJ",
     "flag": ["Flag_of_Djibouti.webp"]
   },
   {
@@ -291,6 +332,7 @@
       "en": "Dominica",
       "ru": "Доминика"
     },
+    "code": "DM",
     "flag": ["Flag_of_Dominica.webp"]
   },
   {
@@ -298,6 +340,7 @@
       "en": "Timor-Leste",
       "ru": "Восточный Тимор"
     },
+    "code": "TL",
     "flag": ["Flag_of_East_Timor.webp"]
   },
   {
@@ -305,6 +348,7 @@
       "en": "Ecuador",
       "ru": "Эквадор"
     },
+    "code": "EC",
     "flag": ["Flag_of_Ecuador.webp"]
   },
   {
@@ -312,6 +356,7 @@
       "en": "Egypt",
       "ru": "Египет"
     },
+    "code": "EG",
     "flag": ["Flag_of_Egypt.webp"]
   },
   {
@@ -319,6 +364,7 @@
       "en": "El Salvador",
       "ru": "Сальвадор"
     },
+    "code": "SV",
     "flag": ["Flag_of_El_Salvador.webp"]
   },
   {
@@ -326,6 +372,7 @@
       "en": "Equatorial Guinea",
       "ru": "Экваториальная Гвинея"
     },
+    "code": "GQ",
     "flag": ["Flag_of_Equatorial_Guinea.webp"]
   },
   {
@@ -333,6 +380,7 @@
       "en": "Eritrea",
       "ru": "Эритрея"
     },
+    "code": "ER",
     "flag": ["Flag_of_Eritrea.webp"]
   },
   {
@@ -340,6 +388,7 @@
       "en": "Estonia",
       "ru": "Эстония"
     },
+    "code": "EE",
     "flag": ["Flag_of_Estonia.webp"]
   },
   {
@@ -347,6 +396,7 @@
       "en": "Eswatini",
       "ru": "Эсватини"
     },
+    "code": "SZ",
     "flag": ["Flag_of_Eswatini.webp"]
   },
   {
@@ -354,6 +404,7 @@
       "en": "Ethiopia",
       "ru": "Эфиопия"
     },
+    "code": "ET",
     "flag": ["Flag_of_Ethiopia.webp"]
   },
   {
@@ -361,6 +412,7 @@
       "en": "Fiji",
       "ru": "Фиджи"
     },
+    "code": "FJ",
     "flag": ["Flag_of_Fiji.webp"]
   },
   {
@@ -368,6 +420,7 @@
       "en": "Finland",
       "ru": "Финляндия"
     },
+    "code": "FI",
     "flag": ["Flag_of_Finland.webp"]
   },
   {
@@ -375,6 +428,7 @@
       "en": "France",
       "ru": "Франция"
     },
+    "code": "FR",
     "flag": ["Flag_of_France.webp"]
   },
   {
@@ -382,6 +436,7 @@
       "en": "Gabon",
       "ru": "Габон"
     },
+    "code": "GA",
     "flag": ["Flag_of_Gabon.webp"]
   },
   {
@@ -389,6 +444,7 @@
       "en": "Georgia",
       "ru": "Грузия"
     },
+    "code": "GE",
     "flag": ["Flag_of_Georgia.webp"]
   },
   {
@@ -396,6 +452,7 @@
       "en": "Germany",
       "ru": "Германия"
     },
+    "code": "DE",
     "flag": ["Flag_of_Germany.webp"]
   },
   {
@@ -403,6 +460,7 @@
       "en": "Ghana",
       "ru": "Гана"
     },
+    "code": "GH",
     "flag": ["Flag_of_Ghana.webp"]
   },
   {
@@ -410,6 +468,7 @@
       "en": "Greece",
       "ru": "Греция"
     },
+    "code": "GR",
     "flag": ["Flag_of_Greece.webp"]
   },
   {
@@ -417,6 +476,7 @@
       "en": "Grenada",
       "ru": "Гренада"
     },
+    "code": "GD",
     "flag": ["Flag_of_Grenada.webp"]
   },
   {
@@ -424,6 +484,7 @@
       "en": "Guatemala",
       "ru": "Гватемала"
     },
+    "code": "GT",
     "flag": ["Flag_of_Guatemala.webp"]
   },
   {
@@ -431,6 +492,7 @@
       "en": "Guinea-Bissau",
       "ru": "Гвинея-Бисау"
     },
+    "code": "GW",
     "flag": ["Flag_of_Guinea-Bissau.webp"]
   },
   {
@@ -438,6 +500,7 @@
       "en": "Guinea",
       "ru": "Гвинея"
     },
+    "code": "GN",
     "flag": ["Flag_of_Guinea.webp"]
   },
   {
@@ -445,6 +508,7 @@
       "en": "Guyana",
       "ru": "Гайана"
     },
+    "code": "GY",
     "flag": ["Flag_of_Guyana.webp"]
   },
   {
@@ -452,6 +516,7 @@
       "en": "Haiti",
       "ru": "Гаити"
     },
+    "code": "HT",
     "flag": ["Flag_of_Haiti.webp"]
   },
   {
@@ -459,6 +524,7 @@
       "en": "Honduras",
       "ru": "Гондурас"
     },
+    "code": "HN",
     "flag": ["Flag_of_Honduras.webp"]
   },
   {
@@ -466,6 +532,7 @@
       "en": "Hungary",
       "ru": "Венгрия"
     },
+    "code": "HU",
     "flag": ["Flag_of_Hungary.webp"]
   },
   {
@@ -473,6 +540,7 @@
       "en": "Iceland",
       "ru": "Исландия"
     },
+    "code": "IS",
     "flag": ["Flag_of_Iceland.webp"]
   },
   {
@@ -480,6 +548,7 @@
       "en": "India",
       "ru": "Индия"
     },
+    "code": "IN",
     "flag": ["Flag_of_India.webp"]
   },
   {
@@ -487,6 +556,7 @@
       "en": "Indonesia",
       "ru": "Индонезия"
     },
+    "code": "ID",
     "flag": ["Flag_of_Indonesia.webp"]
   },
   {
@@ -494,6 +564,7 @@
       "en": "Iran",
       "ru": "Иран"
     },
+    "code": "IR",
     "flag": ["Flag_of_Iran.webp"]
   },
   {
@@ -501,6 +572,7 @@
       "en": "Iraq",
       "ru": "Ирак"
     },
+    "code": "IQ",
     "flag": ["Flag_of_Iraq.webp"]
   },
   {
@@ -508,6 +580,7 @@
       "en": "Ireland",
       "ru": "Ирландия"
     },
+    "code": "IE",
     "flag": ["Flag_of_Ireland.webp"]
   },
   {
@@ -515,6 +588,7 @@
       "en": "Israel",
       "ru": "Израиль"
     },
+    "code": "IL",
     "flag": ["Flag_of_Israel.webp"]
   },
   {
@@ -522,6 +596,7 @@
       "en": "Italy",
       "ru": "Италия"
     },
+    "code": "IT",
     "flag": ["Flag_of_Italy.webp"]
   },
   {
@@ -529,6 +604,7 @@
       "en": "Jamaica",
       "ru": "Ямайка"
     },
+    "code": "JM",
     "flag": ["Flag_of_Jamaica.webp"]
   },
   {
@@ -536,6 +612,7 @@
       "en": "Japan",
       "ru": "Япония"
     },
+    "code": "JP",
     "flag": ["Flag_of_Japan.webp"]
   },
   {
@@ -543,6 +620,7 @@
       "en": "Jordan",
       "ru": "Иордания"
     },
+    "code": "JO",
     "flag": ["Flag_of_Jordan.webp"]
   },
   {
@@ -550,6 +628,7 @@
       "en": "Kazakhstan",
       "ru": "Казахстан"
     },
+    "code": "KZ",
     "flag": ["Flag_of_Kazakhstan.webp"]
   },
   {
@@ -557,6 +636,7 @@
       "en": "Kenya",
       "ru": "Кения"
     },
+    "code": "KE",
     "flag": ["Flag_of_Kenya.webp"]
   },
   {
@@ -564,6 +644,7 @@
       "en": "Kiribati",
       "ru": "Кирибати"
     },
+    "code": "KI",
     "flag": ["Flag_of_Kiribati.webp"]
   },
   {
@@ -571,6 +652,7 @@
       "en": "Kuwait",
       "ru": "Кувейт"
     },
+    "code": "KW",
     "flag": ["Flag_of_Kuwait.webp"]
   },
   {
@@ -578,6 +660,7 @@
       "en": "Kyrgyzstan",
       "ru": "Кыргызстан"
     },
+    "code": "KG",
     "flag": ["Flag_of_Kyrgyzstan.webp"]
   },
   {
@@ -585,6 +668,7 @@
       "en": "Laos",
       "ru": "Лаос"
     },
+    "code": "LA",
     "flag": ["Flag_of_Laos.webp"]
   },
   {
@@ -592,6 +676,7 @@
       "en": "Latvia",
       "ru": "Латвия"
     },
+    "code": "LV",
     "flag": ["Flag_of_Latvia.webp"]
   },
   {
@@ -599,6 +684,7 @@
       "en": "Lebanon",
       "ru": "Ливан"
     },
+    "code": "LB",
     "flag": ["Flag_of_Lebanon.webp"]
   },
   {
@@ -606,6 +692,7 @@
       "en": "Lesotho",
       "ru": "Лесото"
     },
+    "code": "LS",
     "flag": ["Flag_of_Lesotho.webp"]
   },
   {
@@ -613,6 +700,7 @@
       "en": "Liberia",
       "ru": "Либерия"
     },
+    "code": "LR",
     "flag": ["Flag_of_Liberia.webp"]
   },
   {
@@ -620,6 +708,7 @@
       "en": "Libya",
       "ru": "Ливия"
     },
+    "code": "LY",
     "flag": ["Flag_of_Libya.webp"]
   },
   {
@@ -627,6 +716,7 @@
       "en": "Liechtenstein",
       "ru": "Лихтенштейн"
     },
+    "code": "LI",
     "flag": ["Flag_of_Liechtenstein.webp"]
   },
   {
@@ -634,6 +724,7 @@
       "en": "Lithuania",
       "ru": "Литва"
     },
+    "code": "LT",
     "flag": ["Flag_of_Lithuania.webp"]
   },
   {
@@ -641,6 +732,7 @@
       "en": "Luxembourg",
       "ru": "Люксембург"
     },
+    "code": "LU",
     "flag": ["Flag_of_Luxembourg.webp"]
   },
   {
@@ -648,6 +740,7 @@
       "en": "Madagascar",
       "ru": "Мадагаскар"
     },
+    "code": "MG",
     "flag": ["Flag_of_Madagascar.webp"]
   },
   {
@@ -655,6 +748,7 @@
       "en": "Malawi",
       "ru": "Малави"
     },
+    "code": "MW",
     "flag": ["Flag_of_Malawi.webp"]
   },
   {
@@ -662,6 +756,7 @@
       "en": "Malaysia",
       "ru": "Малайзия"
     },
+    "code": "MY",
     "flag": ["Flag_of_Malaysia.webp"]
   },
   {
@@ -669,6 +764,7 @@
       "en": "Maldives",
       "ru": "Мальдивы"
     },
+    "code": "MV",
     "flag": ["Flag_of_Maldives.webp"]
   },
   {
@@ -676,6 +772,7 @@
       "en": "Malta",
       "ru": "Мальта"
     },
+    "code": "MT",
     "flag": ["Flag_of_Malta.webp"]
   },
   {
@@ -683,6 +780,7 @@
       "en": "Mali",
       "ru": "Мали"
     },
+    "code": "ML",
     "flag": ["Flag_of_Mali.webp"]
   },
   {
@@ -690,6 +788,7 @@
       "en": "Mauritania",
       "ru": "Мавритания"
     },
+    "code": "MR",
     "flag": ["Flag_of_Mauritania.webp"]
   },
   {
@@ -697,6 +796,7 @@
       "en": "Mauritius",
       "ru": "Маврикий"
     },
+    "code": "MU",
     "flag": ["Flag_of_Mauritius.webp"]
   },
   {
@@ -704,6 +804,7 @@
       "en": "Mexico",
       "ru": "Мексика"
     },
+    "code": "MX",
     "flag": ["Flag_of_Mexico.webp"]
   },
   {
@@ -711,6 +812,7 @@
       "en": "Moldova",
       "ru": "Молдова"
     },
+    "code": "MD",
     "flag": ["Flag_of_Moldova.webp"]
   },
   {
@@ -718,6 +820,7 @@
       "en": "Monaco",
       "ru": "Монако"
     },
+    "code": "MC",
     "flag": ["Flag_of_Monaco.webp"]
   },
   {
@@ -725,6 +828,7 @@
       "en": "Mongolia",
       "ru": "Монголия"
     },
+    "code": "MN",
     "flag": ["Flag_of_Mongolia.webp"]
   },
   {
@@ -732,6 +836,7 @@
       "en": "Montenegro",
       "ru": "Черногория"
     },
+    "code": "ME",
     "flag": ["Flag_of_Montenegro.webp"]
   },
   {
@@ -739,6 +844,7 @@
       "en": "Morocco",
       "ru": "Марокко"
     },
+    "code": "MA",
     "flag": ["Flag_of_Morocco.webp"]
   },
   {
@@ -746,6 +852,7 @@
       "en": "Mozambique",
       "ru": "Мозамбик"
     },
+    "code": "MZ",
     "flag": ["Flag_of_Mozambique.webp"]
   },
   {
@@ -753,6 +860,7 @@
       "en": "Myanmar",
       "ru": "Мьянма"
     },
+    "code": "MM",
     "flag": ["Flag_of_Myanmar.webp"]
   },
   {
@@ -760,6 +868,7 @@
       "en": "Namibia",
       "ru": "Намибия"
     },
+    "code": "NA",
     "flag": ["Flag_of_Namibia.webp"]
   },
   {
@@ -767,6 +876,7 @@
       "en": "Nauru",
       "ru": "Науру"
     },
+    "code": "NR",
     "flag": ["Flag_of_Nauru.webp"]
   },
   {
@@ -774,6 +884,7 @@
       "en": "Nepal",
       "ru": "Непал"
     },
+    "code": "NP",
     "flag": ["Flag_of_Nepal.webp"]
   },
   {
@@ -781,6 +892,7 @@
       "en": "New Zealand",
       "ru": "Новая Зеландия"
     },
+    "code": "NZ",
     "flag": ["Flag_of_New_Zealand.webp"]
   },
   {
@@ -788,6 +900,7 @@
       "en": "Nicaragua",
       "ru": "Никарагуа"
     },
+    "code": "NI",
     "flag": ["Flag_of_Nicaragua.webp"]
   },
   {
@@ -795,6 +908,7 @@
       "en": "Niger",
       "ru": "Нигер"
     },
+    "code": "NE",
     "flag": ["Flag_of_Niger.webp"]
   },
   {
@@ -802,6 +916,7 @@
       "en": "North Korea",
       "ru": "Северная Корея"
     },
+    "code": "KP",
     "flag": ["Flag_of_North_Korea.webp"]
   },
   {
@@ -809,6 +924,7 @@
       "en": "Nigeria",
       "ru": "Нигерия"
     },
+    "code": "NG",
     "flag": ["Flag_of_Nigeria.webp"]
   },
   {
@@ -816,6 +932,7 @@
       "en": "North Macedonia",
       "ru": "Северная Македония"
     },
+    "code": "MK",
     "flag": ["Flag_of_North_Macedonia.webp"]
   },
   {
@@ -823,6 +940,7 @@
       "en": "Norway",
       "ru": "Норвегия"
     },
+    "code": "NO",
     "flag": ["Flag_of_Norway.webp"]
   },
   {
@@ -830,6 +948,7 @@
       "en": "Oman",
       "ru": "Оман"
     },
+    "code": "OM",
     "flag": ["Flag_of_Oman.webp"]
   },
   {
@@ -837,6 +956,7 @@
       "en": "Pakistan",
       "ru": "Пакистан"
     },
+    "code": "PK",
     "flag": ["Flag_of_Pakistan.webp"]
   },
   {
@@ -844,6 +964,7 @@
       "en": "Palau",
       "ru": "Палау"
     },
+    "code": "PW",
     "flag": ["Flag_of_Palau.webp"]
   },
   {
@@ -851,6 +972,7 @@
       "en": "Panama",
       "ru": "Панама"
     },
+    "code": "PA",
     "flag": ["Flag_of_Panama.webp"]
   },
   {
@@ -858,6 +980,7 @@
       "en": "Paraguay",
       "ru": "Парагвай"
     },
+    "code": "PY",
     "flag": ["Flag_of_Paraguay.webp", "Flag_of_Paraguay_(reverse).webp"]
   },
   {
@@ -865,6 +988,7 @@
       "en": "Papua New Guinea",
       "ru": "Папуа — Новая Гвинея"
     },
+    "code": "PG",
     "flag": ["Flag_of_Papua_New_Guinea.webp"]
   },
   {
@@ -872,6 +996,7 @@
       "en": "Peru",
       "ru": "Перу"
     },
+    "code": "PE",
     "flag": ["Flag_of_Peru.webp"]
   },
   {
@@ -879,6 +1004,7 @@
       "en": "Poland",
       "ru": "Польша"
     },
+    "code": "PL",
     "flag": ["Flag_of_Poland.webp"]
   },
   {
@@ -886,6 +1012,7 @@
       "en": "Portugal",
       "ru": "Португалия"
     },
+    "code": "PT",
     "flag": ["Flag_of_Portugal.webp"]
   },
   {
@@ -893,6 +1020,7 @@
       "en": "Qatar",
       "ru": "Катар"
     },
+    "code": "QA",
     "flag": ["Flag_of_Qatar.webp"]
   },
   {
@@ -900,6 +1028,7 @@
       "en": "Romania",
       "ru": "Румыния"
     },
+    "code": "RO",
     "flag": ["Flag_of_Romania.webp"]
   },
   {
@@ -907,6 +1036,7 @@
       "en": "Russia",
       "ru": "Россия"
     },
+    "code": "RU",
     "flag": ["Flag_of_Russia.webp"]
   },
   {
@@ -914,6 +1044,7 @@
       "en": "Rwanda",
       "ru": "Руанда"
     },
+    "code": "RW",
     "flag": ["Flag_of_Rwanda.webp"]
   },
   {
@@ -921,6 +1052,7 @@
       "en": "Saint Kitts and Nevis",
       "ru": "Сент-Китс и Невис"
     },
+    "code": "KN",
     "flag": ["Flag_of_Saint_Kitts_and_Nevis.webp"]
   },
   {
@@ -928,6 +1060,7 @@
       "en": "Saint Lucia",
       "ru": "Сент-Люсия"
     },
+    "code": "LC",
     "flag": ["Flag_of_Saint_Lucia.webp"]
   },
   {
@@ -935,6 +1068,7 @@
       "en": "San Marino",
       "ru": "Сан-Марино"
     },
+    "code": "SM",
     "flag": ["Flag_of_San_Marino.webp"]
   },
   {
@@ -942,6 +1076,7 @@
       "en": "Samoa",
       "ru": "Самоа"
     },
+    "code": "WS",
     "flag": ["Flag_of_Samoa.webp"]
   },
   {
@@ -949,6 +1084,7 @@
       "en": "Saudi Arabia",
       "ru": "Саудовская Аравия"
     },
+    "code": "SA",
     "flag": ["Flag_of_Saudi_Arabia.webp"]
   },
   {
@@ -956,6 +1092,7 @@
       "en": "Senegal",
       "ru": "Сенегал"
     },
+    "code": "SN",
     "flag": ["Flag_of_Senegal.webp"]
   },
   {
@@ -963,6 +1100,7 @@
       "en": "Serbia",
       "ru": "Сербия"
     },
+    "code": "RS",
     "flag": ["Flag_of_Serbia.webp"]
   },
   {
@@ -970,6 +1108,7 @@
       "en": "Saint Vincent and the Grenadines",
       "ru": "Сент-Винсент и Гренадины"
     },
+    "code": "VC",
     "flag": ["Flag_of_Saint_Vincent_and_the_Grenadines.webp"]
   },
   {
@@ -977,6 +1116,7 @@
       "en": "Seychelles",
       "ru": "Сейшельские Острова"
     },
+    "code": "SC",
     "flag": ["Flag_of_Seychelles.webp"]
   },
   {
@@ -984,6 +1124,7 @@
       "en": "Sierra Leone",
       "ru": "Сьерра-Леоне"
     },
+    "code": "SL",
     "flag": ["Flag_of_Sierra_Leone.webp"]
   },
   {
@@ -991,6 +1132,7 @@
       "en": "Singapore",
       "ru": "Сингапур"
     },
+    "code": "SG",
     "flag": ["Flag_of_Singapore.webp"]
   },
   {
@@ -998,6 +1140,7 @@
       "en": "Slovakia",
       "ru": "Словакия"
     },
+    "code": "SK",
     "flag": ["Flag_of_Slovakia.webp"]
   },
   {
@@ -1005,6 +1148,7 @@
       "en": "Slovenia",
       "ru": "Словения"
     },
+    "code": "SI",
     "flag": ["Flag_of_Slovenia.webp"]
   },
   {
@@ -1012,6 +1156,7 @@
       "en": "Somalia",
       "ru": "Сомали"
     },
+    "code": "SO",
     "flag": ["Flag_of_Somalia.webp"]
   },
   {
@@ -1019,6 +1164,7 @@
       "en": "Palestine",
       "ru": "Палестина"
     },
+    "code": "PS",
     "flag": ["Flag_of_Palestine.webp"]
   },
   {
@@ -1026,6 +1172,7 @@
       "en": "South Africa",
       "ru": "ЮАР"
     },
+    "code": "ZA",
     "flag": ["Flag_of_South_Africa.webp"]
   },
   {
@@ -1033,6 +1180,7 @@
       "en": "South Korea",
       "ru": "Южная Корея"
     },
+    "code": "KR",
     "flag": ["Flag_of_South_Korea.webp"]
   },
   {
@@ -1040,6 +1188,7 @@
       "en": "South Sudan",
       "ru": "Южный Судан"
     },
+    "code": "SS",
     "flag": ["Flag_of_South_Sudan.webp"]
   },
   {
@@ -1047,6 +1196,7 @@
       "en": "Spain",
       "ru": "Испания"
     },
+    "code": "ES",
     "flag": ["Flag_of_Spain.webp"]
   },
   {
@@ -1054,6 +1204,7 @@
       "en": "Sri Lanka",
       "ru": "Шри-Ланка"
     },
+    "code": "LK",
     "flag": ["Flag_of_Sri_Lanka.webp"]
   },
   {
@@ -1061,6 +1212,7 @@
       "en": "Sudan",
       "ru": "Судан"
     },
+    "code": "SD",
     "flag": ["Flag_of_Sudan.webp"]
   },
   {
@@ -1068,6 +1220,7 @@
       "en": "Suriname",
       "ru": "Суринам"
     },
+    "code": "SR",
     "flag": ["Flag_of_Suriname.webp"]
   },
   {
@@ -1075,6 +1228,7 @@
       "en": "Sweden",
       "ru": "Швеция"
     },
+    "code": "SE",
     "flag": ["Flag_of_Sweden.webp"]
   },
   {
@@ -1082,6 +1236,7 @@
       "en": "Switzerland",
       "ru": "Швейцария"
     },
+    "code": "CH",
     "flag": ["Flag_of_Switzerland.webp"]
   },
   {
@@ -1089,6 +1244,7 @@
       "en": "São Tomé and Príncipe",
       "ru": "Сан-Томе и Принсипи"
     },
+    "code": "ST",
     "flag": ["Flag_of_São_Tomé_and_Príncipe.webp"]
   },
   {
@@ -1096,6 +1252,7 @@
       "en": "Tajikistan",
       "ru": "Таджикистан"
     },
+    "code": "TJ",
     "flag": ["Flag_of_Tajikistan.webp"]
   },
   {
@@ -1103,6 +1260,7 @@
       "en": "Tanzania",
       "ru": "Танзания"
     },
+    "code": "TZ",
     "flag": ["Flag_of_Tanzania.webp"]
   },
   {
@@ -1110,6 +1268,7 @@
       "en": "Thailand",
       "ru": "Таиланд"
     },
+    "code": "TH",
     "flag": ["Flag_of_Thailand.webp"]
   },
   {
@@ -1117,6 +1276,7 @@
       "en": "The Gambia",
       "ru": "Гамбия"
     },
+    "code": "GM",
     "flag": ["Flag_of_The_Gambia.webp"]
   },
   {
@@ -1124,6 +1284,7 @@
       "en": "Togo",
       "ru": "Того"
     },
+    "code": "TG",
     "flag": ["Flag_of_Togo.webp"]
   },
   {
@@ -1131,6 +1292,7 @@
       "en": "Tonga",
       "ru": "Тонга"
     },
+    "code": "TO",
     "flag": ["Flag_of_Tonga.webp"]
   },
   {
@@ -1138,6 +1300,7 @@
       "en": "Kosovo",
       "ru": "Косово"
     },
+    "code": "XK",
     "flag": ["Flag_of_Kosovo.webp"]
   },
   {
@@ -1145,6 +1308,7 @@
       "en": "Trinidad and Tobago",
       "ru": "Тринидад и Тобаго"
     },
+    "code": "TT",
     "flag": ["Flag_of_Trinidad_and_Tobago.webp"]
   },
   {
@@ -1152,13 +1316,15 @@
       "en": "Tunisia",
       "ru": "Тунис"
     },
+    "code": "TN",
     "flag": ["Flag_of_Tunisia.webp"]
   },
   {
     "name": {
-      "en": "Turkey",
+      "en": "Türkiye",
       "ru": "Турция"
     },
+    "code": "TR",
     "flag": ["Flag_of_Turkey.webp"]
   },
   {
@@ -1166,6 +1332,7 @@
       "en": "Turkmenistan",
       "ru": "Туркменистан"
     },
+    "code": "TM",
     "flag": ["Flag_of_Turkmenistan.webp"]
   },
   {
@@ -1173,6 +1340,7 @@
       "en": "Tuvalu",
       "ru": "Тувалу"
     },
+    "code": "TV",
     "flag": ["Flag_of_Tuvalu.webp"]
   },
   {
@@ -1180,6 +1348,7 @@
       "en": "Uganda",
       "ru": "Уганда"
     },
+    "code": "UG",
     "flag": ["Flag_of_Uganda.webp"]
   },
   {
@@ -1187,6 +1356,7 @@
       "en": "Ukraine",
       "ru": "Украина"
     },
+    "code": "UA",
     "flag": ["Flag_of_Ukraine.webp"]
   },
   {
@@ -1194,6 +1364,7 @@
       "en": "Uruguay",
       "ru": "Уругвай"
     },
+    "code": "UY",
     "flag": ["Flag_of_Uruguay.webp"]
   },
   {
@@ -1201,6 +1372,7 @@
       "en": "Uzbekistan",
       "ru": "Узбекистан"
     },
+    "code": "UZ",
     "flag": ["Flag_of_Uzbekistan.webp"]
   },
   {
@@ -1208,6 +1380,7 @@
       "en": "Vanuatu",
       "ru": "Вануату"
     },
+    "code": "VU",
     "flag": ["Flag_of_Vanuatu.webp"]
   },
   {
@@ -1215,6 +1388,7 @@
       "en": "Vatican",
       "ru": "Ватикан"
     },
+    "code": "VA",
     "flag": ["Flag_of_Vatican_City_(2023–present).webp"]
   },
   {
@@ -1222,6 +1396,7 @@
       "en": "Venezuela",
       "ru": "Венесуэла"
     },
+    "code": "VE",
     "flag": ["Flag_of_Venezuela.webp"]
   },
   {
@@ -1229,6 +1404,7 @@
       "en": "Vietnam",
       "ru": "Вьетнам"
     },
+    "code": "VN",
     "flag": ["Flag_of_Vietnam.webp"]
   },
   {
@@ -1236,6 +1412,7 @@
       "en": "Yemen",
       "ru": "Йемен"
     },
+    "code": "YE",
     "flag": ["Flag_of_Yemen.webp"]
   },
   {
@@ -1243,6 +1420,7 @@
       "en": "Zambia",
       "ru": "Замбия"
     },
+    "code": "ZM",
     "flag": ["Flag_of_Zambia.webp"]
   },
   {
@@ -1250,6 +1428,7 @@
       "en": "Zimbabwe",
       "ru": "Зимбабве"
     },
+    "code": "ZW",
     "flag": ["Flag_of_Zimbabwe.webp"]
   },
   {
@@ -1257,6 +1436,7 @@
       "en": "The Bahamas",
       "ru": "Багамские Острова"
     },
+    "code": "BS",
     "flag": ["Flag_of_the_Bahamas.webp"]
   },
   {
@@ -1264,6 +1444,7 @@
       "en": "Central African Republic",
       "ru": "Центральноафриканская Республика"
     },
+    "code": "CF",
     "flag": ["Flag_of_the_Central_African_Republic.webp"]
   },
   {
@@ -1271,6 +1452,7 @@
       "en": "Comoros",
       "ru": "Коморы"
     },
+    "code": "KM",
     "flag": ["Flag_of_the_Comoros.webp"]
   },
   {
@@ -1278,6 +1460,7 @@
       "en": "Czech Republic",
       "ru": "Чехия"
     },
+    "code": "CZ",
     "flag": ["Flag_of_the_Czech_Republic.webp"]
   },
   {
@@ -1285,6 +1468,7 @@
       "en": "Democratic Republic of the Congo",
       "ru": "Демократическая Республика Конго"
     },
+    "code": "CD",
     "flag": ["Flag_of_the_Democratic_Republic_of_the_Congo.webp"]
   },
   {
@@ -1292,6 +1476,7 @@
       "en": "Dominican Republic",
       "ru": "Доминиканская Республика"
     },
+    "code": "DO",
     "flag": ["Flag_of_the_Dominican_Republic.webp"]
   },
   {
@@ -1299,6 +1484,7 @@
       "en": "Marshall Islands",
       "ru": "Маршалловы Острова"
     },
+    "code": "MH",
     "flag": ["Flag_of_the_Marshall_Islands.webp"]
   },
   {
@@ -1306,6 +1492,7 @@
       "en": "Federated States of Micronesia",
       "ru": "Федеративные Штаты Микронезии"
     },
+    "code": "FM",
     "flag": ["Flag_of_the_Federated_States_of_Micronesia.webp"]
   },
   {
@@ -1313,6 +1500,7 @@
       "en": "Netherlands",
       "ru": "Нидерланды"
     },
+    "code": "NL",
     "flag": ["Flag_of_the_Netherlands.webp"]
   },
   {
@@ -1320,6 +1508,7 @@
       "en": "China",
       "ru": "Китай"
     },
+    "code": "CN",
     "flag": ["Flag_of_the_People's_Republic_of_China.webp"]
   },
   {
@@ -1327,6 +1516,7 @@
       "en": "Philippines",
       "ru": "Филиппины"
     },
+    "code": "PH",
     "flag": ["Flag_of_the_Philippines.webp"]
   },
   {
@@ -1334,6 +1524,7 @@
       "en": "Taiwan",
       "ru": "Тайвань"
     },
+    "code": "TW",
     "flag": ["Flag_of_the_Republic_of_China.webp"]
   },
   {
@@ -1341,6 +1532,7 @@
       "en": "Republic of the Congo",
       "ru": "Республика Конго"
     },
+    "code": "CG",
     "flag": ["Flag_of_the_Republic_of_the_Congo.webp"]
   },
   {
@@ -1348,6 +1540,7 @@
       "en": "Solomon Islands",
       "ru": "Соломоновы Острова"
     },
+    "code": "SB",
     "flag": ["Flag_of_the_Solomon_Islands.webp"]
   },
   {
@@ -1355,6 +1548,7 @@
       "en": "United Arab Emirates",
       "ru": "ОАЭ"
     },
+    "code": "AE",
     "flag": ["Flag_of_the_United_Arab_Emirates.webp"]
   },
   {
@@ -1362,6 +1556,7 @@
       "en": "Syria",
       "ru": "Сирия"
     },
+    "code": "SY",
     "flag": ["Flag_of_the_Syrian_revolution.webp"]
   },
   {
@@ -1369,6 +1564,7 @@
       "en": "United Kingdom",
       "ru": "Великобритания"
     },
+    "code": "GB",
     "flag": ["Flag_of_the_United_Kingdom_(3-5).webp"]
   },
   {
@@ -1376,6 +1572,7 @@
       "en": "United States",
       "ru": "США"
     },
+    "code": "US",
     "flag": ["Flag_of_the_United_States.webp"]
   }
 ]

@@ -1,6 +1,8 @@
 import countryData from './countries.json' with { type: 'json' };
 
 export interface Country {
+  /** ISO 3166-1 alpha-2; Kosovo uses the user-assigned code XK. */
+  readonly code: string;
   readonly name: {
     readonly en: string;
     readonly ru: string;
