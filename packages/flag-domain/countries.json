@@ -25,7 +25,7 @@
       "en": "Andorra",
       "ru": "Андорра"
     },
-    "flag": ["Flag_of_Andorra.webp", "Flag_of_Andorra_(civil).webp"]
+    "flag": ["Flag_of_Andorra.webp"]
   },
   {
     "name": {
@@ -46,7 +46,7 @@
       "en": "Argentina",
       "ru": "Аргентина"
     },
-    "flag": ["Flag_of_Argentina.webp", "Flag_of_Argentina_(civil).webp"]
+    "flag": ["Flag_of_Argentina.webp"]
   },
   {
     "name": {
@@ -67,7 +67,7 @@
       "en": "Austria",
       "ru": "Австрия"
     },
-    "flag": ["Flag_of_Austria.webp", "Flag_of_Austria_(state).webp"]
+    "flag": ["Flag_of_Austria.webp"]
   },
   {
     "name": {
@@ -109,7 +109,7 @@
       "en": "Belgium",
       "ru": "Бельгия"
     },
-    "flag": ["Flag_of_Belgium.webp", "Flag_of_Belgium_(civil).webp"]
+    "flag": ["Flag_of_Belgium.webp"]
   },
   {
     "name": {
@@ -137,7 +137,7 @@
       "en": "Bolivia",
       "ru": "Боливия"
     },
-    "flag": ["Flag_of_Bolivia.webp", "Flag_of_Bolivia_(state).webp"]
+    "flag": ["Flag_of_Bolivia.webp"]
   },
   {
     "name": {
@@ -242,7 +242,7 @@
       "en": "Costa Rica",
       "ru": "Коста-Рика"
     },
-    "flag": ["Flag_of_Costa_Rica.webp", "Flag_of_Costa_Rica_(state).webp"]
+    "flag": ["Flag_of_Costa_Rica.webp"]
   },
   {
     "name": {
@@ -277,7 +277,7 @@
       "en": "Denmark",
       "ru": "Дания"
     },
-    "flag": ["Flag_of_Denmark.webp", "Flag_of_Denmark_(state).webp"]
+    "flag": ["Flag_of_Denmark.webp"]
   },
   {
     "name": {
@@ -305,7 +305,7 @@
       "en": "Ecuador",
       "ru": "Эквадор"
     },
-    "flag": ["Flag_of_Ecuador.webp", "Civil_flag_and_ensign_of_Ecuador.webp"]
+    "flag": ["Flag_of_Ecuador.webp"]
   },
   {
     "name": {
@@ -319,7 +319,7 @@
       "en": "El Salvador",
       "ru": "Сальвадор"
     },
-    "flag": ["Flag_of_El_Salvador.webp", "Civil_Flag_of_El_Salvador.webp"]
+    "flag": ["Flag_of_El_Salvador.webp"]
   },
   {
     "name": {
@@ -368,7 +368,7 @@
       "en": "Finland",
       "ru": "Финляндия"
     },
-    "flag": ["Flag_of_Finland.webp", "Flag_of_Finland_(state).webp"]
+    "flag": ["Flag_of_Finland.webp"]
   },
   {
     "name": {
@@ -424,7 +424,7 @@
       "en": "Guatemala",
       "ru": "Гватемала"
     },
-    "flag": ["Flag_of_Guatemala.webp", "Civil_ensign_of_Guatemala.webp"]
+    "flag": ["Flag_of_Guatemala.webp"]
   },
   {
     "name": {
@@ -452,7 +452,7 @@
       "en": "Haiti",
       "ru": "Гаити"
     },
-    "flag": ["Flag_of_Haiti.webp", "Flag_of_Haiti_(civil).webp"]
+    "flag": ["Flag_of_Haiti.webp"]
   },
   {
     "name": {
@@ -466,14 +466,14 @@
       "en": "Hungary",
       "ru": "Венгрия"
     },
-    "flag": ["Flag_of_Hungary.webp", "Civil_Ensign_of_Hungary.webp"]
+    "flag": ["Flag_of_Hungary.webp"]
   },
   {
     "name": {
       "en": "Iceland",
       "ru": "Исландия"
     },
-    "flag": ["Flag_of_Iceland.webp", "Flag_of_Iceland_(state).webp"]
+    "flag": ["Flag_of_Iceland.webp"]
   },
   {
     "name": {
@@ -641,7 +641,7 @@
       "en": "Luxembourg",
       "ru": "Люксембург"
     },
-    "flag": ["Flag_of_Luxembourg.webp", "Civil_Ensign_of_Luxembourg.webp"]
+    "flag": ["Flag_of_Luxembourg.webp"]
   },
   {
     "name": {
@@ -704,7 +704,7 @@
       "en": "Mexico",
       "ru": "Мексика"
     },
-    "flag": ["Flag_of_Mexico.webp", "Bandera_de_Mexico_uso_civil.webp"]
+    "flag": ["Flag_of_Mexico.webp"]
   },
   {
     "name": {
@@ -718,7 +718,7 @@
       "en": "Monaco",
       "ru": "Монако"
     },
-    "flag": ["Flag_of_Monaco.webp", "Flag_of_Monaco_(state).webp"]
+    "flag": ["Flag_of_Monaco.webp"]
   },
   {
     "name": {
@@ -823,7 +823,7 @@
       "en": "Norway",
       "ru": "Норвегия"
     },
-    "flag": ["Flag_of_Norway.webp", "Flag_of_Norway,_state.webp"]
+    "flag": ["Flag_of_Norway.webp"]
   },
   {
     "name": {
@@ -872,14 +872,14 @@
       "en": "Peru",
       "ru": "Перу"
     },
-    "flag": ["Flag_of_Peru.webp", "Flag_of_Peru_(state).webp"]
+    "flag": ["Flag_of_Peru.webp"]
   },
   {
     "name": {
       "en": "Poland",
       "ru": "Польша"
     },
-    "flag": ["Flag_of_Poland.webp", "Flag_of_Poland_(normative).webp"]
+    "flag": ["Flag_of_Poland.webp"]
   },
   {
     "name": {
@@ -935,7 +935,7 @@
       "en": "San Marino",
       "ru": "Сан-Марино"
     },
-    "flag": ["Flag_of_San_Marino.webp", "Flag_of_San_Marino_(civil).webp"]
+    "flag": ["Flag_of_San_Marino.webp"]
   },
   {
     "name": {
@@ -963,7 +963,7 @@
       "en": "Serbia",
       "ru": "Сербия"
     },
-    "flag": ["Flag_of_Serbia.webp", "Civil_flag_of_Serbia.webp"]
+    "flag": ["Flag_of_Serbia.webp"]
   },
   {
     "name": {
@@ -1047,7 +1047,7 @@
       "en": "Spain",
       "ru": "Испания"
     },
-    "flag": ["Flag_of_Spain.webp", "Flag_of_Spain_(civil).webp"]
+    "flag": ["Flag_of_Spain.webp"]
   },
   {
     "name": {
@@ -1222,7 +1222,7 @@
       "en": "Venezuela",
       "ru": "Венесуэла"
     },
-    "flag": ["Flag_of_Venezuela.webp", "Flag_of_Venezuela_(state).webp"]
+    "flag": ["Flag_of_Venezuela.webp"]
   },
   {
     "name": {
@@ -1362,10 +1362,7 @@
       "en": "Syria",
       "ru": "Сирия"
     },
-    "flag": [
-      "Flag_of_the_Syrian_revolution.webp",
-      "Flag_of_the_United_Arab_Republic_(1958–1971),_Flag_of_Syria_(1980–2024).webp"
-    ]
+    "flag": ["Flag_of_the_Syrian_revolution.webp"]
   },
   {
     "name": {
