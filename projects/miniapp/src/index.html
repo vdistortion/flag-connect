@@ -6,6 +6,41 @@
     <base href="/" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="theme-color" content="#17212b" />
+    <style>
+      html.telegram-miniapp body {
+        margin: 0;
+      }
+
+      html.telegram-miniapp app-header {
+        display: none;
+      }
+    </style>
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+    <script>
+      (() => {
+        const webApp = window.Telegram?.WebApp;
+        if (!webApp) return;
+
+        const applyTheme = () => {
+          const root = document.documentElement;
+          root.classList.add('telegram-miniapp');
+          for (const [key, value] of Object.entries(webApp.themeParams ?? {})) {
+            if (typeof value === 'string') {
+              root.style.setProperty(`--tg-theme-${key.replaceAll('_', '-')}`, value);
+            }
+          }
+          root.style.colorScheme = webApp.colorScheme;
+          const themeColor = document.querySelector('meta[name="theme-color"]');
+          if (themeColor && webApp.themeParams.bg_color) {
+            themeColor.setAttribute('content', webApp.themeParams.bg_color);
+          }
+        };
+
+        applyTheme();
+        webApp.onEvent('themeChanged', applyTheme);
+      })();
+    </script>
   </head>
   <body>
     <app-root></app-root>

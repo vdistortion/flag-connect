@@ -1,4 +1,4 @@
-<div class="wrapper">
+<div class="wrapper" [class.telegram-layout]="quizService.usesTelegramMainButton">
   @if (quizService.correctCountry(); as country) {
     <app-flag [image]="country.flag" [name]="country.name.ru" [priority]="true"></app-flag>
   }
@@ -20,7 +20,7 @@
       </app-button>
     }
 
-    @if (quizService.hasAnswered()) {
+    @if (quizService.hasAnswered() && !quizService.usesTelegramMainButton) {
       <app-button [country]="true" (clicked)="quizService.nextQuestion()">Далее</app-button>
     }
   </div>
