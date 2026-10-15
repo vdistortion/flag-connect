@@ -4,6 +4,7 @@ import { createUniversalTelegramBot } from '@verse-bot/telegram';
 import type { UniversalContext, UniversalKeyboardButton } from '@verse-bot/core';
 import { countries, createQuestion, type QuizQuestion } from '@flag-connect/flag-domain';
 import { createNumberedFlagImage } from './country-flag-composite.js';
+import { versionedFlagUrl } from './flag-asset-url.js';
 import {
   bold,
   button,
@@ -119,9 +120,12 @@ async function askQuestion(ctx: UniversalContext, mode: QuizMode): Promise<void>
   const choices =
     mode === 'flag'
       ? [
-          photo(`${flagsUrl}${encodeURIComponent(correctCountry.flag[0])}`, {
-            caption: 'Как называется страна на флаге?',
-          }),
+          photo(
+            await versionedFlagUrl(flagsUrl, join(flagsDirectory, 'bot'), correctCountry.flag[0]),
+            {
+              caption: 'Как называется страна на флаге?',
+            },
+          ),
           ...(hasChoices
             ? [
                 list(
@@ -178,7 +182,7 @@ async function handleCallback(ctx: UniversalContext, data: string): Promise<void
     const answer =
       mode === 'flag'
         ? paragraph([bold('Ответ: '), country.name.ru])
-        : photo(`${flagsUrl}${encodeURIComponent(country.flag[0])}`, {
+        : photo(await versionedFlagUrl(flagsUrl, join(flagsDirectory, 'bot'), country.flag[0]), {
             caption: `Правильный флаг страны ${country.name.ru}`,
           });
     await replyRich(ctx, doc(answer, followUpButtons(mode)));

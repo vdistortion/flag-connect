@@ -88,7 +88,7 @@ RCLONE_CONFIG_GARAGE_REGION=garage
 RCLONE_CONFIG_GARAGE_FORCE_PATH_STYLE=true
 ```
 
-Ограничь доступ к файлу: `chmod 600 ~/projects/flag-connect/deploy/.env.garage`. Он не коммитится и не передаётся в GitHub Actions. Actions запускает Rclone для синхронизации bucket в Docker volume. Сайт и Mini App берут флаги из `/images/flags/`; бот в режиме `/flags` — индивидуальные WebP до 440 px из `/images/flags/bot/`. В режиме угадывания бот композитит по два пронумерованных флага в изображение без отдельных подписей, повторяет вопрос перед общей группой кнопок и кэширует composites в отдельном Docker volume, раздаваемом по `/images/generated/`.
+Ограничь доступ к файлу: `chmod 600 ~/projects/flag-connect/deploy/.env.garage`. Он не коммитится и не передаётся в GitHub Actions. Actions запускает Rclone для синхронизации bucket в Docker volume. Сайт и Mini App берут флаги из `/images/flags/`; бот в режиме `/flags` — индивидуальные WebP до 440 px из `/images/flags/bot/`, добавляя к URL SHA-256 версии содержимого для обхода клиентского кэша. В режиме угадывания бот композитит по два пронумерованных флага в изображение без отдельных подписей, повторяет вопрос перед общей группой кнопок и кэширует composites в отдельном Docker volume, раздаваемом по `/images/generated/`.
 
 ## Общий пакет
 
