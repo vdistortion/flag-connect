@@ -218,7 +218,7 @@ async function handleCallback(ctx: UniversalContext, data: string): Promise<void
           : `☑️ Правильно, это ${correctName}`
         : mode === 'flag'
           ? `Вы ответили ${chosenName}.\n❌ Неправильно, это ${correctName}`
-          : `Вы выбрали другой флаг.\n❌ Правильный флаг — ${correctName}`;
+          : '❌ Вы выбрали неверный флаг.';
 
     await replyRich(ctx, doc(paragraph(result), followUpButtons(mode)));
     return;
