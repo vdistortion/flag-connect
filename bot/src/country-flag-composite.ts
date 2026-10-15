@@ -112,7 +112,7 @@ export async function createNumberedFlagImage(
   );
 
   const cacheKey = createHash('sha256')
-    .update('numbered-country-flags-v2\n')
+    .update('numbered-country-flags-v3\n')
     .update(
       sourceImages
         .map(({ flag, filename, source }) =>
@@ -137,7 +137,7 @@ export async function createNumberedFlagImage(
   }
 
   const outerPadding = IMAGE_PADDING;
-  const panelCount = flags.length;
+  const panelCount = 2;
   const width = panelCount * PANEL_WIDTH + (panelCount - 1) * PANEL_GAP + outerPadding * 2;
   const height = outerPadding + FLAG_PANEL_HEIGHT + LABEL_HEIGHT + outerPadding;
   const layers: OverlayOptions[] = [];

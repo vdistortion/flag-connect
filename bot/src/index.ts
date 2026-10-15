@@ -110,7 +110,12 @@ async function askQuestion(ctx: UniversalContext, mode: QuizMode): Promise<void>
   const correctCountry = question.countries[question.correctAnswerIndex];
   const correctCountryIndex = question.countryIndexes[question.correctAnswerIndex];
   const hasChoices = count > 1;
-  const questionPrompt = () => paragraph([bold('Найди флаг страны: '), correctCountry.name.ru]);
+  const questionPrompt = () =>
+    paragraph(
+      hasChoices
+        ? [bold('Найди флаг страны: '), correctCountry.name.ru]
+        : bold(`Как выглядит флаг страны «${correctCountry.name.ru}»?`),
+    );
   const choices =
     mode === 'flag'
       ? [

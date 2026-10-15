@@ -52,9 +52,13 @@ test('creates cached one- and two-panel quiz images with fixed canvases', async 
       sources,
       generated,
     );
-    const singleMetadata = await sharp(join(generated, single)).metadata();
-    assert.equal(singleMetadata.width, 448);
+    const singleImage = sharp(join(generated, single));
+    const singleMetadata = await singleImage.metadata();
+    assert.equal(singleMetadata.width, 896);
     assert.equal(singleMetadata.height, 349);
+    const { data, info } = await singleImage.raw().toBuffer({ resolveWithObject: true });
+    const emptyPanelPixel = (100 * info.width + 700) * info.channels;
+    assert.deepEqual([...data.subarray(emptyPanelPixel, emptyPanelPixel + 3)], [184, 190, 198]);
     assert.equal((await readdir(generated)).length, 2);
 
     await assert.rejects(
