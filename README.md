@@ -88,7 +88,7 @@ RCLONE_CONFIG_GARAGE_REGION=garage
 RCLONE_CONFIG_GARAGE_FORCE_PATH_STYLE=true
 ```
 
-Ограничь доступ к файлу: `chmod 600 ~/projects/flag-connect/deploy/.env.garage`. Он не коммитится и не передаётся в GitHub Actions. Actions запускает Rclone для синхронизации bucket в Docker volume. Сайт и Mini App продолжают брать оригиналы из `/images/flags/`, а бот — уменьшенные изображения из `/images/flags/400/`.
+Ограничь доступ к файлу: `chmod 600 ~/projects/flag-connect/deploy/.env.garage`. Он не коммитится и не передаётся в GitHub Actions. Actions запускает Rclone для синхронизации bucket в Docker volume. Сайт и Mini App берут оригиналы из `/images/flags/`, а бот — компактные WebP 219×146 из `/images/flags/bot/`, с сохранением пропорций и матовым фоном `#B8BEC6`.
 
 ## Общий пакет
 

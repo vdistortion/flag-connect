@@ -31,7 +31,7 @@ if (!configuredMiniAppUrl) throw new Error('MINIAPP_URL is required');
 const parsedMiniAppUrl = new URL(configuredMiniAppUrl);
 if (parsedMiniAppUrl.protocol !== 'https:') throw new Error('MINIAPP_URL must use HTTPS');
 const miniAppUrl = configuredMiniAppUrl.replace(/\/+$/, '');
-const flagsUrl = `${miniAppUrl}/images/flags/400/`;
+const flagsUrl = `${miniAppUrl}/images/flags/bot/`;
 const COUNTRY_CHOICE_GROUP_SIZE = 2;
 const counts = new Map<string, number>();
 const countFor = (ctx: UniversalContext) => counts.get(ctx.userId) ?? 4;

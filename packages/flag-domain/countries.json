@@ -5,7 +5,7 @@
       "ru": "Афганистан"
     },
     "code": "AF",
-    "flag": ["Flag_of_Afghanistan_(2013–2021).webp"]
+    "flag": ["af.webp"]
   },
   {
     "name": {
@@ -13,7 +13,7 @@
       "ru": "Алжир"
     },
     "code": "DZ",
-    "flag": ["Flag_of_Algeria.webp"]
+    "flag": ["dz.webp"]
   },
   {
     "name": {
@@ -21,7 +21,7 @@
       "ru": "Албания"
     },
     "code": "AL",
-    "flag": ["Flag_of_Albania.webp"]
+    "flag": ["al.webp"]
   },
   {
     "name": {
@@ -29,7 +29,7 @@
       "ru": "Андорра"
     },
     "code": "AD",
-    "flag": ["Flag_of_Andorra.webp"]
+    "flag": ["ad.webp"]
   },
   {
     "name": {
@@ -37,7 +37,7 @@
       "ru": "Ангола"
     },
     "code": "AO",
-    "flag": ["Flag_of_Angola.webp"]
+    "flag": ["ao.webp"]
   },
   {
     "name": {
@@ -45,7 +45,7 @@
       "ru": "Антигуа и Барбуда"
     },
     "code": "AG",
-    "flag": ["Flag_of_Antigua_and_Barbuda.webp"]
+    "flag": ["ag.webp"]
   },
   {
     "name": {
@@ -53,7 +53,7 @@
       "ru": "Аргентина"
     },
     "code": "AR",
-    "flag": ["Flag_of_Argentina.webp"]
+    "flag": ["ar.webp"]
   },
   {
     "name": {
@@ -61,7 +61,7 @@
       "ru": "Армения"
     },
     "code": "AM",
-    "flag": ["Flag_of_Armenia.webp"]
+    "flag": ["am.webp"]
   },
   {
     "name": {
@@ -69,7 +69,7 @@
       "ru": "Австралия"
     },
     "code": "AU",
-    "flag": ["Flag_of_Australia.webp"]
+    "flag": ["au.webp"]
   },
   {
     "name": {
@@ -77,7 +77,7 @@
       "ru": "Австрия"
     },
     "code": "AT",
-    "flag": ["Flag_of_Austria.webp"]
+    "flag": ["at.webp"]
   },
   {
     "name": {
@@ -85,7 +85,7 @@
       "ru": "Азербайджан"
     },
     "code": "AZ",
-    "flag": ["Flag_of_Azerbaijan.webp"]
+    "flag": ["az.webp"]
   },
   {
     "name": {
@@ -93,7 +93,7 @@
       "ru": "Бахрейн"
     },
     "code": "BH",
-    "flag": ["Flag_of_Bahrain.webp"]
+    "flag": ["bh.webp"]
   },
   {
     "name": {
@@ -101,7 +101,7 @@
       "ru": "Бангладеш"
     },
     "code": "BD",
-    "flag": ["Flag_of_Bangladesh.webp"]
+    "flag": ["bd.webp"]
   },
   {
     "name": {
@@ -109,7 +109,7 @@
       "ru": "Барбадос"
     },
     "code": "BB",
-    "flag": ["Flag_of_Barbados.webp"]
+    "flag": ["bb.webp"]
   },
   {
     "name": {
@@ -117,7 +117,7 @@
       "ru": "Беларусь"
     },
     "code": "BY",
-    "flag": ["Flag_of_Belarus.webp"]
+    "flag": ["by.webp"]
   },
   {
     "name": {
@@ -125,7 +125,7 @@
       "ru": "Бельгия"
     },
     "code": "BE",
-    "flag": ["Flag_of_Belgium.webp"]
+    "flag": ["be.webp"]
   },
   {
     "name": {
@@ -133,7 +133,7 @@
       "ru": "Белиз"
     },
     "code": "BZ",
-    "flag": ["Flag_of_Belize.webp"]
+    "flag": ["bz.webp"]
   },
   {
     "name": {
@@ -141,7 +141,7 @@
       "ru": "Бенин"
     },
     "code": "BJ",
-    "flag": ["Flag_of_Benin.webp"]
+    "flag": ["bj.webp"]
   },
   {
     "name": {
@@ -149,7 +149,7 @@
       "ru": "Бутан"
     },
     "code": "BT",
-    "flag": ["Flag_of_Bhutan.webp"]
+    "flag": ["bt.webp"]
   },
   {
     "name": {
@@ -157,7 +157,7 @@
       "ru": "Боливия"
     },
     "code": "BO",
-    "flag": ["Flag_of_Bolivia.webp"]
+    "flag": ["bo.webp"]
   },
   {
     "name": {
@@ -165,7 +165,7 @@
       "ru": "Босния и Герцеговина"
     },
     "code": "BA",
-    "flag": ["Flag_of_Bosnia_and_Herzegovina.webp"]
+    "flag": ["ba.webp"]
   },
   {
     "name": {
@@ -173,7 +173,7 @@
       "ru": "Ботсвана"
     },
     "code": "BW",
-    "flag": ["Flag_of_Botswana.webp"]
+    "flag": ["bw.webp"]
   },
   {
     "name": {
@@ -181,7 +181,7 @@
       "ru": "Бразилия"
     },
     "code": "BR",
-    "flag": ["Flag_of_Brazil.webp"]
+    "flag": ["br.webp"]
   },
   {
     "name": {
@@ -189,7 +189,7 @@
       "ru": "Бруней"
     },
     "code": "BN",
-    "flag": ["Flag_of_Brunei.webp"]
+    "flag": ["bn.webp"]
   },
   {
     "name": {
@@ -197,7 +197,7 @@
       "ru": "Болгария"
     },
     "code": "BG",
-    "flag": ["Flag_of_Bulgaria.webp"]
+    "flag": ["bg.webp"]
   },
   {
     "name": {
@@ -205,7 +205,7 @@
       "ru": "Буркина-Фасо"
     },
     "code": "BF",
-    "flag": ["Flag_of_Burkina_Faso.webp"]
+    "flag": ["bf.webp"]
   },
   {
     "name": {
@@ -213,7 +213,7 @@
       "ru": "Бурунди"
     },
     "code": "BI",
-    "flag": ["Flag_of_Burundi.webp"]
+    "flag": ["bi.webp"]
   },
   {
     "name": {
@@ -221,7 +221,7 @@
       "ru": "Камбоджа"
     },
     "code": "KH",
-    "flag": ["Flag_of_Cambodia.webp"]
+    "flag": ["kh.webp"]
   },
   {
     "name": {
@@ -229,7 +229,7 @@
       "ru": "Камерун"
     },
     "code": "CM",
-    "flag": ["Flag_of_Cameroon.webp"]
+    "flag": ["cm.webp"]
   },
   {
     "name": {
@@ -237,7 +237,7 @@
       "ru": "Канада"
     },
     "code": "CA",
-    "flag": ["Flag_of_Canada_(Pantone).webp"]
+    "flag": ["ca.webp"]
   },
   {
     "name": {
@@ -245,7 +245,7 @@
       "ru": "Кабо-Верде"
     },
     "code": "CV",
-    "flag": ["Flag_of_Cape_Verde.webp"]
+    "flag": ["cv.webp"]
   },
   {
     "name": {
@@ -253,7 +253,7 @@
       "ru": "Чад"
     },
     "code": "TD",
-    "flag": ["Flag_of_Chad.webp"]
+    "flag": ["td.webp"]
   },
   {
     "name": {
@@ -261,7 +261,7 @@
       "ru": "Чили"
     },
     "code": "CL",
-    "flag": ["Flag_of_Chile.webp"]
+    "flag": ["cl.webp"]
   },
   {
     "name": {
@@ -269,7 +269,7 @@
       "ru": "Колумбия"
     },
     "code": "CO",
-    "flag": ["Flag_of_Colombia.webp"]
+    "flag": ["co.webp"]
   },
   {
     "name": {
@@ -277,7 +277,7 @@
       "ru": "Коста-Рика"
     },
     "code": "CR",
-    "flag": ["Flag_of_Costa_Rica.webp"]
+    "flag": ["cr.webp"]
   },
   {
     "name": {
@@ -285,7 +285,7 @@
       "ru": "Хорватия"
     },
     "code": "HR",
-    "flag": ["Flag_of_Croatia.webp"]
+    "flag": ["hr.webp"]
   },
   {
     "name": {
@@ -293,7 +293,7 @@
       "ru": "Куба"
     },
     "code": "CU",
-    "flag": ["Flag_of_Cuba.webp"]
+    "flag": ["cu.webp"]
   },
   {
     "name": {
@@ -301,7 +301,7 @@
       "ru": "Кот-д’Ивуар"
     },
     "code": "CI",
-    "flag": ["Flag_of_Côte_d'Ivoire.webp"]
+    "flag": ["ci.webp"]
   },
   {
     "name": {
@@ -309,7 +309,7 @@
       "ru": "Кипр"
     },
     "code": "CY",
-    "flag": ["Flag_of_Cyprus.webp"]
+    "flag": ["cy.webp"]
   },
   {
     "name": {
@@ -317,7 +317,7 @@
       "ru": "Дания"
     },
     "code": "DK",
-    "flag": ["Flag_of_Denmark.webp"]
+    "flag": ["dk.webp"]
   },
   {
     "name": {
@@ -325,7 +325,7 @@
       "ru": "Джибути"
     },
     "code": "DJ",
-    "flag": ["Flag_of_Djibouti.webp"]
+    "flag": ["dj.webp"]
   },
   {
     "name": {
@@ -333,7 +333,7 @@
       "ru": "Доминика"
     },
     "code": "DM",
-    "flag": ["Flag_of_Dominica.webp"]
+    "flag": ["dm.webp"]
   },
   {
     "name": {
@@ -341,7 +341,7 @@
       "ru": "Восточный Тимор"
     },
     "code": "TL",
-    "flag": ["Flag_of_East_Timor.webp"]
+    "flag": ["tl.webp"]
   },
   {
     "name": {
@@ -349,7 +349,7 @@
       "ru": "Эквадор"
     },
     "code": "EC",
-    "flag": ["Flag_of_Ecuador.webp"]
+    "flag": ["ec.webp"]
   },
   {
     "name": {
@@ -357,7 +357,7 @@
       "ru": "Египет"
     },
     "code": "EG",
-    "flag": ["Flag_of_Egypt.webp"]
+    "flag": ["eg.webp"]
   },
   {
     "name": {
@@ -365,7 +365,7 @@
       "ru": "Сальвадор"
     },
     "code": "SV",
-    "flag": ["Flag_of_El_Salvador.webp"]
+    "flag": ["sv.webp"]
   },
   {
     "name": {
@@ -373,7 +373,7 @@
       "ru": "Экваториальная Гвинея"
     },
     "code": "GQ",
-    "flag": ["Flag_of_Equatorial_Guinea.webp"]
+    "flag": ["gq.webp"]
   },
   {
     "name": {
@@ -381,7 +381,7 @@
       "ru": "Эритрея"
     },
     "code": "ER",
-    "flag": ["Flag_of_Eritrea.webp"]
+    "flag": ["er.webp"]
   },
   {
     "name": {
@@ -389,7 +389,7 @@
       "ru": "Эстония"
     },
     "code": "EE",
-    "flag": ["Flag_of_Estonia.webp"]
+    "flag": ["ee.webp"]
   },
   {
     "name": {
@@ -397,7 +397,7 @@
       "ru": "Эсватини"
     },
     "code": "SZ",
-    "flag": ["Flag_of_Eswatini.webp"]
+    "flag": ["sz.webp"]
   },
   {
     "name": {
@@ -405,7 +405,7 @@
       "ru": "Эфиопия"
     },
     "code": "ET",
-    "flag": ["Flag_of_Ethiopia.webp"]
+    "flag": ["et.webp"]
   },
   {
     "name": {
@@ -413,7 +413,7 @@
       "ru": "Фиджи"
     },
     "code": "FJ",
-    "flag": ["Flag_of_Fiji.webp"]
+    "flag": ["fj.webp"]
   },
   {
     "name": {
@@ -421,7 +421,7 @@
       "ru": "Финляндия"
     },
     "code": "FI",
-    "flag": ["Flag_of_Finland.webp"]
+    "flag": ["fi.webp"]
   },
   {
     "name": {
@@ -429,7 +429,7 @@
       "ru": "Франция"
     },
     "code": "FR",
-    "flag": ["Flag_of_France.webp"]
+    "flag": ["fr.webp"]
   },
   {
     "name": {
@@ -437,7 +437,7 @@
       "ru": "Габон"
     },
     "code": "GA",
-    "flag": ["Flag_of_Gabon.webp"]
+    "flag": ["ga.webp"]
   },
   {
     "name": {
@@ -445,7 +445,7 @@
       "ru": "Грузия"
     },
     "code": "GE",
-    "flag": ["Flag_of_Georgia.webp"]
+    "flag": ["ge.webp"]
   },
   {
     "name": {
@@ -453,7 +453,7 @@
       "ru": "Германия"
     },
     "code": "DE",
-    "flag": ["Flag_of_Germany.webp"]
+    "flag": ["de.webp"]
   },
   {
     "name": {
@@ -461,7 +461,7 @@
       "ru": "Гана"
     },
     "code": "GH",
-    "flag": ["Flag_of_Ghana.webp"]
+    "flag": ["gh.webp"]
   },
   {
     "name": {
@@ -469,7 +469,7 @@
       "ru": "Греция"
     },
     "code": "GR",
-    "flag": ["Flag_of_Greece.webp"]
+    "flag": ["gr.webp"]
   },
   {
     "name": {
@@ -477,7 +477,7 @@
       "ru": "Гренада"
     },
     "code": "GD",
-    "flag": ["Flag_of_Grenada.webp"]
+    "flag": ["gd.webp"]
   },
   {
     "name": {
@@ -485,7 +485,7 @@
       "ru": "Гватемала"
     },
     "code": "GT",
-    "flag": ["Flag_of_Guatemala.webp"]
+    "flag": ["gt.webp"]
   },
   {
     "name": {
@@ -493,7 +493,7 @@
       "ru": "Гвинея-Бисау"
     },
     "code": "GW",
-    "flag": ["Flag_of_Guinea-Bissau.webp"]
+    "flag": ["gw.webp"]
   },
   {
     "name": {
@@ -501,7 +501,7 @@
       "ru": "Гвинея"
     },
     "code": "GN",
-    "flag": ["Flag_of_Guinea.webp"]
+    "flag": ["gn.webp"]
   },
   {
     "name": {
@@ -509,7 +509,7 @@
       "ru": "Гайана"
     },
     "code": "GY",
-    "flag": ["Flag_of_Guyana.webp"]
+    "flag": ["gy.webp"]
   },
   {
     "name": {
@@ -517,7 +517,7 @@
       "ru": "Гаити"
     },
     "code": "HT",
-    "flag": ["Flag_of_Haiti.webp"]
+    "flag": ["ht.webp"]
   },
   {
     "name": {
@@ -525,7 +525,7 @@
       "ru": "Гондурас"
     },
     "code": "HN",
-    "flag": ["Flag_of_Honduras.webp"]
+    "flag": ["hn.webp"]
   },
   {
     "name": {
@@ -533,7 +533,7 @@
       "ru": "Венгрия"
     },
     "code": "HU",
-    "flag": ["Flag_of_Hungary.webp"]
+    "flag": ["hu.webp"]
   },
   {
     "name": {
@@ -541,7 +541,7 @@
       "ru": "Исландия"
     },
     "code": "IS",
-    "flag": ["Flag_of_Iceland.webp"]
+    "flag": ["is.webp"]
   },
   {
     "name": {
@@ -549,7 +549,7 @@
       "ru": "Индия"
     },
     "code": "IN",
-    "flag": ["Flag_of_India.webp"]
+    "flag": ["in.webp"]
   },
   {
     "name": {
@@ -557,7 +557,7 @@
       "ru": "Индонезия"
     },
     "code": "ID",
-    "flag": ["Flag_of_Indonesia.webp"]
+    "flag": ["id.webp"]
   },
   {
     "name": {
@@ -565,7 +565,7 @@
       "ru": "Иран"
     },
     "code": "IR",
-    "flag": ["Flag_of_Iran.webp"]
+    "flag": ["ir.webp"]
   },
   {
     "name": {
@@ -573,7 +573,7 @@
       "ru": "Ирак"
     },
     "code": "IQ",
-    "flag": ["Flag_of_Iraq.webp"]
+    "flag": ["iq.webp"]
   },
   {
     "name": {
@@ -581,7 +581,7 @@
       "ru": "Ирландия"
     },
     "code": "IE",
-    "flag": ["Flag_of_Ireland.webp"]
+    "flag": ["ie.webp"]
   },
   {
     "name": {
@@ -589,7 +589,7 @@
       "ru": "Израиль"
     },
     "code": "IL",
-    "flag": ["Flag_of_Israel.webp"]
+    "flag": ["il.webp"]
   },
   {
     "name": {
@@ -597,7 +597,7 @@
       "ru": "Италия"
     },
     "code": "IT",
-    "flag": ["Flag_of_Italy.webp"]
+    "flag": ["it.webp"]
   },
   {
     "name": {
@@ -605,7 +605,7 @@
       "ru": "Ямайка"
     },
     "code": "JM",
-    "flag": ["Flag_of_Jamaica.webp"]
+    "flag": ["jm.webp"]
   },
   {
     "name": {
@@ -613,7 +613,7 @@
       "ru": "Япония"
     },
     "code": "JP",
-    "flag": ["Flag_of_Japan.webp"]
+    "flag": ["jp.webp"]
   },
   {
     "name": {
@@ -621,7 +621,7 @@
       "ru": "Иордания"
     },
     "code": "JO",
-    "flag": ["Flag_of_Jordan.webp"]
+    "flag": ["jo.webp"]
   },
   {
     "name": {
@@ -629,7 +629,7 @@
       "ru": "Казахстан"
     },
     "code": "KZ",
-    "flag": ["Flag_of_Kazakhstan.webp"]
+    "flag": ["kz.webp"]
   },
   {
     "name": {
@@ -637,7 +637,7 @@
       "ru": "Кения"
     },
     "code": "KE",
-    "flag": ["Flag_of_Kenya.webp"]
+    "flag": ["ke.webp"]
   },
   {
     "name": {
@@ -645,7 +645,7 @@
       "ru": "Кирибати"
     },
     "code": "KI",
-    "flag": ["Flag_of_Kiribati.webp"]
+    "flag": ["ki.webp"]
   },
   {
     "name": {
@@ -653,7 +653,7 @@
       "ru": "Кувейт"
     },
     "code": "KW",
-    "flag": ["Flag_of_Kuwait.webp"]
+    "flag": ["kw.webp"]
   },
   {
     "name": {
@@ -661,7 +661,7 @@
       "ru": "Кыргызстан"
     },
     "code": "KG",
-    "flag": ["Flag_of_Kyrgyzstan.webp"]
+    "flag": ["kg.webp"]
   },
   {
     "name": {
@@ -669,7 +669,7 @@
       "ru": "Лаос"
     },
     "code": "LA",
-    "flag": ["Flag_of_Laos.webp"]
+    "flag": ["la.webp"]
   },
   {
     "name": {
@@ -677,7 +677,7 @@
       "ru": "Латвия"
     },
     "code": "LV",
-    "flag": ["Flag_of_Latvia.webp"]
+    "flag": ["lv.webp"]
   },
   {
     "name": {
@@ -685,7 +685,7 @@
       "ru": "Ливан"
     },
     "code": "LB",
-    "flag": ["Flag_of_Lebanon.webp"]
+    "flag": ["lb.webp"]
   },
   {
     "name": {
@@ -693,7 +693,7 @@
       "ru": "Лесото"
     },
     "code": "LS",
-    "flag": ["Flag_of_Lesotho.webp"]
+    "flag": ["ls.webp"]
   },
   {
     "name": {
@@ -701,7 +701,7 @@
       "ru": "Либерия"
     },
     "code": "LR",
-    "flag": ["Flag_of_Liberia.webp"]
+    "flag": ["lr.webp"]
   },
   {
     "name": {
@@ -709,7 +709,7 @@
       "ru": "Ливия"
     },
     "code": "LY",
-    "flag": ["Flag_of_Libya.webp"]
+    "flag": ["ly.webp"]
   },
   {
     "name": {
@@ -717,7 +717,7 @@
       "ru": "Лихтенштейн"
     },
     "code": "LI",
-    "flag": ["Flag_of_Liechtenstein.webp"]
+    "flag": ["li.webp"]
   },
   {
     "name": {
@@ -725,7 +725,7 @@
       "ru": "Литва"
     },
     "code": "LT",
-    "flag": ["Flag_of_Lithuania.webp"]
+    "flag": ["lt.webp"]
   },
   {
     "name": {
@@ -733,7 +733,7 @@
       "ru": "Люксембург"
     },
     "code": "LU",
-    "flag": ["Flag_of_Luxembourg.webp"]
+    "flag": ["lu.webp"]
   },
   {
     "name": {
@@ -741,7 +741,7 @@
       "ru": "Мадагаскар"
     },
     "code": "MG",
-    "flag": ["Flag_of_Madagascar.webp"]
+    "flag": ["mg.webp"]
   },
   {
     "name": {
@@ -749,7 +749,7 @@
       "ru": "Малави"
     },
     "code": "MW",
-    "flag": ["Flag_of_Malawi.webp"]
+    "flag": ["mw.webp"]
   },
   {
     "name": {
@@ -757,7 +757,7 @@
       "ru": "Малайзия"
     },
     "code": "MY",
-    "flag": ["Flag_of_Malaysia.webp"]
+    "flag": ["my.webp"]
   },
   {
     "name": {
@@ -765,7 +765,7 @@
       "ru": "Мальдивы"
     },
     "code": "MV",
-    "flag": ["Flag_of_Maldives.webp"]
+    "flag": ["mv.webp"]
   },
   {
     "name": {
@@ -773,7 +773,7 @@
       "ru": "Мальта"
     },
     "code": "MT",
-    "flag": ["Flag_of_Malta.webp"]
+    "flag": ["mt.webp"]
   },
   {
     "name": {
@@ -781,7 +781,7 @@
       "ru": "Мали"
     },
     "code": "ML",
-    "flag": ["Flag_of_Mali.webp"]
+    "flag": ["ml.webp"]
   },
   {
     "name": {
@@ -789,7 +789,7 @@
       "ru": "Мавритания"
     },
     "code": "MR",
-    "flag": ["Flag_of_Mauritania.webp"]
+    "flag": ["mr.webp"]
   },
   {
     "name": {
@@ -797,7 +797,7 @@
       "ru": "Маврикий"
     },
     "code": "MU",
-    "flag": ["Flag_of_Mauritius.webp"]
+    "flag": ["mu.webp"]
   },
   {
     "name": {
@@ -805,7 +805,7 @@
       "ru": "Мексика"
     },
     "code": "MX",
-    "flag": ["Flag_of_Mexico.webp"]
+    "flag": ["mx.webp"]
   },
   {
     "name": {
@@ -813,7 +813,7 @@
       "ru": "Молдова"
     },
     "code": "MD",
-    "flag": ["Flag_of_Moldova.webp"]
+    "flag": ["md.webp"]
   },
   {
     "name": {
@@ -821,7 +821,7 @@
       "ru": "Монако"
     },
     "code": "MC",
-    "flag": ["Flag_of_Monaco.webp"]
+    "flag": ["mc.webp"]
   },
   {
     "name": {
@@ -829,7 +829,7 @@
       "ru": "Монголия"
     },
     "code": "MN",
-    "flag": ["Flag_of_Mongolia.webp"]
+    "flag": ["mn.webp"]
   },
   {
     "name": {
@@ -837,7 +837,7 @@
       "ru": "Черногория"
     },
     "code": "ME",
-    "flag": ["Flag_of_Montenegro.webp"]
+    "flag": ["me.webp"]
   },
   {
     "name": {
@@ -845,7 +845,7 @@
       "ru": "Марокко"
     },
     "code": "MA",
-    "flag": ["Flag_of_Morocco.webp"]
+    "flag": ["ma.webp"]
   },
   {
     "name": {
@@ -853,7 +853,7 @@
       "ru": "Мозамбик"
     },
     "code": "MZ",
-    "flag": ["Flag_of_Mozambique.webp"]
+    "flag": ["mz.webp"]
   },
   {
     "name": {
@@ -861,7 +861,7 @@
       "ru": "Мьянма"
     },
     "code": "MM",
-    "flag": ["Flag_of_Myanmar.webp"]
+    "flag": ["mm.webp"]
   },
   {
     "name": {
@@ -869,7 +869,7 @@
       "ru": "Намибия"
     },
     "code": "NA",
-    "flag": ["Flag_of_Namibia.webp"]
+    "flag": ["na.webp"]
   },
   {
     "name": {
@@ -877,7 +877,7 @@
       "ru": "Науру"
     },
     "code": "NR",
-    "flag": ["Flag_of_Nauru.webp"]
+    "flag": ["nr.webp"]
   },
   {
     "name": {
@@ -885,7 +885,7 @@
       "ru": "Непал"
     },
     "code": "NP",
-    "flag": ["Flag_of_Nepal.webp"]
+    "flag": ["np.webp"]
   },
   {
     "name": {
@@ -893,7 +893,7 @@
       "ru": "Новая Зеландия"
     },
     "code": "NZ",
-    "flag": ["Flag_of_New_Zealand.webp"]
+    "flag": ["nz.webp"]
   },
   {
     "name": {
@@ -901,7 +901,7 @@
       "ru": "Никарагуа"
     },
     "code": "NI",
-    "flag": ["Flag_of_Nicaragua.webp"]
+    "flag": ["ni.webp"]
   },
   {
     "name": {
@@ -909,7 +909,7 @@
       "ru": "Нигер"
     },
     "code": "NE",
-    "flag": ["Flag_of_Niger.webp"]
+    "flag": ["ne.webp"]
   },
   {
     "name": {
@@ -917,7 +917,7 @@
       "ru": "Северная Корея"
     },
     "code": "KP",
-    "flag": ["Flag_of_North_Korea.webp"]
+    "flag": ["kp.webp"]
   },
   {
     "name": {
@@ -925,7 +925,7 @@
       "ru": "Нигерия"
     },
     "code": "NG",
-    "flag": ["Flag_of_Nigeria.webp"]
+    "flag": ["ng.webp"]
   },
   {
     "name": {
@@ -933,7 +933,7 @@
       "ru": "Северная Македония"
     },
     "code": "MK",
-    "flag": ["Flag_of_North_Macedonia.webp"]
+    "flag": ["mk.webp"]
   },
   {
     "name": {
@@ -941,7 +941,7 @@
       "ru": "Норвегия"
     },
     "code": "NO",
-    "flag": ["Flag_of_Norway.webp"]
+    "flag": ["no.webp"]
   },
   {
     "name": {
@@ -949,7 +949,7 @@
       "ru": "Оман"
     },
     "code": "OM",
-    "flag": ["Flag_of_Oman.webp"]
+    "flag": ["om.webp"]
   },
   {
     "name": {
@@ -957,7 +957,7 @@
       "ru": "Пакистан"
     },
     "code": "PK",
-    "flag": ["Flag_of_Pakistan.webp"]
+    "flag": ["pk.webp"]
   },
   {
     "name": {
@@ -965,7 +965,7 @@
       "ru": "Палау"
     },
     "code": "PW",
-    "flag": ["Flag_of_Palau.webp"]
+    "flag": ["pw.webp"]
   },
   {
     "name": {
@@ -973,7 +973,7 @@
       "ru": "Панама"
     },
     "code": "PA",
-    "flag": ["Flag_of_Panama.webp"]
+    "flag": ["pa.webp"]
   },
   {
     "name": {
@@ -981,7 +981,7 @@
       "ru": "Парагвай"
     },
     "code": "PY",
-    "flag": ["Flag_of_Paraguay.webp", "Flag_of_Paraguay_(reverse).webp"]
+    "flag": ["py.webp", "py-reverse.webp"]
   },
   {
     "name": {
@@ -989,7 +989,7 @@
       "ru": "Папуа — Новая Гвинея"
     },
     "code": "PG",
-    "flag": ["Flag_of_Papua_New_Guinea.webp"]
+    "flag": ["pg.webp"]
   },
   {
     "name": {
@@ -997,7 +997,7 @@
       "ru": "Перу"
     },
     "code": "PE",
-    "flag": ["Flag_of_Peru.webp"]
+    "flag": ["pe.webp"]
   },
   {
     "name": {
@@ -1005,7 +1005,7 @@
       "ru": "Польша"
     },
     "code": "PL",
-    "flag": ["Flag_of_Poland.webp"]
+    "flag": ["pl.webp"]
   },
   {
     "name": {
@@ -1013,7 +1013,7 @@
       "ru": "Португалия"
     },
     "code": "PT",
-    "flag": ["Flag_of_Portugal.webp"]
+    "flag": ["pt.webp"]
   },
   {
     "name": {
@@ -1021,7 +1021,7 @@
       "ru": "Катар"
     },
     "code": "QA",
-    "flag": ["Flag_of_Qatar.webp"]
+    "flag": ["qa.webp"]
   },
   {
     "name": {
@@ -1029,7 +1029,7 @@
       "ru": "Румыния"
     },
     "code": "RO",
-    "flag": ["Flag_of_Romania.webp"]
+    "flag": ["ro.webp"]
   },
   {
     "name": {
@@ -1037,7 +1037,7 @@
       "ru": "Россия"
     },
     "code": "RU",
-    "flag": ["Flag_of_Russia.webp"]
+    "flag": ["ru.webp"]
   },
   {
     "name": {
@@ -1045,7 +1045,7 @@
       "ru": "Руанда"
     },
     "code": "RW",
-    "flag": ["Flag_of_Rwanda.webp"]
+    "flag": ["rw.webp"]
   },
   {
     "name": {
@@ -1053,7 +1053,7 @@
       "ru": "Сент-Китс и Невис"
     },
     "code": "KN",
-    "flag": ["Flag_of_Saint_Kitts_and_Nevis.webp"]
+    "flag": ["kn.webp"]
   },
   {
     "name": {
@@ -1061,7 +1061,7 @@
       "ru": "Сент-Люсия"
     },
     "code": "LC",
-    "flag": ["Flag_of_Saint_Lucia.webp"]
+    "flag": ["lc.webp"]
   },
   {
     "name": {
@@ -1069,7 +1069,7 @@
       "ru": "Сан-Марино"
     },
     "code": "SM",
-    "flag": ["Flag_of_San_Marino.webp"]
+    "flag": ["sm.webp"]
   },
   {
     "name": {
@@ -1077,7 +1077,7 @@
       "ru": "Самоа"
     },
     "code": "WS",
-    "flag": ["Flag_of_Samoa.webp"]
+    "flag": ["ws.webp"]
   },
   {
     "name": {
@@ -1085,7 +1085,7 @@
       "ru": "Саудовская Аравия"
     },
     "code": "SA",
-    "flag": ["Flag_of_Saudi_Arabia.webp"]
+    "flag": ["sa.webp"]
   },
   {
     "name": {
@@ -1093,7 +1093,7 @@
       "ru": "Сенегал"
     },
     "code": "SN",
-    "flag": ["Flag_of_Senegal.webp"]
+    "flag": ["sn.webp"]
   },
   {
     "name": {
@@ -1101,7 +1101,7 @@
       "ru": "Сербия"
     },
     "code": "RS",
-    "flag": ["Flag_of_Serbia.webp"]
+    "flag": ["rs.webp"]
   },
   {
     "name": {
@@ -1109,7 +1109,7 @@
       "ru": "Сент-Винсент и Гренадины"
     },
     "code": "VC",
-    "flag": ["Flag_of_Saint_Vincent_and_the_Grenadines.webp"]
+    "flag": ["vc.webp"]
   },
   {
     "name": {
@@ -1117,7 +1117,7 @@
       "ru": "Сейшельские Острова"
     },
     "code": "SC",
-    "flag": ["Flag_of_Seychelles.webp"]
+    "flag": ["sc.webp"]
   },
   {
     "name": {
@@ -1125,7 +1125,7 @@
       "ru": "Сьерра-Леоне"
     },
     "code": "SL",
-    "flag": ["Flag_of_Sierra_Leone.webp"]
+    "flag": ["sl.webp"]
   },
   {
     "name": {
@@ -1133,7 +1133,7 @@
       "ru": "Сингапур"
     },
     "code": "SG",
-    "flag": ["Flag_of_Singapore.webp"]
+    "flag": ["sg.webp"]
   },
   {
     "name": {
@@ -1141,7 +1141,7 @@
       "ru": "Словакия"
     },
     "code": "SK",
-    "flag": ["Flag_of_Slovakia.webp"]
+    "flag": ["sk.webp"]
   },
   {
     "name": {
@@ -1149,7 +1149,7 @@
       "ru": "Словения"
     },
     "code": "SI",
-    "flag": ["Flag_of_Slovenia.webp"]
+    "flag": ["si.webp"]
   },
   {
     "name": {
@@ -1157,7 +1157,7 @@
       "ru": "Сомали"
     },
     "code": "SO",
-    "flag": ["Flag_of_Somalia.webp"]
+    "flag": ["so.webp"]
   },
   {
     "name": {
@@ -1165,7 +1165,7 @@
       "ru": "Палестина"
     },
     "code": "PS",
-    "flag": ["Flag_of_Palestine.webp"]
+    "flag": ["ps.webp"]
   },
   {
     "name": {
@@ -1173,7 +1173,7 @@
       "ru": "ЮАР"
     },
     "code": "ZA",
-    "flag": ["Flag_of_South_Africa.webp"]
+    "flag": ["za.webp"]
   },
   {
     "name": {
@@ -1181,7 +1181,7 @@
       "ru": "Южная Корея"
     },
     "code": "KR",
-    "flag": ["Flag_of_South_Korea.webp"]
+    "flag": ["kr.webp"]
   },
   {
     "name": {
@@ -1189,7 +1189,7 @@
       "ru": "Южный Судан"
     },
     "code": "SS",
-    "flag": ["Flag_of_South_Sudan.webp"]
+    "flag": ["ss.webp"]
   },
   {
     "name": {
@@ -1197,7 +1197,7 @@
       "ru": "Испания"
     },
     "code": "ES",
-    "flag": ["Flag_of_Spain.webp"]
+    "flag": ["es.webp"]
   },
   {
     "name": {
@@ -1205,7 +1205,7 @@
       "ru": "Шри-Ланка"
     },
     "code": "LK",
-    "flag": ["Flag_of_Sri_Lanka.webp"]
+    "flag": ["lk.webp"]
   },
   {
     "name": {
@@ -1213,7 +1213,7 @@
       "ru": "Судан"
     },
     "code": "SD",
-    "flag": ["Flag_of_Sudan.webp"]
+    "flag": ["sd.webp"]
   },
   {
     "name": {
@@ -1221,7 +1221,7 @@
       "ru": "Суринам"
     },
     "code": "SR",
-    "flag": ["Flag_of_Suriname.webp"]
+    "flag": ["sr.webp"]
   },
   {
     "name": {
@@ -1229,7 +1229,7 @@
       "ru": "Швеция"
     },
     "code": "SE",
-    "flag": ["Flag_of_Sweden.webp"]
+    "flag": ["se.webp"]
   },
   {
     "name": {
@@ -1237,7 +1237,7 @@
       "ru": "Швейцария"
     },
     "code": "CH",
-    "flag": ["Flag_of_Switzerland.webp"]
+    "flag": ["ch.webp"]
   },
   {
     "name": {
@@ -1245,7 +1245,7 @@
       "ru": "Сан-Томе и Принсипи"
     },
     "code": "ST",
-    "flag": ["Flag_of_São_Tomé_and_Príncipe.webp"]
+    "flag": ["st.webp"]
   },
   {
     "name": {
@@ -1253,7 +1253,7 @@
       "ru": "Таджикистан"
     },
     "code": "TJ",
-    "flag": ["Flag_of_Tajikistan.webp"]
+    "flag": ["tj.webp"]
   },
   {
     "name": {
@@ -1261,7 +1261,7 @@
       "ru": "Танзания"
     },
     "code": "TZ",
-    "flag": ["Flag_of_Tanzania.webp"]
+    "flag": ["tz.webp"]
   },
   {
     "name": {
@@ -1269,7 +1269,7 @@
       "ru": "Таиланд"
     },
     "code": "TH",
-    "flag": ["Flag_of_Thailand.webp"]
+    "flag": ["th.webp"]
   },
   {
     "name": {
@@ -1277,7 +1277,7 @@
       "ru": "Гамбия"
     },
     "code": "GM",
-    "flag": ["Flag_of_The_Gambia.webp"]
+    "flag": ["gm.webp"]
   },
   {
     "name": {
@@ -1285,7 +1285,7 @@
       "ru": "Того"
     },
     "code": "TG",
-    "flag": ["Flag_of_Togo.webp"]
+    "flag": ["tg.webp"]
   },
   {
     "name": {
@@ -1293,7 +1293,7 @@
       "ru": "Тонга"
     },
     "code": "TO",
-    "flag": ["Flag_of_Tonga.webp"]
+    "flag": ["to.webp"]
   },
   {
     "name": {
@@ -1301,7 +1301,7 @@
       "ru": "Косово"
     },
     "code": "XK",
-    "flag": ["Flag_of_Kosovo.webp"]
+    "flag": ["xk.webp"]
   },
   {
     "name": {
@@ -1309,7 +1309,7 @@
       "ru": "Тринидад и Тобаго"
     },
     "code": "TT",
-    "flag": ["Flag_of_Trinidad_and_Tobago.webp"]
+    "flag": ["tt.webp"]
   },
   {
     "name": {
@@ -1317,7 +1317,7 @@
       "ru": "Тунис"
     },
     "code": "TN",
-    "flag": ["Flag_of_Tunisia.webp"]
+    "flag": ["tn.webp"]
   },
   {
     "name": {
@@ -1325,7 +1325,7 @@
       "ru": "Турция"
     },
     "code": "TR",
-    "flag": ["Flag_of_Turkey.webp"]
+    "flag": ["tr.webp"]
   },
   {
     "name": {
@@ -1333,7 +1333,7 @@
       "ru": "Туркменистан"
     },
     "code": "TM",
-    "flag": ["Flag_of_Turkmenistan.webp"]
+    "flag": ["tm.webp"]
   },
   {
     "name": {
@@ -1341,7 +1341,7 @@
       "ru": "Тувалу"
     },
     "code": "TV",
-    "flag": ["Flag_of_Tuvalu.webp"]
+    "flag": ["tv.webp"]
   },
   {
     "name": {
@@ -1349,7 +1349,7 @@
       "ru": "Уганда"
     },
     "code": "UG",
-    "flag": ["Flag_of_Uganda.webp"]
+    "flag": ["ug.webp"]
   },
   {
     "name": {
@@ -1357,7 +1357,7 @@
       "ru": "Украина"
     },
     "code": "UA",
-    "flag": ["Flag_of_Ukraine.webp"]
+    "flag": ["ua.webp"]
   },
   {
     "name": {
@@ -1365,7 +1365,7 @@
       "ru": "Уругвай"
     },
     "code": "UY",
-    "flag": ["Flag_of_Uruguay.webp"]
+    "flag": ["uy.webp"]
   },
   {
     "name": {
@@ -1373,7 +1373,7 @@
       "ru": "Узбекистан"
     },
     "code": "UZ",
-    "flag": ["Flag_of_Uzbekistan.webp"]
+    "flag": ["uz.webp"]
   },
   {
     "name": {
@@ -1381,7 +1381,7 @@
       "ru": "Вануату"
     },
     "code": "VU",
-    "flag": ["Flag_of_Vanuatu.webp"]
+    "flag": ["vu.webp"]
   },
   {
     "name": {
@@ -1389,7 +1389,7 @@
       "ru": "Ватикан"
     },
     "code": "VA",
-    "flag": ["Flag_of_Vatican_City_(2023–present).webp"]
+    "flag": ["va.webp"]
   },
   {
     "name": {
@@ -1397,7 +1397,7 @@
       "ru": "Венесуэла"
     },
     "code": "VE",
-    "flag": ["Flag_of_Venezuela.webp"]
+    "flag": ["ve.webp"]
   },
   {
     "name": {
@@ -1405,7 +1405,7 @@
       "ru": "Вьетнам"
     },
     "code": "VN",
-    "flag": ["Flag_of_Vietnam.webp"]
+    "flag": ["vn.webp"]
   },
   {
     "name": {
@@ -1413,7 +1413,7 @@
       "ru": "Йемен"
     },
     "code": "YE",
-    "flag": ["Flag_of_Yemen.webp"]
+    "flag": ["ye.webp"]
   },
   {
     "name": {
@@ -1421,7 +1421,7 @@
       "ru": "Замбия"
     },
     "code": "ZM",
-    "flag": ["Flag_of_Zambia.webp"]
+    "flag": ["zm.webp"]
   },
   {
     "name": {
@@ -1429,7 +1429,7 @@
       "ru": "Зимбабве"
     },
     "code": "ZW",
-    "flag": ["Flag_of_Zimbabwe.webp"]
+    "flag": ["zw.webp"]
   },
   {
     "name": {
@@ -1437,7 +1437,7 @@
       "ru": "Багамские Острова"
     },
     "code": "BS",
-    "flag": ["Flag_of_the_Bahamas.webp"]
+    "flag": ["bs.webp"]
   },
   {
     "name": {
@@ -1445,7 +1445,7 @@
       "ru": "Центральноафриканская Республика"
     },
     "code": "CF",
-    "flag": ["Flag_of_the_Central_African_Republic.webp"]
+    "flag": ["cf.webp"]
   },
   {
     "name": {
@@ -1453,7 +1453,7 @@
       "ru": "Коморы"
     },
     "code": "KM",
-    "flag": ["Flag_of_the_Comoros.webp"]
+    "flag": ["km.webp"]
   },
   {
     "name": {
@@ -1461,7 +1461,7 @@
       "ru": "Чехия"
     },
     "code": "CZ",
-    "flag": ["Flag_of_the_Czech_Republic.webp"]
+    "flag": ["cz.webp"]
   },
   {
     "name": {
@@ -1469,7 +1469,7 @@
       "ru": "Демократическая Республика Конго"
     },
     "code": "CD",
-    "flag": ["Flag_of_the_Democratic_Republic_of_the_Congo.webp"]
+    "flag": ["cd.webp"]
   },
   {
     "name": {
@@ -1477,7 +1477,7 @@
       "ru": "Доминиканская Республика"
     },
     "code": "DO",
-    "flag": ["Flag_of_the_Dominican_Republic.webp"]
+    "flag": ["do.webp"]
   },
   {
     "name": {
@@ -1485,7 +1485,7 @@
       "ru": "Маршалловы Острова"
     },
     "code": "MH",
-    "flag": ["Flag_of_the_Marshall_Islands.webp"]
+    "flag": ["mh.webp"]
   },
   {
     "name": {
@@ -1493,7 +1493,7 @@
       "ru": "Федеративные Штаты Микронезии"
     },
     "code": "FM",
-    "flag": ["Flag_of_the_Federated_States_of_Micronesia.webp"]
+    "flag": ["fm.webp"]
   },
   {
     "name": {
@@ -1501,7 +1501,7 @@
       "ru": "Нидерланды"
     },
     "code": "NL",
-    "flag": ["Flag_of_the_Netherlands.webp"]
+    "flag": ["nl.webp"]
   },
   {
     "name": {
@@ -1509,7 +1509,7 @@
       "ru": "Китай"
     },
     "code": "CN",
-    "flag": ["Flag_of_the_People's_Republic_of_China.webp"]
+    "flag": ["cn.webp"]
   },
   {
     "name": {
@@ -1517,7 +1517,7 @@
       "ru": "Филиппины"
     },
     "code": "PH",
-    "flag": ["Flag_of_the_Philippines.webp"]
+    "flag": ["ph.webp"]
   },
   {
     "name": {
@@ -1525,7 +1525,7 @@
       "ru": "Тайвань"
     },
     "code": "TW",
-    "flag": ["Flag_of_the_Republic_of_China.webp"]
+    "flag": ["tw.webp"]
   },
   {
     "name": {
@@ -1533,7 +1533,7 @@
       "ru": "Республика Конго"
     },
     "code": "CG",
-    "flag": ["Flag_of_the_Republic_of_the_Congo.webp"]
+    "flag": ["cg.webp"]
   },
   {
     "name": {
@@ -1541,7 +1541,7 @@
       "ru": "Соломоновы Острова"
     },
     "code": "SB",
-    "flag": ["Flag_of_the_Solomon_Islands.webp"]
+    "flag": ["sb.webp"]
   },
   {
     "name": {
@@ -1549,7 +1549,7 @@
       "ru": "ОАЭ"
     },
     "code": "AE",
-    "flag": ["Flag_of_the_United_Arab_Emirates.webp"]
+    "flag": ["ae.webp"]
   },
   {
     "name": {
@@ -1557,7 +1557,7 @@
       "ru": "Сирия"
     },
     "code": "SY",
-    "flag": ["Flag_of_the_Syrian_revolution.webp"]
+    "flag": ["sy.webp"]
   },
   {
     "name": {
@@ -1565,7 +1565,7 @@
       "ru": "Великобритания"
     },
     "code": "GB",
-    "flag": ["Flag_of_the_United_Kingdom_(3-5).webp"]
+    "flag": ["gb.webp"]
   },
   {
     "name": {
@@ -1573,6 +1573,6 @@
       "ru": "США"
     },
     "code": "US",
-    "flag": ["Flag_of_the_United_States.webp"]
+    "flag": ["us.webp"]
   }
 ]

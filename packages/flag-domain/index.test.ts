@@ -9,6 +9,17 @@ describe('countries', () => {
     expect(codes.every((code) => /^[A-Z]{2}$/.test(code))).toBe(true);
     expect(countries.find(({ name }) => name.en === 'Kosovo')?.code).toBe('XK');
   });
+
+  it('uses code-based WebP filenames, including Paraguay’s reverse side', () => {
+    for (const country of countries) {
+      expect(country.flag[0]).toBe(`${country.code.toLowerCase()}.webp`);
+    }
+
+    expect(countries.find(({ name }) => name.en === 'Paraguay')?.flag).toEqual([
+      'py.webp',
+      'py-reverse.webp',
+    ]);
+  });
 });
 
 describe('createQuestion', () => {
