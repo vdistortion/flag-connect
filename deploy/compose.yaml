@@ -9,6 +9,7 @@ services:
     restart: unless-stopped
     volumes:
       - flag-connect-flags:/usr/share/nginx/html/images/flags:ro
+      - flag-connect-generated:/usr/share/nginx/html/images/generated:ro
     networks:
       - caddy
     labels:
@@ -26,6 +27,7 @@ services:
       PORT: '4000'
     volumes:
       - flag-connect-flags:/app/dist/web/browser/images/flags:ro
+      - flag-connect-generated:/app/dist/web/browser/images/generated:ro
     networks:
       - caddy
     labels:
@@ -40,6 +42,12 @@ services:
     restart: unless-stopped
     env_file:
       - .env.bot
+    environment:
+      FLAG_ASSETS_DIR: /flags
+      GENERATED_FLAGS_DIR: /generated
+    volumes:
+      - flag-connect-flags:/flags:ro
+      - flag-connect-generated:/generated
 
   flags-sync:
     image: rclone/rclone:latest
@@ -47,7 +55,15 @@ services:
       - asset-sync
     restart: 'no'
     entrypoint: ['rclone']
-    command: ['sync', 'garage:flag-connect-assets', '/flags', '--delete-before']
+    command:
+      [
+        'sync',
+        'garage:flag-connect-assets',
+        '/flags',
+        '--delete-before',
+        '--exclude',
+        'generated/**',
+      ]
     env_file:
       - .env.garage
     volumes:
@@ -64,3 +80,5 @@ networks:
 volumes:
   flag-connect-flags:
     name: flag-connect-flags
+  flag-connect-generated:
+    name: flag-connect-generated

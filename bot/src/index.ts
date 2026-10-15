@@ -1,13 +1,14 @@
 import 'dotenv/config';
+import { join } from 'node:path';
 import { createUniversalTelegramBot } from '@verse-bot/telegram';
 import type { UniversalContext, UniversalKeyboardButton } from '@verse-bot/core';
 import { countries, createQuestion, type QuizQuestion } from '@flag-connect/flag-domain';
+import { createNumberedFlagImage } from './country-flag-composite.js';
 import {
   bold,
   button,
   buttonRow,
   type BlockNode,
-  collage,
   doc,
   list,
   paragraph,
@@ -32,6 +33,9 @@ const parsedMiniAppUrl = new URL(configuredMiniAppUrl);
 if (parsedMiniAppUrl.protocol !== 'https:') throw new Error('MINIAPP_URL must use HTTPS');
 const miniAppUrl = configuredMiniAppUrl.replace(/\/+$/, '');
 const flagsUrl = `${miniAppUrl}/images/flags/bot/`;
+const generatedFlagsUrl = `${miniAppUrl}/images/generated/`;
+const flagsDirectory = process.env.FLAG_ASSETS_DIR ?? '/flags';
+const generatedFlagsDirectory = process.env.GENERATED_FLAGS_DIR ?? '/generated';
 const COUNTRY_CHOICE_GROUP_SIZE = 2;
 const counts = new Map<string, number>();
 const countFor = (ctx: UniversalContext) => counts.get(ctx.userId) ?? 4;
@@ -59,37 +63,33 @@ function richChoiceRows(mode: QuizMode, indexes: number[], correctIndex: number,
   );
 }
 
-function countryChoiceBlocks(
-  question: QuizQuestion,
-  count: number,
-  countryName: string,
-  correctCountryIndex: number,
-): BlockNode[] {
+function followUpButtons(mode: QuizMode) {
+  return buttonRow([
+    button('⚙️ Настройки', {
+      type: 'callback_data',
+      data: `settings:${mode}`,
+    }),
+    button('Продолжить', { type: 'callback_data', data: `more:${mode}` }),
+  ]);
+}
+
+async function countryChoiceBlocks(question: QuizQuestion, count: number): Promise<BlockNode[]> {
   const blocks: BlockNode[] = [];
 
   for (let offset = 0; offset < count; offset += COUNTRY_CHOICE_GROUP_SIZE) {
     const indexes = question.countryIndexes.slice(offset, offset + COUNTRY_CHOICE_GROUP_SIZE);
     const firstNumber = offset + 1;
-    const lastNumber = offset + indexes.length;
-    blocks.push(
-      collage(
-        indexes.map((index) => ({
-          url: `${flagsUrl}${encodeURIComponent(countries[index].flag[0])}`,
-        })),
-        {
-          caption: `Флаг страны ${countryName}. Варианты ${firstNumber}–${lastNumber}: слева направо, сверху вниз.`,
-        },
-      ),
-      buttonRow(
-        indexes.map((countryIndex, index) =>
-          button(String(firstNumber + index), {
-            type: 'callback_data',
-            data: `answer:country:${countryIndex}:${correctCountryIndex}:${count}`,
-            style: 'primary',
-          }),
-        ),
-      ),
+    const numberedFlags = indexes.map((index, itemIndex) => ({
+      code: countries[index].code,
+      filename: countries[index].flag[0],
+      number: firstNumber + itemIndex,
+    }));
+    const compositeFilename = await createNumberedFlagImage(
+      numberedFlags,
+      join(flagsDirectory, 'bot'),
+      generatedFlagsDirectory,
     );
+    blocks.push(photo(`${generatedFlagsUrl}${encodeURIComponent(compositeFilename)}`));
   }
 
   return blocks;
@@ -109,27 +109,38 @@ async function askQuestion(ctx: UniversalContext, mode: QuizMode): Promise<void>
   const question = createQuestion(count);
   const correctCountry = question.countries[question.correctAnswerIndex];
   const correctCountryIndex = question.countryIndexes[question.correctAnswerIndex];
+  const hasChoices = count > 1;
+  const questionPrompt = () => paragraph([bold('Найди флаг страны: '), correctCountry.name.ru]);
   const choices =
     mode === 'flag'
       ? [
           photo(`${flagsUrl}${encodeURIComponent(correctCountry.flag[0])}`, {
             caption: 'Как называется страна на флаге?',
           }),
-          list(
-            question.countries.map((country) => country.name.ru),
-            { ordered: true },
-          ),
+          ...(hasChoices
+            ? [
+                list(
+                  question.countries.map((country) => country.name.ru),
+                  { ordered: true },
+                ),
+              ]
+            : []),
         ]
-      : [
-          paragraph([bold('Найди флаг страны: '), correctCountry.name.ru]),
-          ...countryChoiceBlocks(question, count, correctCountry.name.ru, correctCountryIndex),
-        ];
-  const trailingButtons =
-    mode === 'flag'
-      ? richChoiceRows(mode, question.countryIndexes, correctCountryIndex, count)
-      : [];
+      : [questionPrompt(), ...(hasChoices ? await countryChoiceBlocks(question, count) : [])];
+  const repeatedPrompt = mode === 'country' && hasChoices ? [questionPrompt()] : [];
+  const trailingButtons = hasChoices
+    ? richChoiceRows(mode, question.countryIndexes, correctCountryIndex, count)
+    : [
+        buttonRow([
+          button('Показать ответ', {
+            type: 'callback_data',
+            data: `reveal:${mode}:${correctCountryIndex}`,
+            style: 'primary',
+          }),
+        ]),
+      ];
 
-  await replyRich(ctx, doc(...choices, ...trailingButtons));
+  await replyRich(ctx, doc(...choices, ...repeatedPrompt, ...trailingButtons));
 }
 
 async function showSettings(ctx: UniversalContext, mode: QuizMode): Promise<void> {
@@ -148,6 +159,26 @@ async function showSettings(ctx: UniversalContext, mode: QuizMode): Promise<void
 
 async function handleCallback(ctx: UniversalContext, data: string): Promise<void> {
   const [action, ...parts] = data.split(':');
+
+  if (action === 'reveal') {
+    const [modeValue, countryIndexValue] = parts;
+    const mode = isQuizMode(modeValue) ? modeValue : undefined;
+    const countryIndex = Number(countryIndexValue);
+    if (!mode || !Number.isInteger(countryIndex) || !countries[countryIndex]) {
+      await ctx.reply('Вопрос устарел. Начни новый раунд через /flags или /country.');
+      return;
+    }
+
+    const country = countries[countryIndex];
+    const answer =
+      mode === 'flag'
+        ? paragraph([bold('Ответ: '), country.name.ru])
+        : photo(`${flagsUrl}${encodeURIComponent(country.flag[0])}`, {
+            caption: `Правильный флаг страны ${country.name.ru}`,
+          });
+    await replyRich(ctx, doc(answer, followUpButtons(mode)));
+    return;
+  }
 
   if (action === 'answer') {
     const [modeValue, chosenValue, correctValue, countValue] = parts;
@@ -180,19 +211,7 @@ async function handleCallback(ctx: UniversalContext, data: string): Promise<void
           ? `Вы ответили ${chosenName}.\n❌ Неправильно, это ${correctName}`
           : `Вы выбрали другой флаг.\n❌ Правильный флаг — ${correctName}`;
 
-    await replyRich(
-      ctx,
-      doc(
-        paragraph(result),
-        buttonRow([
-          button('⚙️ Настройки', {
-            type: 'callback_data',
-            data: `settings:${mode}`,
-          }),
-          button('Продолжить', { type: 'callback_data', data: `more:${mode}` }),
-        ]),
-      ),
-    );
+    await replyRich(ctx, doc(paragraph(result), followUpButtons(mode)));
     return;
   }
 

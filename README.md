@@ -88,11 +88,13 @@ RCLONE_CONFIG_GARAGE_REGION=garage
 RCLONE_CONFIG_GARAGE_FORCE_PATH_STYLE=true
 ```
 
-Ограничь доступ к файлу: `chmod 600 ~/projects/flag-connect/deploy/.env.garage`. Он не коммитится и не передаётся в GitHub Actions. Actions запускает Rclone для синхронизации bucket в Docker volume. Сайт и Mini App берут оригиналы из `/images/flags/`, а бот — компактные WebP 219×146 из `/images/flags/bot/`, с сохранением пропорций и матовым фоном `#B8BEC6`.
+Ограничь доступ к файлу: `chmod 600 ~/projects/flag-connect/deploy/.env.garage`. Он не коммитится и не передаётся в GitHub Actions. Actions запускает Rclone для синхронизации bucket в Docker volume. Сайт и Mini App берут флаги из `/images/flags/`; бот в режиме `/flags` — индивидуальные WebP до 440 px из `/images/flags/bot/`. В режиме угадывания бот композитит по два пронумерованных флага в изображение без отдельных подписей, повторяет вопрос перед общей группой кнопок и кэширует composites в отдельном Docker volume, раздаваемом по `/images/generated/`.
 
 ## Общий пакет
 
 `projects/shared` содержит общие страницы, UI и сервисы для сайта и Mini App. `packages/flag-domain` содержит каталог стран, типы и общую логику вопросов для Angular-приложений и бота.
+
+В настройке бота «Без вариантов» запускает режим показа ответа: для `/flags` бот показывает флаг и предлагает раскрыть название страны; для `/country` показывает страну и по нажатию «Показать ответ» присылает один исходный bot-флаг без композиции.
 
 Проверки:
 
