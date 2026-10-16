@@ -1,4 +1,5 @@
 import 'dotenv/config';
+import { randomUUID } from 'node:crypto';
 import { join } from 'node:path';
 import { createUniversalTelegramBot } from '@verse-bot/telegram';
 import type { UniversalContext, UniversalKeyboardButton } from '@verse-bot/core';
@@ -39,6 +40,15 @@ const flagsDirectory = process.env.FLAG_ASSETS_DIR ?? '/flags';
 const generatedFlagsDirectory = process.env.GENERATED_FLAGS_DIR ?? '/generated';
 const COUNTRY_CHOICE_GROUP_SIZE = 2;
 const counts = new Map<string, number>();
+interface QuizRound {
+  ownerId: string;
+  mode: QuizMode;
+  choiceCount: number;
+  correctCountryIndex: number;
+  answered: boolean;
+}
+
+const rounds = new Map<string, QuizRound>();
 const countFor = (ctx: UniversalContext) => counts.get(ctx.userId) ?? 4;
 
 const inline = (label: string, callbackData: string): UniversalKeyboardButton => ({
@@ -46,15 +56,11 @@ const inline = (label: string, callbackData: string): UniversalKeyboardButton =>
   command: callbackData,
 });
 
-function isQuizMode(value: string | undefined): value is QuizMode {
-  return value === 'flag' || value === 'country';
-}
-
-function richChoiceRows(mode: QuizMode, indexes: number[], correctIndex: number, count: number) {
+function richChoiceRows(roundId: string, indexes: number[]) {
   const buttons = indexes.map((countryIndex, choiceIndex) =>
     button(String(choiceIndex + 1), {
       type: 'callback_data',
-      data: `answer:${mode}:${countryIndex}:${correctIndex}:${count}`,
+      data: `answer:${roundId}:${countryIndex}`,
       style: 'primary',
     }),
   );
@@ -64,13 +70,13 @@ function richChoiceRows(mode: QuizMode, indexes: number[], correctIndex: number,
   );
 }
 
-function followUpButtons(mode: QuizMode) {
+function followUpButtons(mode: QuizMode, roundId: string) {
   return buttonRow([
     button('⚙️ Настройки', {
       type: 'callback_data',
-      data: `settings:${mode}`,
+      data: `settings:${roundId}`,
     }),
-    button('Продолжить', { type: 'callback_data', data: `more:${mode}` }),
+    button('Продолжить', { type: 'callback_data', data: `more:${roundId}` }),
   ]);
 }
 
@@ -110,6 +116,26 @@ async function askQuestion(ctx: UniversalContext, mode: QuizMode): Promise<void>
   const question = createQuestion(count);
   const correctCountry = question.countries[question.correctAnswerIndex];
   const correctCountryIndex = question.countryIndexes[question.correctAnswerIndex];
+  const roundId = randomUUID();
+  if (rounds.size >= 5_000) {
+    const oldestRoundId = rounds.keys().next().value;
+    if (oldestRoundId) rounds.delete(oldestRoundId);
+  }
+  rounds.set(roundId, {
+    ownerId: ctx.userId,
+    mode,
+    choiceCount: count,
+    correctCountryIndex,
+    answered: false,
+  });
+  const profile = ctx.chatType === 'private' ? null : await ctx.getUserProfile();
+  const ownerName = profile
+    ? [profile.firstName, profile.lastName].filter(Boolean).join(' ')
+    : undefined;
+  const addressedPrompt =
+    ctx.chatType === 'private'
+      ? []
+      : [paragraph(`Вопрос для ${ownerName || `участника ${ctx.userId}`}.`)];
   const hasChoices = count > 1;
   const questionPrompt = () =>
     paragraph(
@@ -120,6 +146,7 @@ async function askQuestion(ctx: UniversalContext, mode: QuizMode): Promise<void>
   const choices =
     mode === 'flag'
       ? [
+          ...addressedPrompt,
           photo(
             await versionedFlagUrl(flagsUrl, join(flagsDirectory, 'bot'), correctCountry.flag[0]),
             {
@@ -135,15 +162,19 @@ async function askQuestion(ctx: UniversalContext, mode: QuizMode): Promise<void>
               ]
             : []),
         ]
-      : [questionPrompt(), ...(hasChoices ? await countryChoiceBlocks(question, count) : [])];
+      : [
+          ...addressedPrompt,
+          questionPrompt(),
+          ...(hasChoices ? await countryChoiceBlocks(question, count) : []),
+        ];
   const repeatedPrompt = mode === 'country' && hasChoices ? [questionPrompt()] : [];
   const trailingButtons = hasChoices
-    ? richChoiceRows(mode, question.countryIndexes, correctCountryIndex, count)
+    ? richChoiceRows(roundId, question.countryIndexes)
     : [
         buttonRow([
           button('Показать ответ', {
             type: 'callback_data',
-            data: `reveal:${mode}:${correctCountryIndex}`,
+            data: `reveal:${roundId}`,
             style: 'primary',
           }),
         ]),
@@ -152,13 +183,13 @@ async function askQuestion(ctx: UniversalContext, mode: QuizMode): Promise<void>
   await replyRich(ctx, doc(...choices, ...repeatedPrompt, ...trailingButtons));
 }
 
-async function showSettings(ctx: UniversalContext, mode: QuizMode): Promise<void> {
+async function showSettings(ctx: UniversalContext, mode: QuizMode, roundId: string): Promise<void> {
   const countsButtons = [
     ...Array.from({ length: 9 }, (_, index) =>
-      inline(String(index + 2), `count:${mode}:${index + 2}`),
+      inline(String(index + 2), `count:${roundId}:${index + 2}`),
     ),
-    inline('Без вариантов', `count:${mode}:1`),
-    inline('10', `count:${mode}:10`),
+    inline('Без вариантов', `count:${roundId}:1`),
+    inline('10', `count:${roundId}:10`),
   ];
 
   await ctx.reply('Сколько должно быть вариантов ответа?', {
@@ -170,80 +201,95 @@ async function handleCallback(ctx: UniversalContext, data: string): Promise<void
   const [action, ...parts] = data.split(':');
 
   if (action === 'reveal') {
-    const [modeValue, countryIndexValue] = parts;
-    const mode = isQuizMode(modeValue) ? modeValue : undefined;
-    const countryIndex = Number(countryIndexValue);
-    if (!mode || !Number.isInteger(countryIndex) || !countries[countryIndex]) {
+    const [roundId] = parts;
+    const round = rounds.get(roundId);
+    if (!round) {
       await ctx.reply('Вопрос устарел. Начни новый раунд через /flags или /country.');
       return;
     }
+    if (round.ownerId !== ctx.userId) {
+      await ctx.reply('Этот вопрос предназначен другому участнику.');
+      return;
+    }
+    if (round.answered) {
+      await ctx.reply('Раунд завершён. Начни новый через /flags или /country.');
+      return;
+    }
 
-    const country = countries[countryIndex];
+    round.answered = true;
+    const country = countries[round.correctCountryIndex];
     const answer =
-      mode === 'flag'
+      round.mode === 'flag'
         ? paragraph([bold('Ответ: '), country.name.ru])
         : photo(await versionedFlagUrl(flagsUrl, join(flagsDirectory, 'bot'), country.flag[0]), {
             caption: `Правильный флаг страны ${country.name.ru}`,
           });
-    await replyRich(ctx, doc(answer, followUpButtons(mode)));
+    await replyRich(ctx, doc(answer, followUpButtons(round.mode, roundId)));
     return;
   }
 
   if (action === 'answer') {
-    const [modeValue, chosenValue, correctValue, countValue] = parts;
-    const mode = isQuizMode(modeValue) ? modeValue : undefined;
+    const [roundId, chosenValue] = parts;
+    const round = rounds.get(roundId);
     const chosen = Number(chosenValue);
-    const correct = Number(correctValue);
-    const count = Number(countValue);
-    if (
-      !mode ||
-      !Number.isInteger(chosen) ||
-      !countries[chosen] ||
-      !Number.isInteger(correct) ||
-      !countries[correct] ||
-      !Number.isInteger(count) ||
-      count < 1 ||
-      count > 10
-    ) {
+    if (!round || !Number.isInteger(chosen) || !countries[chosen]) {
       await ctx.reply('Вопрос устарел. Начни новый раунд через /flags или /country.');
       return;
     }
+    if (round.ownerId !== ctx.userId) {
+      await ctx.reply('Этот вопрос предназначен другому участнику.');
+      return;
+    }
+    if (round.answered) {
+      await ctx.reply('Раунд завершён. Начни новый через /flags или /country.');
+      return;
+    }
+    round.answered = true;
 
-    const correctName = countries[correct].name.ru;
+    const correctName = countries[round.correctCountryIndex].name.ru;
     const chosenName = countries[chosen].name.ru;
     const result =
-      chosen === correct
-        ? count === 1
+      chosen === round.correctCountryIndex
+        ? round.choiceCount === 1
           ? `Это ${correctName}`
           : `☑️ Правильно, это ${correctName}`
-        : mode === 'flag'
+        : round.mode === 'flag'
           ? `Вы ответили ${chosenName}.\n❌ Неправильно, это ${correctName}`
           : '❌ Вы выбрали неверный флаг.';
 
-    await replyRich(ctx, doc(paragraph(result), followUpButtons(mode)));
+    await replyRich(ctx, doc(paragraph(result), followUpButtons(round.mode, roundId)));
     return;
   }
 
   if (action === 'more' || action === 'settings') {
-    const mode = isQuizMode(parts[0]) ? parts[0] : undefined;
-    if (!mode) {
+    const [roundId] = parts;
+    const round = rounds.get(roundId);
+    if (!round) {
       await ctx.reply('Вопрос устарел. Начни новый раунд через /flags или /country.');
       return;
     }
+    if (round.ownerId !== ctx.userId) {
+      await ctx.reply('Эти кнопки предназначены участнику, запустившему раунд.');
+      return;
+    }
 
-    if (action === 'more') await askQuestion(ctx, mode);
-    else await showSettings(ctx, mode);
+    if (action === 'more') await askQuestion(ctx, round.mode);
+    else await showSettings(ctx, round.mode, roundId);
     return;
   }
 
   if (action === 'count') {
-    const [modeValue, countValue] = parts;
-    const mode = isQuizMode(modeValue) ? modeValue : undefined;
+    const [roundId, countValue] = parts;
+    const round = rounds.get(roundId);
     const count = Number(countValue);
-    if (!mode || !Number.isInteger(count) || count < 1 || count > 10) return;
+    if (!round || !Number.isInteger(count) || count < 1 || count > 10) return;
+    if (round.ownerId !== ctx.userId) {
+      await ctx.reply('Эти настройки принадлежат участнику, запустившему раунд.');
+      return;
+    }
 
     counts.set(ctx.userId, count);
-    await askQuestion(ctx, mode);
+    await askQuestion(ctx, round.mode);
     return;
   }
 
