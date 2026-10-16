@@ -21,7 +21,7 @@
     "prewatch": "npm run build:shared",
     "test": "ng test",
     "test:domain": "npm test --workspace=@flag-connect/flag-domain",
-    "prepare": "cp -n bot/.env.example bot/.env",
+    "prepare": "cp -n apps/bot/.env.example apps/bot/.env",
     "bot:dev": "npm run dev --workspace=flag-connect-bot",
     "prebot:dev": "npm run build --workspace=@flag-connect/flag-domain",
     "bot:build": "npm run build --workspace=flag-connect-bot",
@@ -34,7 +34,7 @@
   "license": "Apache-2.0",
   "packageManager": "npm@11.19.0",
   "workspaces": [
-    "bot",
+    "apps/*",
     "packages/*"
   ],
   "dependencies": {

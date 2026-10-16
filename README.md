@@ -8,7 +8,7 @@
 npm install
 ```
 
-При установке создаётся `bot/.env` из шаблона:
+При установке создаётся `apps/bot/.env` из шаблона:
 
 ```dotenv
 TELEGRAM_BOT_TOKEN=токен_бота
