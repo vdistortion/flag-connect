@@ -1,0 +1,46 @@
+<svg
+  xmlns="http://www.w3.org/2000/svg"
+  viewBox="0 0 1440 512"
+  role="img"
+  aria-labelledby="title desc"
+>
+  <title id="title">Широкий вариант логотипа для README</title>
+  <desc id="desc">
+    Знак и фон Telegram-аватара, размещённые по центру широкого холста без надписей.
+  </desc>
+  <defs>
+    <radialGradient id="background" gradientUnits="userSpaceOnUse" cx="720" cy="180" r="820">
+      <stop offset="0" stop-color="#5276ff" />
+      <stop offset="0.48" stop-color="#304fd5" />
+      <stop offset="1" stop-color="#17264f" />
+    </radialGradient>
+    <radialGradient id="glow" cx="50%" cy="50%" r="50%">
+      <stop offset="0" stop-color="#91a8ff" stop-opacity="0.3" />
+      <stop offset="1" stop-color="#91a8ff" stop-opacity="0" />
+    </radialGradient>
+  </defs>
+  <rect width="1440" height="512" fill="url(#background)" />
+  <g transform="translate(464 0)">
+    <circle cx="166" cy="136" r="220" fill="url(#glow)" />
+    <g fill="none" stroke="#dce4ff" stroke-opacity="0.12" stroke-width="1.5">
+      <circle cx="256" cy="256" r="205" />
+      <circle cx="256" cy="256" r="176" />
+      <path d="M51 256h410M256 51v410" />
+      <ellipse cx="256" cy="256" rx="86" ry="205" />
+      <ellipse cx="256" cy="256" rx="176" ry="86" />
+    </g>
+    <g fill="#ffd66e">
+      <circle cx="420" cy="190" r="5" />
+      <circle cx="200" cy="430" r="3" opacity="0.75" />
+      <path d="M386 354h4v12h-4zM382 358h12v4h-12z" opacity="0.85" />
+    </g>
+    <g transform="translate(96 96) scale(5)" fill="#fff">
+      <rect x="4" y="4" width="12" height="56" rx="2" />
+      <rect x="4" y="4" width="25.5" height="12" rx="2" />
+      <rect x="4" y="28" width="25.5" height="12" rx="2" />
+      <rect x="48" y="4" width="12" height="36" rx="2" />
+      <rect x="34.5" y="4" width="25.5" height="12" rx="2" />
+      <rect x="34.5" y="28" width="25.5" height="12" rx="2" />
+    </g>
+  </g>
+</svg>

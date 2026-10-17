@@ -1,5 +1,9 @@
 # FlagConnect
 
+<p align="center">
+  <img src="assets/brand/readme-banner.svg" alt="FlagConnect" width="100%" />
+</p>
+
 Проект включает Telegram Mini App, Telegram-бота и общий пакет `@flag-connect/flag-domain` с данными стран и логикой викторины.
 
 ## Установка
