@@ -18,11 +18,29 @@ button {
     color: var(--text-color);
   }
 
+  &.answer-option {
+    min-height: 56px;
+    text-align: start;
+    text-transform: none;
+    line-height: 1.3;
+    overflow-wrap: anywhere;
+  }
+
   &.success {
     background-color: var(--success-color);
   }
 
   &.error {
     background-color: var(--error-color);
+  }
+
+  &:disabled {
+    cursor: not-allowed;
+    opacity: 0.72;
+  }
+
+  &:focus-visible {
+    outline: 3px solid var(--text-color-hover);
+    outline-offset: 3px;
   }
 }

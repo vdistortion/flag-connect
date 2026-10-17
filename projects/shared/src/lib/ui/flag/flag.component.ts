@@ -1,5 +1,14 @@
 import { NgOptimizedImage } from '@angular/common';
-import { Component, computed, inject, input, output, signal } from '@angular/core';
+import {
+  Component,
+  computed,
+  ElementRef,
+  inject,
+  input,
+  output,
+  signal,
+  viewChild,
+} from '@angular/core';
 import { IconComponent } from '../icon/icon.component';
 import { LanguageService } from '../../services/language.service';
 
@@ -11,6 +20,7 @@ import { LanguageService } from '../../services/language.service';
 })
 export class FlagComponent {
   protected readonly messages = inject(LanguageService).messages;
+  private readonly imageButton = viewChild<ElementRef<HTMLButtonElement>>('imageButton');
   readonly error = input(false);
   readonly success = input(false);
   readonly image = input<readonly string[]>([]);
@@ -34,5 +44,9 @@ export class FlagComponent {
   selectFlag() {
     const source = this.imageSource();
     if (source) this.selected.emit(source);
+  }
+
+  focus(): void {
+    this.imageButton()?.nativeElement.focus();
   }
 }

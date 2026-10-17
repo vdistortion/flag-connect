@@ -3,8 +3,9 @@ import { WebStorageService } from './webstorage.service';
 
 export const QUIZ_SETTINGS = {
   defaultCount: 4,
+  noChoicesCount: 1,
   minCount: 2,
-  maxCount: 6,
+  maxCount: 10,
 } as const;
 const STORAGE_KEY = 'fc-count';
 
@@ -18,8 +19,8 @@ export class SettingsService {
   setCount(value: number): void {
     if (
       !Number.isInteger(value) ||
-      value < QUIZ_SETTINGS.minCount ||
-      value > QUIZ_SETTINGS.maxCount
+      (value !== QUIZ_SETTINGS.noChoicesCount &&
+        (value < QUIZ_SETTINGS.minCount || value > QUIZ_SETTINGS.maxCount))
     ) {
       return;
     }
@@ -33,8 +34,8 @@ export class SettingsService {
     const value = this.storage.get<unknown>(STORAGE_KEY);
     return typeof value === 'number' &&
       Number.isInteger(value) &&
-      value >= QUIZ_SETTINGS.minCount &&
-      value <= QUIZ_SETTINGS.maxCount
+      (value === QUIZ_SETTINGS.noChoicesCount ||
+        (value >= QUIZ_SETTINGS.minCount && value <= QUIZ_SETTINGS.maxCount))
       ? value
       : QUIZ_SETTINGS.defaultCount;
   }

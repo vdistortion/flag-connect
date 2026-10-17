@@ -8,6 +8,7 @@
     @if (image().length > 1) {
       <div class="flag__icon">
         <button
+          #imageButton
           class="flag__variant-button"
           type="button"
           [attr.aria-label]="messages().showAnotherFlag + ': ' + name()"

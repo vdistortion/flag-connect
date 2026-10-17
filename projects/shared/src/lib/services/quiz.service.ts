@@ -13,10 +13,14 @@ export class QuizService implements OnDestroy {
   private readonly language = inject(LanguageService);
   readonly usesTelegramMainButton = this.mainButton !== null;
   readonly count = computed(() => this.settings.count());
+  readonly noChoices = computed(() => this.count() === 1);
   readonly countries = signal<readonly Country[]>([]);
   readonly correctAnswerIndex = signal(-1);
   readonly answerIndex = signal(-1);
-  readonly hasAnswered = computed(() => this.answerIndex() >= 0);
+  readonly answerRevealed = signal(false);
+  readonly hasAnswered = computed(() =>
+    this.noChoices() ? this.answerRevealed() : this.answerIndex() >= 0,
+  );
   readonly correctCountry = computed(() => this.countries()[this.correctAnswerIndex()] ?? null);
 
   constructor() {
@@ -27,8 +31,16 @@ export class QuizService implements OnDestroy {
   }
 
   selectAnswer(index: number): void {
-    if (this.hasAnswered() || index < 0 || index >= this.countries().length) return;
+    if (this.noChoices() || this.hasAnswered() || index < 0 || index >= this.countries().length) {
+      return;
+    }
     this.answerIndex.set(index);
+    this.updateMainButton();
+  }
+
+  revealAnswer(): void {
+    if (!this.noChoices() || this.answerRevealed()) return;
+    this.answerRevealed.set(true);
     this.updateMainButton();
   }
 
@@ -37,12 +49,20 @@ export class QuizService implements OnDestroy {
     this.countries.set(question.countries);
     this.correctAnswerIndex.set(question.correctAnswerIndex);
     this.answerIndex.set(-1);
+    this.answerRevealed.set(false);
     this.updateMainButton();
   }
 
   private updateMainButton(): void {
+    const noChoices = this.noChoices();
     const answered = this.hasAnswered();
     const messages = this.language.messages();
+
+    if (noChoices && !answered) {
+      this.mainButton?.set(messages.showAnswer, true, () => this.revealAnswer());
+      return;
+    }
+
     this.mainButton?.set(answered ? messages.next : messages.chooseAnswer, answered, () => {
       if (answered) this.nextQuestion();
     });

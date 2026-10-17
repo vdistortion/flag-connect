@@ -1,31 +1,73 @@
-<div class="wrapper" [class.telegram-layout]="quizService.usesTelegramMainButton">
-  @if (quizService.correctCountry(); as correctCountry) {
-    <h1 class="name">{{ correctCountry.name[language()] }}</h1>
+<div
+  class="wrapper quiz-page"
+  [class.telegram-layout]="quizService.usesTelegramMainButton"
+  [class.web-quiz]="!quizService.usesTelegramMainButton"
+>
+  @if (quizService.correctCountry(); as country) {
+    <header class="quiz-question">
+      <h1 class="name">{{ country.name[language()] }}</h1>
+      <p class="quiz-prompt">{{ messages().countryFlagPrompt }}</p>
+    </header>
+
+    @if (quizService.noChoices()) {
+      @if (quizService.hasAnswered()) {
+        <app-flag
+          class="answer-reveal-flag"
+          [aspectRatio]="75"
+          [image]="country.flag"
+          [name]="country.name[language()]"
+          [priority]="true"
+        ></app-flag>
+      }
+    } @else {
+      @if (quizService.hasAnswered()) {
+        <p class="visually-hidden" aria-live="polite">
+          {{
+            quizService.answerIndex() === quizService.correctAnswerIndex()
+              ? messages().correctAnswer
+              : messages().incorrectAnswer
+          }}
+        </p>
+      }
+      <div class="countries flag-options">
+        @for (option of quizService.countries(); track option.name.en; let index = $index) {
+          <app-flag
+            #answerFlag
+            class="flag"
+            [aspectRatio]="75"
+            [success]="quizService.hasAnswered() && index === quizService.correctAnswerIndex()"
+            [error]="
+              quizService.hasAnswered() &&
+              index === quizService.answerIndex() &&
+              index !== quizService.correctAnswerIndex()
+            "
+            [image]="option.flag"
+            [name]="messages().flagOption + ' ' + (index + 1)"
+            [selectable]="true"
+            [disabled]="quizService.hasAnswered()"
+            (selected)="selectAnswer(index)"
+          ></app-flag>
+        }
+      </div>
+    }
+
+    @if (!quizService.usesTelegramMainButton) {
+      <div class="quiz-action-bar">
+        <app-button
+          #actionButton
+          [country]="true"
+          [disabled]="!quizService.noChoices() && !quizService.hasAnswered()"
+          (clicked)="activateAction()"
+        >
+          @if (quizService.noChoices() && !quizService.hasAnswered()) {
+            {{ messages().showAnswer }}
+          } @else if (quizService.hasAnswered()) {
+            {{ messages().next }}
+          } @else {
+            {{ messages().chooseAnswer }}
+          }
+        </app-button>
+      </div>
+    }
   }
-
-  <div class="countries">
-    @for (country of quizService.countries(); track country.name.en; let index = $index) {
-      <app-flag
-        class="flag"
-        [aspectRatio]="75"
-        [success]="quizService.hasAnswered() && index === quizService.correctAnswerIndex()"
-        [error]="
-          quizService.hasAnswered() &&
-          index === quizService.answerIndex() &&
-          index !== quizService.correctAnswerIndex()
-        "
-        [image]="country.flag"
-        [name]="country.name[language()]"
-        [selectable]="true"
-        [disabled]="quizService.hasAnswered()"
-        (selected)="quizService.selectAnswer(index)"
-      ></app-flag>
-    }
-
-    @if (quizService.hasAnswered() && !quizService.usesTelegramMainButton) {
-      <app-button [country]="true" (clicked)="quizService.nextQuestion()">
-        {{ messages().next }}
-      </app-button>
-    }
-  </div>
 </div>

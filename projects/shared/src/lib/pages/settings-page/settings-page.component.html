@@ -8,19 +8,16 @@
     <tbody>
       <tr>
         <th scope="row">{{ messages().answerCount }}</th>
-        <td>{{ settings.count() }}</td>
-        <td>
+        <td colspan="2">
           <label class="visually-hidden" for="answer-count">{{
             messages().answerCountLabel
           }}</label>
-          <input
-            id="answer-count"
-            type="range"
-            [value]="settings.count()"
-            [min]="minCount"
-            [max]="maxCount"
-            (input)="setCount($event)"
-          />
+          <select id="answer-count" [value]="settings.count()" (change)="setCount($event)">
+            <option [value]="noChoicesCount">{{ messages().noChoices }}</option>
+            @for (count of choiceCounts; track count) {
+              <option [value]="count">{{ count }}</option>
+            }
+          </select>
         </td>
       </tr>
     </tbody>

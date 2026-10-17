@@ -1,21 +1,89 @@
-.wrapper.telegram-layout {
+.quiz-page.telegram-layout {
   min-height: calc(100dvh - 40px);
   display: flex;
   flex-direction: column;
 }
 
-.countries {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  grid-gap: 20px;
-  margin-top: 20px;
-
-  @media (max-width: 320px) {
-    grid-template-columns: repeat(1, 1fr);
-  }
+.quiz-page.telegram-layout .quiz-layout {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
 }
 
-.wrapper.telegram-layout .countries {
+.quiz-page.telegram-layout .answer-panel {
   margin-top: auto;
+}
+
+.quiz-layout--web {
+  display: grid;
+  grid-template-columns: minmax(0, 0.95fr) minmax(0, 1.05fr);
+  align-items: center;
+  gap: clamp(24px, 4vw, 56px);
+}
+
+.question-panel,
+.answer-panel {
+  min-width: 0;
+}
+
+.question-panel app-flag {
+  max-width: 660px;
+  margin-inline: auto;
+}
+
+.quiz-prompt {
+  margin: 0 0 18px;
+  font-size: clamp(20px, 2vw, 28px);
+  line-height: 1.3;
+}
+
+.answer-reveal {
+  margin: 0;
+  font-size: clamp(24px, 2.5vw, 36px);
+  font-weight: 700;
+}
+
+.countries {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: clamp(10px, 1.5vw, 20px);
+  margin-top: 20px;
+}
+
+.quiz-page.telegram-layout .countries {
+  margin-top: 20px;
   padding: 20px 0;
+}
+
+.quiz-action-bar {
+  position: fixed;
+  z-index: 10;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  display: flex;
+  justify-content: center;
+  padding: 12px 20px calc(12px + env(safe-area-inset-bottom));
+  border-top: 1px solid color-mix(in srgb, var(--text-color) 14%, transparent);
+  background: var(--bg-color);
+}
+
+.quiz-action-bar app-button {
+  width: min(100%, 520px);
+}
+
+.quiz-page.web-quiz {
+  min-height: calc(100dvh - 80px);
+  padding-bottom: calc(100px + env(safe-area-inset-bottom));
+}
+
+@media (max-width: 760px) {
+  .quiz-layout--web {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 20px;
+  }
+
+  .question-panel app-flag {
+    max-width: 600px;
+  }
 }
