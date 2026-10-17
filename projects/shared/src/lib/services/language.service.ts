@@ -150,5 +150,27 @@ export class LanguageService {
     this.document.documentElement.lang = language;
     this.document.title = MESSAGES[language].pageTitle;
     this.document.documentElement.classList.remove('locale-pending');
+
+    const debugPanel = this.document.getElementById('locale-debug-panel');
+    if (!debugPanel) return;
+
+    const telegram = (this.document.defaultView as TelegramWindow | null)?.Telegram?.WebApp;
+    const telegramLanguage = telegram?.initDataUnsafe?.user?.language_code;
+    const browserNavigator = this.document.defaultView?.navigator;
+    const browserLanguages =
+      browserNavigator?.languages?.join(', ') || browserNavigator?.language || 'not provided';
+    const source = this.document.documentElement.classList.contains('telegram-miniapp')
+      ? telegramLanguage
+        ? 'Telegram language_code'
+        : 'browser fallback'
+      : this.request
+        ? 'Accept-Language'
+        : 'navigator.language';
+
+    debugPanel.textContent = [
+      `Telegram language_code: ${telegramLanguage ?? 'not provided'}`,
+      `navigator.languages: ${browserLanguages}`,
+      `applied app language: ${language} (${source})`,
+    ].join('\n');
   }
 }
