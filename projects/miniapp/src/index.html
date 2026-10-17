@@ -19,25 +19,6 @@
       html.locale-pending app-root {
         visibility: hidden;
       }
-
-      #locale-debug-panel {
-        position: fixed;
-        z-index: 10000;
-        top: 8px;
-        right: 8px;
-        max-width: min(360px, calc(100vw - 16px));
-        padding: 10px 12px;
-        border: 1px solid rgb(255 255 255 / 25%);
-        border-radius: 8px;
-        color: #ffffff;
-        background: rgb(15 23 42 / 92%);
-        font:
-          12px/1.5 ui-monospace,
-          monospace;
-        white-space: pre-wrap;
-        overflow-wrap: anywhere;
-        pointer-events: none;
-      }
     </style>
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <script>
@@ -79,7 +60,6 @@
     </script>
   </head>
   <body>
-    <aside id="locale-debug-panel" role="status" aria-live="polite"></aside>
     <app-root ngSkipHydration></app-root>
   </body>
 </html>

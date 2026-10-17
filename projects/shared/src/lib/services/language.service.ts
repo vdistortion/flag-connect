@@ -66,13 +66,6 @@ export function languageFromTag(tag: string | null | undefined): AppLanguage {
   return tag?.toLowerCase().startsWith('ru') ? 'ru' : 'en';
 }
 
-export function supportedLanguageFromTag(tag: string | null | undefined): AppLanguage | null {
-  const normalizedTag = tag?.toLowerCase();
-  if (normalizedTag?.startsWith('ru')) return 'ru';
-  if (normalizedTag?.startsWith('en')) return 'en';
-  return null;
-}
-
 export function miniAppLanguageFromTags(
   telegramTag: string | null | undefined,
   browserTag: string | null | undefined,
@@ -167,30 +160,5 @@ export class LanguageService {
     this.document.documentElement.lang = language;
     this.document.title = MESSAGES[language].pageTitle;
     this.document.documentElement.classList.remove('locale-pending');
-
-    const debugPanel = this.document.getElementById('locale-debug-panel');
-    if (!debugPanel) return;
-
-    const telegram = (this.document.defaultView as TelegramWindow | null)?.Telegram?.WebApp;
-    const telegramLanguage = telegram?.initDataUnsafe?.user?.language_code;
-    const supportedTelegramLanguage = supportedLanguageFromTag(telegramLanguage);
-    const browserNavigator = this.document.defaultView?.navigator;
-    const browserLanguages =
-      browserNavigator?.languages?.join(', ') || browserNavigator?.language || 'not provided';
-    const source = this.document.documentElement.classList.contains('telegram-miniapp')
-      ? supportedTelegramLanguage
-        ? 'Telegram language_code'
-        : telegramLanguage
-          ? `Telegram fallback to English (${telegramLanguage} unsupported)`
-          : 'browser fallback (Telegram code not provided)'
-      : this.request
-        ? 'Accept-Language'
-        : 'navigator.language';
-
-    debugPanel.textContent = [
-      `Telegram language_code: ${telegramLanguage ?? 'not provided'}`,
-      `navigator.languages: ${browserLanguages}`,
-      `applied app language: ${language} (${source})`,
-    ].join('\n');
   }
 }
