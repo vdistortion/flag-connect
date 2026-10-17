@@ -1,7 +1,8 @@
-import { computed, inject, Injectable, OnDestroy, signal } from '@angular/core';
+import { computed, effect, inject, Injectable, OnDestroy, signal } from '@angular/core';
 import { createQuestion, type Country } from '@flag-connect/flag-domain';
 import { SettingsService } from './settings.service';
 import { QUIZ_MAIN_BUTTON } from './quiz-main-button';
+import { LanguageService } from './language.service';
 
 @Injectable({
   providedIn: 'root',
@@ -9,6 +10,7 @@ import { QUIZ_MAIN_BUTTON } from './quiz-main-button';
 export class QuizService implements OnDestroy {
   private readonly settings = inject(SettingsService);
   private readonly mainButton = inject(QUIZ_MAIN_BUTTON, { optional: true });
+  private readonly language = inject(LanguageService);
   readonly usesTelegramMainButton = this.mainButton !== null;
   readonly count = computed(() => this.settings.count());
   readonly countries = signal<readonly Country[]>([]);
@@ -17,10 +19,17 @@ export class QuizService implements OnDestroy {
   readonly hasAnswered = computed(() => this.answerIndex() >= 0);
   readonly correctCountry = computed(() => this.countries()[this.correctAnswerIndex()] ?? null);
 
+  constructor() {
+    effect(() => {
+      this.language.messages();
+      if (this.countries().length > 0) this.updateMainButton();
+    });
+  }
+
   selectAnswer(index: number): void {
     if (this.hasAnswered() || index < 0 || index >= this.countries().length) return;
     this.answerIndex.set(index);
-    this.mainButton?.set('Далее', true, () => this.nextQuestion());
+    this.updateMainButton();
   }
 
   nextQuestion(): void {
@@ -28,7 +37,15 @@ export class QuizService implements OnDestroy {
     this.countries.set(question.countries);
     this.correctAnswerIndex.set(question.correctAnswerIndex);
     this.answerIndex.set(-1);
-    this.mainButton?.set('Выберите ответ', false, () => undefined);
+    this.updateMainButton();
+  }
+
+  private updateMainButton(): void {
+    const answered = this.hasAnswered();
+    const messages = this.language.messages();
+    this.mainButton?.set(answered ? messages.next : messages.chooseAnswer, answered, () => {
+      if (answered) this.nextQuestion();
+    });
   }
 
   ngOnDestroy(): void {

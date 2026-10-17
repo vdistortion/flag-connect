@@ -4,15 +4,20 @@
     type="button"
     tabindex="-1"
     aria-hidden="true"
-    aria-label="Закрыть изображение"
+    [attr.aria-label]="messages().closeImage"
     (click)="close.emit()"
   ></button>
-  <section class="popup__content" role="dialog" aria-modal="true" aria-label="Флаг страны">
+  <section
+    class="popup__content"
+    role="dialog"
+    aria-modal="true"
+    [attr.aria-label]="messages().countryFlag"
+  >
     <button
       #closeButton
       class="popup__close"
       type="button"
-      aria-label="Закрыть"
+      [attr.aria-label]="messages().close"
       (click)="close.emit()"
     >
       <app-icon icon="mdi/close-circle-outline"></app-icon>

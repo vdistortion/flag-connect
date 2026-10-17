@@ -1,6 +1,7 @@
 import { NgOptimizedImage } from '@angular/common';
-import { Component, signal } from '@angular/core';
+import { Component, computed, inject, signal } from '@angular/core';
 import { countries, type Country } from '@flag-connect/flag-domain';
+import { LanguageService } from '../../services/language.service';
 import { FlagComponent } from '../../ui/flag/flag.component';
 import { PopupComponent } from '../../ui/popup/popup.component';
 
@@ -11,15 +12,13 @@ import { PopupComponent } from '../../ui/popup/popup.component';
   styleUrl: './list-page.component.scss',
 })
 export class ListPageComponent {
-  protected readonly lang = signal<'ru' | 'en'>('ru');
+  protected readonly language = inject(LanguageService).language;
   protected readonly popup = signal<{ src: string; alt: string } | null>(null);
-  protected readonly countries: readonly Country[] = [...countries].sort((a, b) =>
-    a.name.ru.localeCompare(b.name.ru, 'ru'),
+  protected readonly countries = computed(() =>
+    [...countries].sort((a, b) =>
+      a.name[this.language()].localeCompare(b.name[this.language()], this.language()),
+    ),
   );
-
-  toggleName(): void {
-    this.lang.update((language) => (language === 'ru' ? 'en' : 'ru'));
-  }
 
   showPopup(src: string, alt: string): void {
     this.popup.set({ src, alt });

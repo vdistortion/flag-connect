@@ -56,7 +56,7 @@
                 "input": "projects/shared/public"
               }
             ],
-            "styles": ["projects/shared/src/lib/styles.scss"],
+            "styles": ["projects/shared/src/lib/styles.scss", "projects/miniapp/src/theme.scss"],
             "server": "projects/miniapp/src/main.server.ts",
             "outputMode": "static",
             "security": {
@@ -156,7 +156,7 @@
                 "input": "projects/shared/public"
               }
             ],
-            "styles": ["projects/shared/src/lib/styles.scss"],
+            "styles": ["projects/shared/src/lib/styles.scss", "projects/web/src/theme.scss"],
             "server": "projects/web/src/main.server.ts",
             "outputMode": "server",
             "security": {

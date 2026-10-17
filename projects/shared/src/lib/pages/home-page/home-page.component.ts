@@ -2,6 +2,7 @@ import { Component, inject } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { ButtonComponent } from '../../ui/button/button.component';
 import { SHOW_HOME_SETTINGS } from '../../services/quiz-main-button';
+import { LanguageService } from '../../services/language.service';
 
 @Component({
   selector: 'app-home-page',
@@ -11,4 +12,5 @@ import { SHOW_HOME_SETTINGS } from '../../services/quiz-main-button';
 })
 export class HomePageComponent {
   protected readonly showSettings = inject(SHOW_HOME_SETTINGS);
+  protected readonly messages = inject(LanguageService).messages;
 }

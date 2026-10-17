@@ -1,6 +1,6 @@
 <div class="wrapper" [class.telegram-layout]="quizService.usesTelegramMainButton">
   @if (quizService.correctCountry(); as correctCountry) {
-    <h1 class="name">{{ correctCountry.name.ru }}</h1>
+    <h1 class="name">{{ correctCountry.name[language()] }}</h1>
   }
 
   <div class="countries">
@@ -15,7 +15,7 @@
           index !== quizService.correctAnswerIndex()
         "
         [image]="country.flag"
-        [name]="country.name.ru"
+        [name]="country.name[language()]"
         [selectable]="true"
         [disabled]="quizService.hasAnswered()"
         (selected)="quizService.selectAnswer(index)"
@@ -23,7 +23,9 @@
     }
 
     @if (quizService.hasAnswered() && !quizService.usesTelegramMainButton) {
-      <app-button [country]="true" (clicked)="quizService.nextQuestion()">Далее</app-button>
+      <app-button [country]="true" (clicked)="quizService.nextQuestion()">
+        {{ messages().next }}
+      </app-button>
     }
   </div>
 </div>

@@ -9,6 +9,7 @@ import {
   viewChild,
 } from '@angular/core';
 import { IconComponent } from '../icon/icon.component';
+import { LanguageService } from '../../services/language.service';
 
 @Component({
   selector: 'app-popup',
@@ -21,6 +22,7 @@ import { IconComponent } from '../icon/icon.component';
   styleUrl: './popup.component.scss',
 })
 export class PopupComponent {
+  protected readonly messages = inject(LanguageService).messages;
   private readonly document = inject(DOCUMENT);
   private readonly destroyRef = inject(DestroyRef);
   private readonly host = inject(ElementRef) as ElementRef<HTMLElement>;

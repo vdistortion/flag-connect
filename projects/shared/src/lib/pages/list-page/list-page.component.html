@@ -1,17 +1,13 @@
 <div class="wrapper">
   <div class="flags">
-    @for (country of countries; track country.name.en) {
+    @for (country of countries(); track country.name.en) {
       <div>
-        <h2 class="name">
-          <button type="button" (click)="toggleName()">
-            {{ country.name[lang()] }}
-          </button>
-        </h2>
+        <h2 class="name">{{ country.name[language()] }}</h2>
         <app-flag
           [image]="country.flag"
-          [name]="country.name[lang()]"
+          [name]="country.name[language()]"
           [selectable]="true"
-          (selected)="showPopup($event, country.name[lang()])"
+          (selected)="showPopup($event, country.name[language()])"
         ></app-flag>
       </div>
     }

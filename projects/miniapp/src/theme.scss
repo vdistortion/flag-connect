@@ -1,0 +1,10 @@
+:root.telegram-miniapp {
+  --app-bg-color: var(--tg-theme-bg-color);
+  --app-flag-color: var(--tg-theme-secondary-bg-color, var(--tg-theme-bg-color));
+  --app-text-color: var(--tg-theme-text-color);
+  --app-text-color-hover: var(--tg-theme-accent-text-color, var(--tg-theme-link-color));
+  --app-button-color: var(--tg-theme-button-color);
+  --app-button-text-color: var(--tg-theme-button-text-color);
+  --app-error-color: var(--tg-theme-destructive-text-color, #ec3942);
+  --app-success-color: var(--tg-theme-accent-text-color, var(--tg-theme-button-color));
+}

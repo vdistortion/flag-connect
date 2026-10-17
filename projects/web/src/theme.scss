@@ -1,0 +1,25 @@
+:root {
+  color-scheme: light;
+  --app-bg-color: #ffffff;
+  --app-flag-color: #f1f1f1;
+  --app-text-color: #17212b;
+  --app-text-color-hover: #168acd;
+  --app-button-color: #40a7e3;
+  --app-button-text-color: #ffffff;
+  --app-error-color: #d14e4e;
+  --app-success-color: #168acd;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    color-scheme: dark;
+    --app-bg-color: #17212b;
+    --app-flag-color: #232e3c;
+    --app-text-color: #f5f5f5;
+    --app-text-color-hover: #6ab2f2;
+    --app-button-color: #5288c1;
+    --app-button-text-color: #ffffff;
+    --app-error-color: #ec3942;
+    --app-success-color: #6ab2f2;
+  }
+}

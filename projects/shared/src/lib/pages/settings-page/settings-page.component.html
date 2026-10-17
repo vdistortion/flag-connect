@@ -1,14 +1,18 @@
 <div class="wrapper">
   <table>
     <caption>
-      Настройки
+      {{
+        messages().settings
+      }}
     </caption>
     <tbody>
       <tr>
-        <th scope="row">Количество вариантов</th>
+        <th scope="row">{{ messages().answerCount }}</th>
         <td>{{ settings.count() }}</td>
         <td>
-          <label class="visually-hidden" for="answer-count">Количество вариантов ответа</label>
+          <label class="visually-hidden" for="answer-count">{{
+            messages().answerCountLabel
+          }}</label>
           <input
             id="answer-count"
             type="range"

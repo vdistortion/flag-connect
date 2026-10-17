@@ -1,6 +1,7 @@
 import { NgOptimizedImage } from '@angular/common';
-import { Component, computed, input, output, signal } from '@angular/core';
+import { Component, computed, inject, input, output, signal } from '@angular/core';
 import { IconComponent } from '../icon/icon.component';
+import { LanguageService } from '../../services/language.service';
 
 @Component({
   selector: 'app-flag',
@@ -9,6 +10,7 @@ import { IconComponent } from '../icon/icon.component';
   styleUrl: './flag.component.scss',
 })
 export class FlagComponent {
+  protected readonly messages = inject(LanguageService).messages;
   readonly error = input(false);
   readonly success = input(false);
   readonly image = input<readonly string[]>([]);

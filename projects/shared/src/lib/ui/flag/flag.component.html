@@ -10,7 +10,7 @@
         <button
           class="flag__variant-button"
           type="button"
-          [attr.aria-label]="'Показать другой вариант флага: ' + name()"
+          [attr.aria-label]="messages().showAnotherFlag + ': ' + name()"
           (click)="nextFlag()"
         >
           <app-icon icon="mdi/image-multiple-outline"></app-icon>
@@ -23,7 +23,7 @@
           class="flag__image-button"
           type="button"
           [disabled]="disabled()"
-          [attr.aria-label]="'Выбрать флаг: ' + name()"
+          [attr.aria-label]="messages().selectFlag + ': ' + name()"
           (click)="selectFlag()"
         >
           <img class="flag__image" [ngSrc]="source" [alt]="''" [priority]="priority()" fill />

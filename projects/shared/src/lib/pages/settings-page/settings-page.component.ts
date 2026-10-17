@@ -1,5 +1,6 @@
 import { Component, inject } from '@angular/core';
 import { QUIZ_SETTINGS, SettingsService } from '../../services/settings.service';
+import { LanguageService } from '../../services/language.service';
 
 @Component({
   selector: 'app-settings-page',
@@ -8,6 +9,7 @@ import { QUIZ_SETTINGS, SettingsService } from '../../services/settings.service'
 })
 export class SettingsPageComponent {
   protected readonly settings = inject(SettingsService);
+  protected readonly messages = inject(LanguageService).messages;
   protected readonly minCount = QUIZ_SETTINGS.minCount;
   protected readonly maxCount = QUIZ_SETTINGS.maxCount;
 

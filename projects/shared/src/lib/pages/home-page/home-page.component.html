@@ -1,10 +1,10 @@
 <div class="wrapper">
   <div class="buttons">
-    <app-button routerLink="quiz/flag">Угадать страну по флагу</app-button>
-    <app-button routerLink="quiz/country">Угадать флаг по стране</app-button>
-    <app-button routerLink="list">Все флаги</app-button>
+    <app-button routerLink="quiz/flag">{{ messages().guessCountryByFlag }}</app-button>
+    <app-button routerLink="quiz/country">{{ messages().guessFlagByCountry }}</app-button>
+    <app-button routerLink="list">{{ messages().allFlags }}</app-button>
     @if (showSettings) {
-      <app-button routerLink="settings">Настройки</app-button>
+      <app-button routerLink="settings">{{ messages().settings }}</app-button>
     }
   </div>
 </div>
