@@ -9,3 +9,39 @@ table {
     margin: 40px 0;
   }
 }
+
+.answer-count-control {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+
+  input {
+    flex: 1;
+    min-width: 0;
+    accent-color: var(--button-color);
+  }
+
+  output {
+    min-width: 2ch;
+    font-variant-numeric: tabular-nums;
+    text-align: end;
+  }
+}
+
+.no-choices-control {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
+
+  input {
+    width: 18px;
+    height: 18px;
+    accent-color: var(--button-color);
+  }
+}
+
+input:focus-visible {
+  outline: 3px solid var(--text-color-hover);
+  outline-offset: 3px;
+}

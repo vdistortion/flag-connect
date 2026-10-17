@@ -14,11 +14,11 @@
       </section>
 
       <section class="answer-panel" [attr.aria-label]="messages().guessCountryByFlag">
-        <h2 class="quiz-prompt">{{ messages().guessCountryByFlag }}</h2>
-
         @if (quizService.noChoices()) {
           @if (quizService.hasAnswered()) {
             <p class="answer-reveal" aria-live="polite">{{ country.name[language()] }}</p>
+          } @else {
+            <h2 class="quiz-prompt">{{ messages().identifyCountry }}</h2>
           }
         } @else {
           @if (quizService.hasAnswered()) {

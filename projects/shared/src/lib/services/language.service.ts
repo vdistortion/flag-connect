@@ -15,6 +15,7 @@ const MESSAGES = {
   ru: {
     pageTitle: 'FlagConnect — викторина по флагам',
     guessCountryByFlag: 'Угадать страну по флагу',
+    identifyCountry: 'Какая это страна?',
     guessFlagByCountry: 'Угадать флаг по стране',
     allFlags: 'Все флаги',
     settings: 'Настройки',
@@ -38,6 +39,7 @@ const MESSAGES = {
   en: {
     pageTitle: 'FlagConnect — flag quiz',
     guessCountryByFlag: 'Guess the country by its flag',
+    identifyCountry: 'Which country is it?',
     guessFlagByCountry: 'Guess the flag by its country',
     allFlags: 'All flags',
     settings: 'Settings',

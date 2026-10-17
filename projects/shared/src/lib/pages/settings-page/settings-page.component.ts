@@ -12,17 +12,18 @@ export class SettingsPageComponent {
   protected readonly messages = inject(LanguageService).messages;
   protected readonly minCount = QUIZ_SETTINGS.minCount;
   protected readonly maxCount = QUIZ_SETTINGS.maxCount;
-  protected readonly noChoicesCount = QUIZ_SETTINGS.noChoicesCount;
-  protected readonly choiceCounts = Array.from(
-    { length: QUIZ_SETTINGS.maxCount - QUIZ_SETTINGS.minCount + 1 },
-    (_, index) => QUIZ_SETTINGS.minCount + index,
-  );
-
   setCount(event: Event): void {
     const input = event.target;
-    if (!(input instanceof HTMLSelectElement)) return;
+    if (!(input instanceof HTMLInputElement)) return;
 
     const value = Number(input.value);
     this.settings.setCount(value);
+  }
+
+  setNoChoices(event: Event): void {
+    const input = event.target;
+    if (!(input instanceof HTMLInputElement)) return;
+
+    this.settings.setNoChoices(input.checked);
   }
 }

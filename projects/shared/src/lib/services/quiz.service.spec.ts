@@ -11,7 +11,11 @@ describe('QuizService without answer choices', () => {
         SettingsService,
         {
           provide: WebStorageService,
-          useValue: { get: () => 1, set: () => undefined, delete: () => undefined },
+          useValue: {
+            get: (key: string) => (key === 'fc-count' ? 1 : null),
+            set: () => undefined,
+            delete: () => undefined,
+          },
         },
       ],
     });
@@ -34,15 +38,27 @@ describe('QuizService without answer choices', () => {
     expect(quiz.hasAnswered()).toBe(false);
   });
 
-  it('allows the no-choice mode and up to ten choices in settings', () => {
+  it('migrates the saved no-choice setting and keeps a separate range value', () => {
     const settings = TestBed.inject(SettingsService);
+    const quiz = TestBed.inject(QuizService);
 
-    expect(settings.count()).toBe(1);
+    expect(settings.count()).toBe(4);
+    expect(settings.noChoices()).toBe(true);
+    expect(quiz.count()).toBe(1);
+
     settings.setCount(10);
     expect(settings.count()).toBe(10);
+    expect(settings.noChoices()).toBe(true);
+
+    settings.setNoChoices(false);
+    expect(settings.noChoices()).toBe(false);
+    expect(quiz.count()).toBe(10);
+
     settings.setCount(11);
     expect(settings.count()).toBe(10);
-    settings.setCount(1);
-    expect(settings.count()).toBe(1);
+
+    settings.setNoChoices(true);
+    expect(quiz.count()).toBe(1);
+    expect(settings.count()).toBe(10);
   });
 });

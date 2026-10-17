@@ -43,6 +43,11 @@
     color: inherit;
     background: var(--flag-color);
     cursor: pointer;
+
+    &:focus-visible {
+      outline: 3px solid var(--text-color-hover);
+      outline-offset: -3px;
+    }
   }
 
   &__image-button {
@@ -54,6 +59,11 @@
     border: 0;
     background: transparent;
     cursor: pointer;
+
+    &:focus-visible {
+      outline: 3px solid var(--text-color-hover);
+      outline-offset: -3px;
+    }
   }
 
   &__image {

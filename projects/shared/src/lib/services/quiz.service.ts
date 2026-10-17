@@ -1,6 +1,6 @@
 import { computed, effect, inject, Injectable, OnDestroy, signal } from '@angular/core';
 import { createQuestion, type Country } from '@flag-connect/flag-domain';
-import { SettingsService } from './settings.service';
+import { QUIZ_SETTINGS, SettingsService } from './settings.service';
 import { QUIZ_MAIN_BUTTON } from './quiz-main-button';
 import { LanguageService } from './language.service';
 
@@ -12,8 +12,10 @@ export class QuizService implements OnDestroy {
   private readonly mainButton = inject(QUIZ_MAIN_BUTTON, { optional: true });
   private readonly language = inject(LanguageService);
   readonly usesTelegramMainButton = this.mainButton !== null;
-  readonly count = computed(() => this.settings.count());
-  readonly noChoices = computed(() => this.count() === 1);
+  readonly count = computed(() =>
+    this.settings.noChoices() ? QUIZ_SETTINGS.noChoicesCount : this.settings.count(),
+  );
+  readonly noChoices = computed(() => this.settings.noChoices());
   readonly countries = signal<readonly Country[]>([]);
   readonly correctAnswerIndex = signal(-1);
   readonly answerIndex = signal(-1);
