@@ -133,5 +133,6 @@ export class LanguageService {
     const language = this.language();
     this.document.documentElement.lang = language;
     this.document.title = MESSAGES[language].pageTitle;
+    this.document.documentElement.classList.remove('locale-pending');
   }
 }

@@ -15,15 +15,28 @@
       html.telegram-miniapp app-header {
         display: none;
       }
+
+      html.locale-pending app-root {
+        visibility: hidden;
+      }
     </style>
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <script>
       (() => {
         const webApp = window.Telegram?.WebApp;
+        const languageTag =
+          webApp?.initDataUnsafe?.user?.language_code ??
+          navigator.languages[0] ??
+          navigator.language;
+        const language = languageTag.toLowerCase().startsWith('ru') ? 'ru' : 'en';
+        const root = document.documentElement;
+
+        if (root.lang !== language) root.classList.add('locale-pending');
+        root.lang = language;
+
         if (!webApp) return;
 
         const applyTheme = () => {
-          const root = document.documentElement;
           root.classList.add('telegram-miniapp');
           for (const [key, value] of Object.entries(webApp.themeParams ?? {})) {
             if (typeof value === 'string') {
@@ -43,6 +56,6 @@
     </script>
   </head>
   <body>
-    <app-root></app-root>
+    <app-root ngSkipHydration></app-root>
   </body>
 </html>
