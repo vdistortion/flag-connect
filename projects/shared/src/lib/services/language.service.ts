@@ -66,6 +66,20 @@ export function languageFromTag(tag: string | null | undefined): AppLanguage {
   return tag?.toLowerCase().startsWith('ru') ? 'ru' : 'en';
 }
 
+export function supportedLanguageFromTag(tag: string | null | undefined): AppLanguage | null {
+  const normalizedTag = tag?.toLowerCase();
+  if (normalizedTag?.startsWith('ru')) return 'ru';
+  if (normalizedTag?.startsWith('en')) return 'en';
+  return null;
+}
+
+export function miniAppLanguageFromTags(
+  telegramTag: string | null | undefined,
+  browserTag: string | null | undefined,
+): AppLanguage {
+  return telegramTag ? languageFromTag(telegramTag) : languageFromTag(browserTag);
+}
+
 export function languageFromAcceptLanguage(header: string | null): AppLanguage {
   if (!header) return 'en';
 
@@ -119,7 +133,10 @@ export class LanguageService {
         const browserLanguage =
           browserWindow.navigator.languages[0] ?? browserWindow.navigator.language;
 
-        this.setLanguage(languageFromTag(telegramLanguage ?? browserLanguage));
+        const language = root.classList.contains('telegram-miniapp')
+          ? miniAppLanguageFromTags(telegramLanguage, browserLanguage)
+          : languageFromTag(browserLanguage);
+        this.setLanguage(language);
       };
 
       syncLanguage();
@@ -156,13 +173,16 @@ export class LanguageService {
 
     const telegram = (this.document.defaultView as TelegramWindow | null)?.Telegram?.WebApp;
     const telegramLanguage = telegram?.initDataUnsafe?.user?.language_code;
+    const supportedTelegramLanguage = supportedLanguageFromTag(telegramLanguage);
     const browserNavigator = this.document.defaultView?.navigator;
     const browserLanguages =
       browserNavigator?.languages?.join(', ') || browserNavigator?.language || 'not provided';
     const source = this.document.documentElement.classList.contains('telegram-miniapp')
-      ? telegramLanguage
+      ? supportedTelegramLanguage
         ? 'Telegram language_code'
-        : 'browser fallback'
+        : telegramLanguage
+          ? `Telegram fallback to English (${telegramLanguage} unsupported)`
+          : 'browser fallback (Telegram code not provided)'
       : this.request
         ? 'Accept-Language'
         : 'navigator.language';

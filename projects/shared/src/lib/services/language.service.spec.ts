@@ -1,4 +1,8 @@
-import { languageFromAcceptLanguage, languageFromTag } from './language.service';
+import {
+  languageFromAcceptLanguage,
+  languageFromTag,
+  miniAppLanguageFromTags,
+} from './language.service';
 
 describe('languageFromTag', () => {
   it('uses Russian for Russian language tags and English otherwise', () => {
@@ -16,5 +20,15 @@ describe('languageFromAcceptLanguage', () => {
     expect(languageFromAcceptLanguage('en-US,en;q=0.9,ru;q=0.8')).toBe('en');
     expect(languageFromAcceptLanguage('fr-FR,ru;q=0.8')).toBe('en');
     expect(languageFromAcceptLanguage(null)).toBe('en');
+  });
+});
+
+describe('miniAppLanguageFromTags', () => {
+  it('uses Russian only for Telegram Russian and English otherwise', () => {
+    expect(miniAppLanguageFromTags('ru-RU', 'en')).toBe('ru');
+    expect(miniAppLanguageFromTags('en-US', 'ru')).toBe('en');
+    expect(miniAppLanguageFromTags('be', 'ru_RU')).toBe('en');
+    expect(miniAppLanguageFromTags('be', 'en-US')).toBe('en');
+    expect(miniAppLanguageFromTags(undefined, 'ru')).toBe('ru');
   });
 });

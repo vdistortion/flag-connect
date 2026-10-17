@@ -43,11 +43,15 @@
     <script>
       (() => {
         const webApp = window.Telegram?.WebApp;
-        const languageTag =
-          webApp?.initDataUnsafe?.user?.language_code ??
-          navigator.languages[0] ??
-          navigator.language;
-        const language = languageTag.toLowerCase().startsWith('ru') ? 'ru' : 'en';
+        const telegramLanguage = webApp?.initDataUnsafe?.user?.language_code?.toLowerCase();
+        const browserLanguage = (navigator.languages[0] ?? navigator.language).toLowerCase();
+        const language = telegramLanguage
+          ? telegramLanguage.startsWith('ru')
+            ? 'ru'
+            : 'en'
+          : browserLanguage.startsWith('ru')
+            ? 'ru'
+            : 'en';
         const root = document.documentElement;
 
         if (root.lang !== language) root.classList.add('locale-pending');
