@@ -8,7 +8,6 @@ services:
       target: miniapp
     restart: unless-stopped
     volumes:
-      - flag-connect-flags:/usr/share/nginx/html/images/flags:ro
       - flag-connect-generated:/usr/share/nginx/html/images/generated:ro
     networks:
       - caddy
@@ -25,9 +24,6 @@ services:
     environment:
       NODE_ENV: production
       PORT: '4000'
-    volumes:
-      - flag-connect-flags:/app/dist/web/browser/images/flags:ro
-      - flag-connect-generated:/app/dist/web/browser/images/generated:ro
     networks:
       - caddy
     labels:

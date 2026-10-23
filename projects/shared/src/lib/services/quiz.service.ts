@@ -1,8 +1,10 @@
 import { computed, effect, inject, Injectable, OnDestroy, signal } from '@angular/core';
+import { toSignal } from '@angular/core/rxjs-interop';
 import { createQuestion, type Country } from '@flag-connect/flag-domain';
 import { QUIZ_SETTINGS, SettingsService } from './settings.service';
 import { QUIZ_MAIN_BUTTON } from './quiz-main-button';
 import { LanguageService } from './language.service';
+import { CountryCatalogService } from './country-catalog.service';
 
 @Injectable({
   providedIn: 'root',
@@ -11,6 +13,9 @@ export class QuizService implements OnDestroy {
   private readonly settings = inject(SettingsService);
   private readonly mainButton = inject(QUIZ_MAIN_BUTTON, { optional: true });
   private readonly language = inject(LanguageService);
+  private readonly catalog = toSignal(inject(CountryCatalogService).countries, {
+    initialValue: [] as readonly Country[],
+  });
   readonly usesTelegramMainButton = this.mainButton !== null;
   readonly count = computed(() =>
     this.settings.noChoices() ? QUIZ_SETTINGS.noChoicesCount : this.settings.count(),
@@ -47,7 +52,9 @@ export class QuizService implements OnDestroy {
   }
 
   nextQuestion(): void {
-    const question = createQuestion(this.count());
+    const countryCatalog = this.catalog();
+    if (countryCatalog.length === 0) return;
+    const question = createQuestion(this.count(), Math.random, countryCatalog);
     this.countries.set(question.countries);
     this.correctAnswerIndex.set(question.correctAnswerIndex);
     this.answerIndex.set(-1);

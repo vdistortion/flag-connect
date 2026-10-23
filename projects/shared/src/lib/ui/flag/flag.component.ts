@@ -11,6 +11,7 @@ import {
 } from '@angular/core';
 import { IconComponent } from '../icon/icon.component';
 import { LanguageService } from '../../services/language.service';
+import { FLAG_CDN_BASE_URL } from '../../services/country-catalog.service';
 
 @Component({
   selector: 'app-flag',
@@ -33,7 +34,11 @@ export class FlagComponent {
   protected readonly index = signal(0);
   protected readonly imageSource = computed(() => {
     const filename = this.image()[this.index()];
-    return filename ? `/images/flags/${filename}` : null;
+    return filename
+      ? filename.endsWith('.svg')
+        ? `${FLAG_CDN_BASE_URL}${encodeURIComponent(filename)}`
+        : `/images/flags/${filename}`
+      : null;
   });
 
   nextFlag() {

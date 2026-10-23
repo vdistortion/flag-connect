@@ -1,30 +1,15 @@
 import { describe, expect, it } from 'vitest';
-import { countries, createQuestion } from './dist/index.js';
+import { createQuestion, type Country } from './dist/index.js';
 
-describe('countries', () => {
-  it('has a unique two-letter country code for every entry', () => {
-    const codes = countries.map(({ code }) => code);
-
-    expect(new Set(codes).size).toBe(countries.length);
-    expect(codes.every((code) => /^[A-Z]{2}$/.test(code))).toBe(true);
-    expect(countries.find(({ name }) => name.en === 'Kosovo')?.code).toBe('XK');
-  });
-
-  it('uses code-based WebP filenames, including Paraguay’s reverse side', () => {
-    for (const country of countries) {
-      expect(country.flag[0]).toBe(`${country.code.toLowerCase()}.webp`);
-    }
-
-    expect(countries.find(({ name }) => name.en === 'Paraguay')?.flag).toEqual([
-      'py.webp',
-      'py-reverse.webp',
-    ]);
-  });
-});
+const countries: readonly Country[] = Array.from({ length: 12 }, (_, index) => ({
+  code: `C${index}`,
+  name: { en: `Country ${index}`, ru: `Страна ${index}` },
+  flag: [`c${index}.svg`],
+}));
 
 describe('createQuestion', () => {
   it('creates a question with unique countries and a valid correct answer', () => {
-    const question = createQuestion(5, () => 0.5);
+    const question = createQuestion(5, () => 0.5, countries);
 
     expect(question.countries).toHaveLength(5);
     expect(new Set(question.countryIndexes).size).toBe(5);
@@ -36,15 +21,23 @@ describe('createQuestion', () => {
   });
 
   it('supports a single answer choice', () => {
-    const question = createQuestion(1, () => 0);
+    const question = createQuestion(1, () => 0, countries);
 
     expect(question.countries).toHaveLength(1);
     expect(question.correctAnswerIndex).toBe(0);
   });
 
+  it('can create questions from a separate catalog', () => {
+    const catalog = countries.slice(0, 3);
+    const question = createQuestion(2, () => 0, catalog);
+
+    expect(question.countries).toHaveLength(2);
+    expect(question.countries.every((country) => catalog.includes(country))).toBe(true);
+  });
+
   it('rejects unsupported choice counts', () => {
-    expect(() => createQuestion(0)).toThrow(RangeError);
-    expect(() => createQuestion(11)).toThrow(RangeError);
-    expect(() => createQuestion(2.5)).toThrow(RangeError);
+    expect(() => createQuestion(0, Math.random, countries)).toThrow(RangeError);
+    expect(() => createQuestion(11, Math.random, countries)).toThrow(RangeError);
+    expect(() => createQuestion(2.5, Math.random, countries)).toThrow(RangeError);
   });
 });

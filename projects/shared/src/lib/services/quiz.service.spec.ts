@@ -2,6 +2,15 @@ import { TestBed } from '@angular/core/testing';
 import { QuizService } from './quiz.service';
 import { SettingsService } from './settings.service';
 import { WebStorageService } from './webstorage.service';
+import { CountryCatalogService } from './country-catalog.service';
+import type { Country } from '@flag-connect/flag-domain';
+import { of } from 'rxjs';
+
+const countries: readonly Country[] = Array.from({ length: 10 }, (_, index) => ({
+  code: `C${index}`,
+  name: { en: `Country ${index}`, ru: `Страна ${index}` },
+  flag: [`c${index}.svg`],
+}));
 
 describe('QuizService without answer choices', () => {
   beforeEach(() => {
@@ -9,6 +18,7 @@ describe('QuizService without answer choices', () => {
       providers: [
         QuizService,
         SettingsService,
+        { provide: CountryCatalogService, useValue: { countries: of(countries) } },
         {
           provide: WebStorageService,
           useValue: {

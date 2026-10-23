@@ -3,9 +3,10 @@ import { randomUUID } from 'node:crypto';
 import { join } from 'node:path';
 import { createUniversalTelegramBot } from '@verse-bot/telegram';
 import type { UniversalContext, UniversalKeyboardButton } from '@verse-bot/core';
-import { countries, createQuestion, type QuizQuestion } from '@flag-connect/flag-domain';
+import { createQuestion, type Country, type QuizQuestion } from '@flag-connect/flag-domain';
 import { createNumberedFlagImage } from './country-flag-composite.js';
 import { versionedFlagUrl } from './flag-asset-url.js';
+import { loadCountryCatalog } from './country-catalog.js';
 import {
   bold,
   button,
@@ -38,6 +39,7 @@ const flagsUrl = `${miniAppUrl}/images/flags/bot/`;
 const generatedFlagsUrl = `${miniAppUrl}/images/generated/`;
 const flagsDirectory = process.env.FLAG_ASSETS_DIR ?? '/flags';
 const generatedFlagsDirectory = process.env.GENERATED_FLAGS_DIR ?? '/generated';
+const countries: readonly Country[] = await loadCountryCatalog();
 const COUNTRY_CHOICE_GROUP_SIZE = 2;
 const counts = new Map<string, number>();
 interface QuizRound {
@@ -113,7 +115,7 @@ async function replyRich(ctx: UniversalContext, message: RichDocument): Promise<
 
 async function askQuestion(ctx: UniversalContext, mode: QuizMode): Promise<void> {
   const count = countFor(ctx);
-  const question = createQuestion(count);
+  const question = createQuestion(count, Math.random, countries);
   const correctCountry = question.countries[question.correctAnswerIndex];
   const correctCountryIndex = question.countryIndexes[question.correctAnswerIndex];
   const roundId = randomUUID();
