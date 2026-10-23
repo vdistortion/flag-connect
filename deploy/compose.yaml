@@ -8,6 +8,7 @@ services:
       target: miniapp
     restart: unless-stopped
     volumes:
+      - flag-connect-flags:/usr/share/nginx/html/images/flags:ro
       - flag-connect-generated:/usr/share/nginx/html/images/generated:ro
     networks:
       - caddy
