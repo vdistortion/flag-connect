@@ -1,6 +1,8 @@
 import {
   afterNextRender,
   Directive,
+  ElementRef,
+  HostListener,
   inject,
   Injector,
   OnInit,
@@ -16,6 +18,7 @@ import { QuizActionComponent } from './quiz-action.component';
 @Directive()
 export abstract class QuizPageBase implements OnInit {
   private readonly injector = inject(Injector);
+  private readonly element = inject<ElementRef<HTMLElement>>(ElementRef);
   protected readonly quizService = inject(QuizService);
   protected readonly language = inject(LanguageService).language;
   protected readonly messages = inject(LanguageService).messages;
@@ -26,12 +29,74 @@ export abstract class QuizPageBase implements OnInit {
     this.quizService.nextQuestion();
   }
 
+  @HostListener('document:keydown', ['$event'])
+  protected onKeydown(event: KeyboardEvent): void {
+    if (
+      event.defaultPrevented ||
+      event.repeat ||
+      event.isComposing ||
+      event.altKey ||
+      event.ctrlKey ||
+      event.metaKey ||
+      event.shiftKey ||
+      this.quizService.status() !== 'ready'
+    )
+      return;
+    const target = event.target instanceof Element ? event.target : null;
+    if (
+      target?.closest('input, textarea, select, [contenteditable]:not([contenteditable="false"])')
+    )
+      return;
+    const interactive = target?.closest(
+      'button, a, summary, [role]:not([role="main"]):not([role="region"]):not([role="group"]), [tabindex]:not([tabindex="-1"])',
+    );
+    const options = Array.from(
+      this.element.nativeElement.querySelectorAll<HTMLButtonElement>(
+        '.countries app-button button, .countries .flag__image-button',
+      ),
+    );
+    const focusedIndex = options.indexOf(interactive as HTMLButtonElement);
+    // Native Enter/Space activation belongs to the focused button, never both handlers.
+    if (interactive && (focusedIndex < 0 || event.key === 'Enter')) return;
+    if (event.key === 'Enter') {
+      if (!this.quizService.noChoices() && !this.quizService.hasAnswered()) return;
+      event.preventDefault();
+      this.activateAction();
+      return;
+    }
+    if (this.quizService.hasAnswered()) return;
+    if (['ArrowLeft', 'ArrowRight', 'ArrowUp', 'ArrowDown'].includes(event.key) && options.length) {
+      const backwards = event.key === 'ArrowLeft' || event.key === 'ArrowUp';
+      const index =
+        focusedIndex < 0
+          ? backwards
+            ? options.length - 1
+            : 0
+          : (focusedIndex + (backwards ? -1 : 1) + options.length) % options.length;
+      event.preventDefault();
+      this.answers()[index]?.focus();
+      return;
+    }
+    if (!this.quizService.noChoices() && /^[0-9]$/.test(event.key)) {
+      const index = event.key === '0' ? 9 : Number(event.key) - 1;
+      if (index >= this.answers().length) return;
+      event.preventDefault();
+      this.selectAnswer(index);
+    }
+  }
+
   protected selectAnswer(index: number): void {
+    if (this.quizService.status() !== 'ready' || this.quizService.hasAnswered()) return;
     this.quizService.selectAnswer(index);
     this.focusActionButton();
   }
 
   protected activateAction(): void {
+    if (
+      this.quizService.status() !== 'ready' ||
+      (!this.quizService.noChoices() && !this.quizService.hasAnswered())
+    )
+      return;
     if (this.quizService.noChoices() && !this.quizService.hasAnswered()) {
       this.quizService.revealAnswer();
       this.focusActionButton();

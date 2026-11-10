@@ -29,6 +29,7 @@ export class FlagComponent {
   readonly aspectRatio = input(0);
   readonly priority = input(false);
   readonly selectable = input(false);
+  readonly optionNumber = input<number | null>(null);
   readonly disabled = input(false);
   readonly selected = output<string>();
   protected readonly index = linkedSignal(() => {
@@ -50,6 +51,7 @@ export class FlagComponent {
   }
 
   selectFlag() {
+    if (this.disabled() || !this.selectable()) return;
     const source = this.imageSource();
     if (source) this.selected.emit(source);
   }

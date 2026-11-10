@@ -1,25 +1,84 @@
 :root {
   color-scheme: light;
-  --app-bg-color: #ffffff;
-  --app-flag-color: #f1f1f1;
-  --app-text-color: #17212b;
-  --app-text-color-hover: #168acd;
-  --app-button-color: #40a7e3;
+  --app-bg-color: #f7f8fa;
+  --app-flag-color: #eff2f6;
+  --app-text-color: #192d3b;
+  --app-text-color-hover: #176651;
+  --app-button-color: #176651;
   --app-button-text-color: #ffffff;
-  --app-error-color: #d14e4e;
-  --app-success-color: #168acd;
+  --app-error-color: #b63838;
+  --app-success-color: #176651;
+  --surface-color: #ffffff;
+  --border-color: #dce2e7;
+  --muted-color: #586773;
+}
+
+body {
+  margin: 0;
+  font-family:
+    Inter,
+    -apple-system,
+    BlinkMacSystemFont,
+    'Segoe UI',
+    sans-serif;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+}
+main {
+  min-height: calc(100dvh - 170px);
+  padding-top: 32px;
+}
+main:focus {
+  outline: none;
+}
+body main .wrapper.quiz-page.web-quiz {
+  min-height: 0;
+  padding-bottom: 32px;
+}
+.web-quiz app-quiz-action .quiz-action-bar {
+  position: static;
+  padding: 24px 0;
+  border: 0;
+  background: transparent;
+}
+.wrapper {
+  max-width: 1120px;
+}
+.site-footer {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  padding-top: 24px;
+  padding-bottom: 24px;
+  border-top: 1px solid var(--border-color);
+  color: var(--muted-color);
+  font-size: 12px;
+}
+.site-footer span:first-child {
+  font-weight: 650;
+}
+@media (max-width: 620px) {
+  main {
+    padding-top: 24px;
+  }
+  .site-footer {
+    flex-wrap: wrap;
+  }
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
     color-scheme: dark;
-    --app-bg-color: #17212b;
-    --app-flag-color: #232e3c;
-    --app-text-color: #f5f5f5;
-    --app-text-color-hover: #6ab2f2;
-    --app-button-color: #5288c1;
-    --app-button-text-color: #ffffff;
-    --app-error-color: #ec3942;
-    --app-success-color: #6ab2f2;
+    --app-bg-color: #111b21;
+    --app-flag-color: #24333e;
+    --app-text-color: #eef3f5;
+    --app-text-color-hover: #88dbc1;
+    --app-button-color: #88dbc1;
+    --app-button-text-color: #102f27;
+    --app-error-color: #f69292;
+    --app-success-color: #88dbc1;
+    --surface-color: #19262f;
+    --border-color: #35444f;
+    --muted-color: #adbdc8;
   }
 }

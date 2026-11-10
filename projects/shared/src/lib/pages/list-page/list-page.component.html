@@ -1,4 +1,28 @@
 <div class="wrapper">
+  <header class="catalog-heading">
+    <h1>{{ messages().allFlags }}</h1>
+    <p class="intro">{{ copy().introduction }}</p>
+  </header>
+  <div class="catalog-search" role="search">
+    <label for="catalog-search">{{ copy().search }}</label>
+    <div class="search-field">
+      <input
+        #searchInput
+        id="catalog-search"
+        type="search"
+        [value]="query()"
+        aria-describedby="catalog-search-hint"
+        autocomplete="off"
+        (input)="query.set($any($event.target).value)"
+      />
+      @if (query()) {
+        <button class="search-clear" type="button" (click)="query.set(''); searchInput.focus()">
+          {{ copy().clear }}
+        </button>
+      }
+    </div>
+    <p id="catalog-search-hint" class="search-hint">{{ copy().hint }}</p>
+  </div>
   @if (status() === 'loading') {
     <p role="status">{{ messages().loadingCountries }}</p>
   } @else if (status() === 'error') {
@@ -6,22 +30,36 @@
       <p>{{ messages().countriesError }}</p>
       <button type="button" (click)="retry()">{{ messages().retry }}</button>
     </div>
+  } @else {
+    <p class="result-count" role="status" aria-live="polite" aria-atomic="true">
+      {{ copy().count }}
+    </p>
+    @if (!countries().length) {
+      <div class="empty-state">
+        <h2>{{ copy().empty }}</h2>
+        <p>{{ copy().emptyHint }}</p>
+      </div>
+    }
   }
   <div class="flags">
     @for (country of countries(); track country.code) {
-      <div>
-        <h2 class="name">{{ country.name[language()] }}</h2>
+      <article class="country-card">
+        <div class="country-card__heading">
+          <h2 class="name">{{ country.name[language()] }}</h2>
+          <span class="country-code">{{ country.code }}</span>
+        </div>
         <app-flag
           [image]="country.flag"
           [name]="country.name[language()]"
           [selectable]="true"
           (selected)="showPopup($event, country.name[language()])"
         ></app-flag>
-      </div>
+      </article>
     }
   </div>
   @if (popup(); as preview) {
-    <app-popup (close)="hidePopup()">
+    <app-popup [label]="copy().preview + ': ' + preview.alt" (close)="hidePopup()">
+      <h2 class="preview-title">{{ preview.alt }}</h2>
       <div class="flag-preview">
         <img [ngSrc]="preview.src" [alt]="preview.alt" fill />
       </div>

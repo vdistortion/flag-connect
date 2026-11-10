@@ -12,6 +12,7 @@
     </div>
   } @else if (quizService.correctCountry(); as country) {
     <header class="quiz-question">
+      <p class="quiz-eyebrow">{{ messages().guessFlagByCountry }}</p>
       <h1 class="name">{{ country.name[language()] }}</h1>
       <p class="quiz-prompt">{{ messages().countryFlagPrompt }}</p>
     </header>
@@ -27,15 +28,6 @@
         ></app-flag>
       }
     } @else {
-      @if (quizService.hasAnswered()) {
-        <p class="visually-hidden" aria-live="polite">
-          {{
-            quizService.answerIndex() === quizService.correctAnswerIndex()
-              ? messages().correctAnswer
-              : messages().incorrectAnswer
-          }}
-        </p>
-      }
       <div class="countries flag-options">
         @for (option of quizService.countries(); track option.code; let index = $index) {
           <app-flag
@@ -50,6 +42,7 @@
             "
             [image]="option.flag"
             [name]="messages().flagOption + ' ' + (index + 1)"
+            [optionNumber]="index + 1"
             [selectable]="true"
             [disabled]="quizService.hasAnswered()"
             (selected)="selectAnswer(index)"
@@ -58,6 +51,7 @@
       </div>
     }
 
+    <app-quiz-feedback></app-quiz-feedback>
     <app-quiz-action (activated)="activateAction()"></app-quiz-action>
   }
 </div>

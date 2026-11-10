@@ -16,9 +16,9 @@
 
 .quiz-layout--web {
   display: grid;
-  grid-template-columns: minmax(0, 2fr) minmax(280px, 1fr);
+  grid-template-columns: minmax(0, 1.35fr) minmax(300px, 1fr);
   align-items: start;
-  gap: clamp(24px, 4vw, 56px);
+  gap: clamp(24px, 4vw, 48px);
 }
 
 .question-panel,
@@ -28,6 +28,41 @@
 
 .question-panel app-flag {
   margin-inline: auto;
+}
+
+.quiz-question {
+  padding: 32px 0;
+}
+.quiz-eyebrow {
+  margin: 0 0 12px;
+  color: var(--muted-color, var(--text-color));
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+h1 {
+  margin: 0;
+  font-size: clamp(28px, 4vw, 48px);
+  line-height: 1.15;
+  letter-spacing: -0.035em;
+}
+.options-heading {
+  margin: 0;
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--muted-color, var(--text-color));
+}
+.option-number {
+  display: grid;
+  place-items: center;
+  min-width: 28px;
+  height: 28px;
+  border: 1px solid var(--border-color, #8886);
+  border-radius: 8px;
+  color: var(--muted-color, var(--text-color));
+  font-size: 12px;
+  flex-shrink: 0;
 }
 
 .quiz-prompt {
@@ -55,7 +90,7 @@
 
 .quiz-page.telegram-layout .countries {
   margin-top: 20px;
-  padding: 20px 0;
+  padding: 0;
 }
 
 .quiz-page.web-quiz {

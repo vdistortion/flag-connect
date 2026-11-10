@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import { QUIZ_SETTINGS, SettingsService } from '../../services/settings.service';
 import { LanguageService } from '../../services/language.service';
 
@@ -10,6 +10,8 @@ import { LanguageService } from '../../services/language.service';
 export class SettingsPageComponent {
   protected readonly settings = inject(SettingsService);
   protected readonly messages = inject(LanguageService).messages;
+  protected readonly language = inject(LanguageService).language;
+  protected readonly saved = signal(false);
   protected readonly minCount = QUIZ_SETTINGS.minCount;
   protected readonly maxCount = QUIZ_SETTINGS.maxCount;
   setCount(event: Event): void {
@@ -18,6 +20,7 @@ export class SettingsPageComponent {
 
     const value = Number(input.value);
     this.settings.setCount(value);
+    this.saved.set(true);
   }
 
   setNoChoices(event: Event): void {
@@ -25,5 +28,6 @@ export class SettingsPageComponent {
     if (!(input instanceof HTMLInputElement)) return;
 
     this.settings.setNoChoices(input.checked);
+    this.saved.set(true);
   }
 }

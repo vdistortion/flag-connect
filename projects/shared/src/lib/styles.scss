@@ -1,5 +1,50 @@
 @use 'colors' as *;
 
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+button,
+input,
+select,
+textarea {
+  font: inherit;
+}
+button,
+a,
+input,
+select,
+textarea {
+  -webkit-tap-highlight-color: transparent;
+}
+:where(a, button, input, select, textarea, [tabindex]):focus-visible {
+  outline: 3px solid var(--text-color-hover);
+  outline-offset: 4px;
+}
+button:not(:disabled),
+a,
+input {
+  touch-action: manipulation;
+}
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+@media (forced-colors: active) {
+  button,
+  input,
+  a {
+    forced-color-adjust: auto;
+  }
+}
+
 body {
   margin: 40px 0 0;
   color: var(--text-color);

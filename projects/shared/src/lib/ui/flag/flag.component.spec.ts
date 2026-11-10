@@ -13,6 +13,21 @@ describe('FlagComponent', () => {
     expect(document.activeElement).toBe(fixture.nativeElement.querySelector('.flag__image-button'));
   });
 
+  it('does not emit a selection when disabled or not selectable', () => {
+    const fixture = TestBed.createComponent(FlagComponent);
+    fixture.componentRef.setInput('image', ['a.svg']);
+    fixture.detectChanges();
+    let selections = 0;
+    fixture.componentInstance.selected.subscribe(() => selections++);
+    fixture.componentInstance.selectFlag();
+    expect(selections).toBe(0);
+    fixture.componentRef.setInput('selectable', true);
+    fixture.componentRef.setInput('disabled', true);
+    fixture.detectChanges();
+    fixture.componentInstance.selectFlag();
+    expect(selections).toBe(0);
+  });
+
   it('shows a valid first image after the input changes', () => {
     const fixture = TestBed.createComponent(FlagComponent);
     fixture.componentRef.setInput('image', ['a.svg', 'b.svg']);

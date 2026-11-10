@@ -1,22 +1,87 @@
+.site-header {
+  border-bottom: 1px solid var(--border-color, #ddd);
+  background: var(--surface-color, var(--bg-color));
+}
 .header {
-  margin-bottom: 20px;
-
-  a {
-    text-decoration: none;
-    text-transform: uppercase;
-    color: inherit;
-
-    &:hover {
-      color: var(--text-color-hover);
-    }
-
-    h1 {
-      margin: 0;
-
-      app-icon {
-        position: relative;
-        top: 5px;
-      }
-    }
+  min-height: 80px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+}
+a {
+  text-decoration: none;
+  color: inherit;
+}
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 21px;
+  font-weight: 750;
+  letter-spacing: -0.045em;
+  white-space: nowrap;
+}
+.brand-light {
+  font-weight: 450;
+}
+.brand-mark {
+  display: grid;
+  place-items: center;
+  width: 34px;
+  height: 36px;
+  border-radius: 9px;
+  color: var(--button-text-color);
+  background: var(--button-color);
+  font-size: 26px;
+}
+nav {
+  display: flex;
+  gap: 6px;
+}
+nav a {
+  display: flex;
+  align-items: center;
+  min-height: 44px;
+  padding: 0 14px;
+  font-size: 13px;
+  font-weight: 600;
+  border-radius: 8px;
+  color: var(--muted-color, var(--text-color));
+}
+nav a:hover,
+nav .active {
+  color: var(--button-color);
+  background: color-mix(in srgb, var(--button-color) 8%, transparent);
+}
+.skip-link {
+  position: fixed;
+  top: -120px;
+  left: 16px;
+  z-index: 100;
+  padding: 12px 20px;
+  border-radius: 8px;
+  background: var(--button-color);
+  color: var(--button-text-color);
+}
+.skip-link:focus {
+  top: 12px;
+}
+@media (max-width: 620px) {
+  .header {
+    flex-wrap: wrap;
+    gap: 8px;
+    padding-top: 16px;
+    padding-bottom: 12px;
+  }
+  .brand {
+    font-size: 20px;
+  }
+  nav {
+    width: 100%;
+    justify-content: space-between;
+  }
+  nav a {
+    padding: 0 10px;
   }
 }

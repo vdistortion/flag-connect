@@ -7,7 +7,10 @@
   overflow: hidden;
   height: 0;
   padding-top: 56.25%;
-  background-color: var(--flag-color);
+  border: 1px solid var(--border-color, #8886);
+  border-radius: 18px;
+  background-color: var(--surface-color, var(--flag-color));
+  box-shadow: 0 8px 28px #0000000d;
   background-position: center;
   background-size: cover;
 
@@ -29,6 +32,7 @@
   }
 
   &__icon {
+    z-index: 2;
     position: absolute;
     top: 0;
     right: 0;
@@ -39,9 +43,10 @@
     display: grid;
     place-items: center;
     padding: 8px;
-    border: 0;
     color: inherit;
-    background: var(--flag-color);
+    background: var(--surface-color, var(--flag-color));
+    border-radius: 10px;
+    border: 1px solid var(--border-color, #8886);
     cursor: pointer;
 
     &:focus-visible {
@@ -71,12 +76,38 @@
   }
 
   &.success {
-    background-color: var(--success-color);
+    border-color: var(--success-color);
+    background-color: color-mix(
+      in srgb,
+      var(--success-color) 22%,
+      var(--surface-color, var(--flag-color))
+    );
     background-image: none;
   }
 
   &.error {
-    background-color: var(--error-color);
+    border-color: var(--error-color);
+    background-color: color-mix(
+      in srgb,
+      var(--error-color) 22%,
+      var(--surface-color, var(--flag-color))
+    );
     background-image: none;
   }
+}
+
+.option-number {
+  position: absolute;
+  bottom: -10px;
+  left: -10px;
+  display: grid;
+  place-items: center;
+  min-width: 28px;
+  height: 28px;
+  padding: 0 3px;
+  border: 1px solid var(--border-color, #8886);
+  border-radius: 8px;
+  background: var(--surface-color, var(--flag-color));
+  color: var(--muted-color, var(--text-color));
+  font: 600 12px sans-serif;
 }

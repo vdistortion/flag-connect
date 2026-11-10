@@ -1,11 +1,14 @@
-import { Component } from '@angular/core';
-import { RouterLink } from '@angular/router';
-import { IconComponent } from '../icon/icon.component';
+import { Component, inject } from '@angular/core';
+import { RouterLink, RouterLinkActive } from '@angular/router';
+import { LanguageService } from '../../services/language.service';
 
 @Component({
   selector: 'app-header',
-  imports: [RouterLink, IconComponent],
+  imports: [RouterLink, RouterLinkActive],
   templateUrl: './header.component.html',
   styleUrl: './header.component.scss',
 })
-export class HeaderComponent {}
+export class HeaderComponent {
+  protected readonly language = inject(LanguageService).language;
+  protected readonly messages = inject(LanguageService).messages;
+}

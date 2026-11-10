@@ -37,8 +37,9 @@ import { ButtonComponent } from '../ui/button/button.component';
         display: flex;
         justify-content: center;
         padding: 12px 20px calc(12px + env(safe-area-inset-bottom));
-        border-top: 1px solid color-mix(in srgb, var(--text-color) 14%, transparent);
-        background: var(--bg-color);
+        border-top: 1px solid var(--border-color, #8886);
+        background: var(--surface-color, var(--bg-color));
+        box-shadow: 0 -4px 24px #00000008;
       }
       app-button {
         width: min(100%, 520px);

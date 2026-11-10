@@ -13,7 +13,7 @@
           [attr.aria-label]="messages().showAnotherFlag + ': ' + name()"
           (click)="nextFlag()"
         >
-          <app-icon icon="mdi/image-multiple-outline"></app-icon>
+          <app-icon icon="mdi:image-multiple-outline" [size]="24"></app-icon>
         </button>
       </div>
     }
@@ -28,6 +28,9 @@
           (click)="selectFlag()"
         >
           <img class="flag__image" [ngSrc]="source" [alt]="''" [priority]="priority()" fill />
+          @if (optionNumber(); as number) {
+            <span class="option-number" aria-hidden="true">{{ number }}</span>
+          }
         </button>
       } @else {
         <img class="flag__image" [ngSrc]="source" [alt]="name()" [priority]="priority()" fill />

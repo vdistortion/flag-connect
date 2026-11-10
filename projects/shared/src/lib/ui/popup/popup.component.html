@@ -11,7 +11,7 @@
     class="popup__content"
     role="dialog"
     aria-modal="true"
-    [attr.aria-label]="messages().countryFlag"
+    [attr.aria-label]="label() || messages().countryFlag"
   >
     <button
       #closeButton
@@ -20,7 +20,7 @@
       [attr.aria-label]="messages().close"
       (click)="close.emit()"
     >
-      <app-icon icon="mdi/close-circle-outline"></app-icon>
+      <app-icon icon="mdi:close-circle-outline" [size]="24"></app-icon>
     </button>
     <ng-content></ng-content>
   </section>

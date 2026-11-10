@@ -3,10 +3,11 @@ import { QuizService } from '../../services/quiz.service';
 import { FlagComponent } from '../../ui/flag/flag.component';
 import { QuizPageBase } from '../quiz-page-base';
 import { QuizActionComponent } from '../quiz-action.component';
+import { QuizFeedbackComponent } from '../quiz-feedback.component';
 
 @Component({
   selector: 'app-quiz-country-page',
-  imports: [FlagComponent, QuizActionComponent],
+  imports: [FlagComponent, QuizActionComponent, QuizFeedbackComponent],
   templateUrl: './quiz-country-page.component.html',
   styleUrl: './quiz-country-page.component.scss',
   providers: [QuizService],

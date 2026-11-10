@@ -1,10 +1,84 @@
-<div class="wrapper">
-  <div class="buttons">
-    <app-button routerLink="quiz/flag">{{ messages().guessCountryByFlag }}</app-button>
-    <app-button routerLink="quiz/country">{{ messages().guessFlagByCountry }}</app-button>
-    <app-button routerLink="list">{{ messages().allFlags }}</app-button>
+<div class="wrapper home">
+  <section class="hero" aria-labelledby="home-title">
+    <div class="hero-copy">
+      <p class="eyebrow"><span aria-hidden="true">✦</span> {{ copy().eyebrow }}</p>
+      <h1 id="home-title">
+        {{ copy().title }}<br /><span>{{ copy().accent }}</span>
+      </h1>
+      <p class="intro">{{ copy().intro }}</p>
+      <a class="primary-link" routerLink="quiz/flag"
+        >{{ copy().start }} <span aria-hidden="true">↗</span></a
+      >
+    </div>
+    <div class="atlas-art" aria-hidden="true">
+      <div class="orbit orbit-one"></div>
+      <div class="orbit orbit-two"></div>
+      <span class="atlas-label">FLAG / CONNECT</span>
+      @for (slot of flagSlots; track slot) {
+        <div class="flag-tile" [class]="'flag-tile tile-' + slot">
+          @if (heroFlags()[slot]; as source) {
+            <img [ngSrc]="source" alt="" fill disableOptimizedSrcset />
+          }
+        </div>
+      }
+      <span class="atlas-coordinates">DISCOVER / PRACTICE / EXPLORE</span>
+      <span class="atlas-plus">+</span>
+    </div>
+  </section>
+  <section class="modes" aria-labelledby="modes-title">
+    <h2 id="modes-title">{{ copy().modes }}</h2>
+    <div class="mode-grid">
+      <a
+        class="mode-card recommended"
+        routerLink="quiz/flag"
+        [attr.aria-label]="messages().guessCountryByFlag"
+      >
+        <div class="card-top">
+          <span class="mode-symbol" aria-hidden="true">⚑</span
+          ><span class="tag">{{ copy().recommended }}</span>
+        </div>
+        <h3>{{ copy().country }}</h3>
+        <p>{{ copy().countryHint }}</p>
+        <span class="card-bottom"
+          >{{ messages().guessCountryByFlag }} <span aria-hidden="true">↗</span></span
+        >
+      </a>
+      <a
+        class="mode-card"
+        routerLink="quiz/country"
+        [attr.aria-label]="messages().guessFlagByCountry"
+      >
+        <div class="card-top">
+          <span class="mode-symbol" aria-hidden="true">◎</span
+          ><span class="mode-number" aria-hidden="true">02</span>
+        </div>
+        <h3>{{ copy().flag }}</h3>
+        <p>{{ copy().flagHint }}</p>
+        <span class="card-bottom"
+          >{{ messages().guessFlagByCountry }} <span aria-hidden="true">↗</span></span
+        >
+      </a>
+      <a class="mode-card" routerLink="list">
+        <div class="card-top">
+          <span class="mode-symbol" aria-hidden="true">⊞</span
+          ><span class="mode-number" aria-hidden="true">03</span>
+        </div>
+        <h3>{{ copy().explore }}</h3>
+        <p>{{ copy().exploreHint }}</p>
+        <span class="card-bottom">{{ messages().allFlags }} <span aria-hidden="true">↗</span></span>
+      </a>
+    </div>
+  </section>
+  <div class="home-utility">
+    <div>
+      <strong>{{ copy().keyboard }}</strong>
+      <p>{{ copy().keyboardHint }}</p>
+    </div>
     @if (showSettings()) {
-      <app-button routerLink="settings">{{ messages().settings }}</app-button>
+      <a class="settings-link" routerLink="settings"
+        >{{ messages().settings }} <span aria-hidden="true">↗</span
+        ><small>{{ copy().settingsHint }}</small></a
+      >
     }
   </div>
 </div>

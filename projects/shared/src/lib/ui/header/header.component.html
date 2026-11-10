@@ -1,12 +1,30 @@
-<div class="wrapper">
-  <div class="header">
-    <div class="header__item">
-      <a routerLink="/">
-        <h1>
-          <app-icon icon="mdi/home" [size]="34"></app-icon>
-          Flag Connect
-        </h1>
-      </a>
-    </div>
+<a class="skip-link" href="#main-content">{{
+  language() === 'ru' ? 'Перейти к содержимому' : 'Skip to content'
+}}</a>
+<header class="site-header">
+  <div class="wrapper header">
+    <a
+      class="brand"
+      routerLink="/"
+      [attr.aria-label]="language() === 'ru' ? 'FlagConnect — главная' : 'FlagConnect — home'"
+    >
+      <span class="brand-mark" aria-hidden="true">⚑</span
+      ><span>Flag<span class="brand-light">Connect</span></span>
+    </a>
+    <nav [attr.aria-label]="language() === 'ru' ? 'Основная навигация' : 'Main navigation'">
+      <a
+        routerLink="/"
+        routerLinkActive="active"
+        [routerLinkActiveOptions]="{ exact: true }"
+        ariaCurrentWhenActive="page"
+        >{{ language() === 'ru' ? 'Тренировка' : 'Practice' }}</a
+      >
+      <a routerLink="/list" routerLinkActive="active" ariaCurrentWhenActive="page">{{
+        messages().allFlags
+      }}</a>
+      <a routerLink="/settings" routerLinkActive="active" ariaCurrentWhenActive="page">{{
+        messages().settings
+      }}</a>
+    </nav>
   </div>
-</div>
+</header>

@@ -1,2 +1,10 @@
 <app-header />
-<router-outlet />
+<main #main id="main-content" tabindex="-1">
+  <router-outlet (activate)="focusPage()" />
+</main>
+<footer class="site-footer wrapper">
+  <span>FlagConnect</span
+  ><span>{{
+    language() === 'ru' ? 'Маленькие открытия. Большой мир.' : 'Small discoveries. A bigger world.'
+  }}</span>
+</footer>

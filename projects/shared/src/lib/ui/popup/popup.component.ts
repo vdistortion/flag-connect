@@ -5,6 +5,7 @@ import {
   DestroyRef,
   ElementRef,
   inject,
+  input,
   output,
   viewChild,
 } from '@angular/core';
@@ -16,7 +17,7 @@ import { LanguageService } from '../../services/language.service';
   imports: [IconComponent],
   host: {
     '(document:keydown.escape)': 'close.emit()',
-    '(keydown.tab)': 'trapFocus($event)',
+    '(keydown)': 'trapFocus($event)',
   },
   templateUrl: './popup.component.html',
   styleUrl: './popup.component.scss',
@@ -28,12 +29,41 @@ export class PopupComponent {
   private readonly host = inject(ElementRef) as ElementRef<HTMLElement>;
   private readonly closeButton = viewChild<ElementRef<HTMLButtonElement>>('closeButton');
   readonly close = output<void>();
+  readonly label = input('');
 
   constructor() {
     const previousFocus = this.document.activeElement;
+    let restoreBackground: (() => void) | undefined;
 
-    afterNextRender(() => this.closeButton()?.nativeElement.focus());
+    afterNextRender(() => {
+      const body = this.document.body;
+      const originalStyle = body.getAttribute('style');
+      body.style.setProperty('overflow', 'hidden', 'important');
+      const backgrounds = new Map<Element, string | null>();
+      // Inert sibling branches at every level, never an ancestor of this dialog.
+      let branch: Element = this.host.nativeElement;
+      while (branch.parentElement) {
+        const parent = branch.parentElement;
+        for (const sibling of Array.from(parent.children)) {
+          if (sibling === branch) continue;
+          backgrounds.set(sibling, sibling.getAttribute('inert'));
+          sibling.setAttribute('inert', '');
+        }
+        if (parent === body) break;
+        branch = parent;
+      }
+      restoreBackground = () => {
+        for (const [element, inert] of backgrounds) {
+          if (inert === null) element.removeAttribute('inert');
+          else element.setAttribute('inert', inert);
+        }
+        if (originalStyle === null) body.removeAttribute('style');
+        else body.setAttribute('style', originalStyle);
+      };
+      this.closeButton()?.nativeElement.focus();
+    });
     this.destroyRef.onDestroy(() => {
+      restoreBackground?.();
       if (typeof HTMLElement !== 'undefined' && previousFocus instanceof HTMLElement) {
         previousFocus.focus();
       }
@@ -41,13 +71,31 @@ export class PopupComponent {
   }
 
   trapFocus(event: Event): void {
-    if (!(event instanceof KeyboardEvent)) return;
+    if (!(event instanceof KeyboardEvent) || event.key !== 'Tab') return;
 
-    const focusable = this.host.nativeElement.querySelectorAll<HTMLElement>(
-      '.popup__content button:not([disabled]), .popup__content [href], .popup__content input:not([disabled]), .popup__content [tabindex]:not([tabindex="-1"])',
-    );
-    const first = focusable.item(0);
-    const last = focusable.item(focusable.length - 1);
+    const dialog = this.host.nativeElement.querySelector('.popup__content');
+    const focusable = Array.from(
+      dialog?.querySelectorAll<HTMLElement>(
+        'button, a[href], input, select, textarea, [tabindex]',
+      ) ?? [],
+    ).filter((element) => {
+      if (
+        element.tabIndex < 0 ||
+        element.matches(':disabled') ||
+        element.closest('[hidden], [inert], [aria-hidden="true"]')
+      )
+        return false;
+      let ancestor: HTMLElement | null = element;
+      while (ancestor && ancestor !== dialog) {
+        const style = this.document.defaultView?.getComputedStyle(ancestor);
+        if (style?.display === 'none' || style?.visibility === 'hidden') return false;
+        ancestor = ancestor.parentElement;
+      }
+      return true;
+    });
+    const first = focusable[0];
+    const last = focusable[focusable.length - 1];
+
     if (!first || !last) return;
 
     if (event.shiftKey && this.document.activeElement === first) {

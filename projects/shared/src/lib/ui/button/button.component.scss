@@ -3,23 +3,38 @@
 }
 
 button {
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  min-height: 52px;
   width: 100%;
-  padding: 10px;
-  border: none;
-  font-size: 20px;
+  padding: 14px 18px;
+  border: 1px solid transparent;
+  border-radius: 14px;
+  font: inherit;
+  font-size: 15px;
   font-weight: 700;
-  text-transform: uppercase;
+  line-height: 1.4;
   cursor: pointer;
   background-color: var(--button-color);
   color: var(--button-text-color);
+  transition:
+    border-color 160ms ease,
+    background-color 160ms ease,
+    box-shadow 160ms ease;
 
   &.country {
-    background-color: var(--flag-color);
+    background-color: var(--surface-color, var(--flag-color));
+    border-color: var(--border-color, #8886);
     color: var(--text-color);
   }
 
   &.answer-option {
-    min-height: 56px;
+    justify-content: flex-start;
+    min-height: 64px;
+    font-weight: 600;
     text-align: start;
     text-transform: none;
     line-height: 1.3;
@@ -27,11 +42,21 @@ button {
   }
 
   &.success {
-    background-color: var(--success-color);
+    border-color: var(--success-color);
+    background-color: color-mix(
+      in srgb,
+      var(--success-color) 20%,
+      var(--surface-color, var(--flag-color))
+    );
   }
 
   &.error {
-    background-color: var(--error-color);
+    border-color: var(--error-color);
+    background-color: color-mix(
+      in srgb,
+      var(--error-color) 20%,
+      var(--surface-color, var(--flag-color))
+    );
   }
 
   &:disabled {
@@ -39,8 +64,24 @@ button {
     opacity: 0.72;
   }
 
+  &.answer-option:disabled {
+    opacity: 1;
+    cursor: default;
+  }
+
+  &:not(:disabled):hover {
+    border-color: var(--text-color-hover, var(--text-color));
+    box-shadow: 0 4px 18px #00000014;
+  }
+
   &:focus-visible {
-    outline: 3px solid var(--text-color-hover);
+    outline: 3px solid var(--text-color-hover, var(--text-color));
     outline-offset: 3px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  button {
+    transition: none;
   }
 }
