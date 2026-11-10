@@ -8,7 +8,6 @@
     @if (image().length > 1) {
       <div class="flag__icon">
         <button
-          #imageButton
           class="flag__variant-button"
           type="button"
           [attr.aria-label]="messages().showAnotherFlag + ': ' + name()"
@@ -21,6 +20,7 @@
     @if (imageSource(); as source) {
       @if (selectable()) {
         <button
+          #imageButton
           class="flag__image-button"
           type="button"
           [disabled]="disabled()"

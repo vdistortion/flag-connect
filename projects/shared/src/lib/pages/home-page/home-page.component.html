@@ -3,7 +3,7 @@
     <app-button routerLink="quiz/flag">{{ messages().guessCountryByFlag }}</app-button>
     <app-button routerLink="quiz/country">{{ messages().guessFlagByCountry }}</app-button>
     <app-button routerLink="list">{{ messages().allFlags }}</app-button>
-    @if (showSettings) {
+    @if (showSettings()) {
       <app-button routerLink="settings">{{ messages().settings }}</app-button>
     }
   </div>

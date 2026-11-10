@@ -5,8 +5,8 @@ import {
   ElementRef,
   inject,
   input,
+  linkedSignal,
   output,
-  signal,
   viewChild,
 } from '@angular/core';
 import { IconComponent } from '../icon/icon.component';
@@ -31,7 +31,10 @@ export class FlagComponent {
   readonly selectable = input(false);
   readonly disabled = input(false);
   readonly selected = output<string>();
-  protected readonly index = signal(0);
+  protected readonly index = linkedSignal(() => {
+    this.image();
+    return 0;
+  });
   protected readonly imageSource = computed(() => {
     const filename = this.image()[this.index()];
     return filename

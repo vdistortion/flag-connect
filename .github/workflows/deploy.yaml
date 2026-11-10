@@ -11,7 +11,21 @@ concurrency:
   cancel-in-progress: false
 
 jobs:
+  verify:
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+      - run: npm ci
+      - run: npm test
+      - run: npm run build
+
   deploy:
+    needs: verify
     if: github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
     steps:
@@ -30,13 +44,16 @@ jobs:
         env:
           VPS_HOST: ${{ secrets.VPS_HOST }}
           VPS_USER: ${{ secrets.VPS_USER }}
+          VERIFIED_COMMIT: ${{ github.sha }}
         run: |
           set -euo pipefail
           test -n "$VPS_HOST"
           test -n "$VPS_USER"
+          [[ "$VERIFIED_COMMIT" =~ ^[0-9a-f]{40}$ ]]
           ssh -i ~/.ssh/id_ed25519 -o IdentitiesOnly=yes "$VPS_USER@$VPS_HOST" \
-            'bash -se' <<'DEPLOY'
+            "bash -se -- '$VERIFIED_COMMIT'" <<'DEPLOY'
           set -euo pipefail
+          verified_commit="$1"
           project_dir="$HOME/projects/flag-connect"
           mkdir -p "$HOME/projects"
 
@@ -59,6 +76,10 @@ jobs:
             fi
             git fetch --prune origin
             remote_commit="$(git rev-parse refs/remotes/origin/main)"
+            if [ "$remote_commit" != "$verified_commit" ]; then
+              echo "main changed after verification; start a new deployment." >&2
+              exit 1
+            fi
             if git merge-base --is-ancestor HEAD "$remote_commit"; then
               git merge --ff-only "$remote_commit"
             elif [ -z "$(git status --porcelain)" ]; then
@@ -70,6 +91,11 @@ jobs:
               echo "Checkout has local changes; refusing to replace it after upstream history rewrite." >&2
               exit 1
             fi
+          fi
+
+          if [ "$(git -C "$project_dir" rev-parse HEAD)" != "$verified_commit" ]; then
+            echo "Checkout does not match the verified commit; start a new deployment." >&2
+            exit 1
           fi
 
           if ! docker network inspect caddy >/dev/null 2>&1; then

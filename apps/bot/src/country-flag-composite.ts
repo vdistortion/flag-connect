@@ -1,5 +1,5 @@
 import { createHash, randomUUID } from 'node:crypto';
-import { access, mkdir, readdir, rename, stat, unlink } from 'node:fs/promises';
+import { access, mkdir, readFile, readdir, rename, stat, unlink } from 'node:fs/promises';
 import { basename, join } from 'node:path';
 import sharp, { type OverlayOptions } from 'sharp';
 
@@ -96,18 +96,10 @@ export async function createNumberedFlagImage(
   const sourceImages = await Promise.all(
     flags.map(async (flag) => {
       const filename = basename(flag.filename);
-      const source = await sharp(join(sourceDirectory, filename)).rotate().toBuffer();
-      const image = await sharp(source)
-        .resize(PANEL_WIDTH - IMAGE_PADDING * 2, FLAG_PANEL_HEIGHT - IMAGE_PADDING * 2, {
-          fit: 'contain',
-          position: flag.code === 'NP' ? 'west' : 'centre',
-          background: MATTE,
-        })
-        .flatten({ background: MATTE })
-        .png()
+      const source = await sharp(await readFile(join(sourceDirectory, filename)))
+        .rotate()
         .toBuffer();
-
-      return { flag, filename, source, image };
+      return { flag, filename, source };
     }),
   );
 
@@ -136,13 +128,28 @@ export async function createNumberedFlagImage(
     // Generate the cached image below.
   }
 
+  const resizedImages = await Promise.all(
+    sourceImages.map(async ({ flag, source }) => ({
+      flag,
+      image: await sharp(source)
+        .resize(PANEL_WIDTH - IMAGE_PADDING * 2, FLAG_PANEL_HEIGHT - IMAGE_PADDING * 2, {
+          fit: 'contain',
+          position: flag.code === 'NP' ? 'west' : 'centre',
+          background: MATTE,
+        })
+        .flatten({ background: MATTE })
+        .png()
+        .toBuffer(),
+    })),
+  );
+
   const outerPadding = IMAGE_PADDING;
   const panelCount = 2;
   const width = panelCount * PANEL_WIDTH + (panelCount - 1) * PANEL_GAP + outerPadding * 2;
   const height = outerPadding + FLAG_PANEL_HEIGHT + LABEL_HEIGHT + outerPadding;
   const layers: OverlayOptions[] = [];
 
-  sourceImages.forEach(({ flag, image }, index) => {
+  resizedImages.forEach(({ flag, image }, index) => {
     const panelX = outerPadding + index * (PANEL_WIDTH + PANEL_GAP);
     layers.push({ input: image, left: panelX + IMAGE_PADDING, top: outerPadding + IMAGE_PADDING });
     layers.push({

@@ -1,28 +1,35 @@
-import type { Country } from '@flag-connect/flag-domain';
+import { COUNTRY_CATALOG_URL, parseCountryCatalog, type Country } from '@flag-connect/flag-domain';
 
-export const COUNTRY_CATALOG_URL =
-  'https://cdn.jsdelivr.net/gh/vdistortion/country-flags@0.1.0/countries.json';
+export { COUNTRY_CATALOG_URL } from '@flag-connect/flag-domain';
 
 export async function loadCountryCatalog(
   fetchJson: typeof fetch = fetch,
+  timeoutMs = 10_000,
 ): Promise<readonly Country[]> {
-  const response = await fetchJson(COUNTRY_CATALOG_URL);
-  if (!response.ok) {
-    throw new Error(`Could not load country catalog: HTTP ${response.status}`);
-  }
+  const controller = new AbortController();
+  let timer: ReturnType<typeof setTimeout> | undefined;
+  try {
+    const data = await Promise.race([
+      (async () => {
+        const response = await fetchJson(COUNTRY_CATALOG_URL, { signal: controller.signal });
+        if (!response.ok) {
+          throw new Error(`Could not load country catalog: HTTP ${response.status}`);
+        }
+        return parseCountryCatalog(await response.json());
+      })(),
+      new Promise<never>((_, reject) => {
+        timer = setTimeout(() => {
+          reject(new Error(`Country catalog request timed out after ${timeoutMs}ms`));
+          controller.abort();
+        }, timeoutMs);
+      }),
+    ]);
 
-  const data: unknown = await response.json();
-  if (!Array.isArray(data) || data.length === 0) {
-    throw new Error('Country catalog must be a non-empty array');
+    return data.map((entry) => ({
+      ...entry,
+      flag: entry.flag.map((filename) => `${filename.slice(0, -4)}.webp`),
+    }));
+  } finally {
+    clearTimeout(timer);
   }
-
-  return data.map((entry: Country) => ({
-    ...entry,
-    flag: entry.flag.map((filename) => {
-      if (!filename.endsWith('.svg')) {
-        throw new Error(`Unexpected flag filename in country catalog: ${filename}`);
-      }
-      return `${filename.slice(0, -4)}.webp`;
-    }),
-  }));
 }

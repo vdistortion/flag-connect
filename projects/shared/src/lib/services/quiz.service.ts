@@ -1,5 +1,5 @@
-import { computed, effect, inject, Injectable, OnDestroy, signal } from '@angular/core';
-import { toSignal } from '@angular/core/rxjs-interop';
+import { computed, DestroyRef, effect, inject, Injectable, OnDestroy, signal } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { createQuestion, type Country } from '@flag-connect/flag-domain';
 import { QUIZ_SETTINGS, SettingsService } from './settings.service';
 import { QUIZ_MAIN_BUTTON } from './quiz-main-button';
@@ -13,10 +13,12 @@ export class QuizService implements OnDestroy {
   private readonly settings = inject(SettingsService);
   private readonly mainButton = inject(QUIZ_MAIN_BUTTON, { optional: true });
   private readonly language = inject(LanguageService);
-  private readonly catalog = toSignal(inject(CountryCatalogService).countries, {
-    initialValue: [] as readonly Country[],
-  });
-  readonly usesTelegramMainButton = this.mainButton !== null;
+  private readonly catalogService = inject(CountryCatalogService);
+  private readonly destroyRef = inject(DestroyRef);
+  private readonly catalog = signal<readonly Country[]>([]);
+  private pendingQuestion = false;
+  readonly status = signal<'loading' | 'ready' | 'error'>('loading');
+  readonly usesTelegramMainButton = computed(() => this.mainButton?.available() ?? false);
   readonly count = computed(() =>
     this.settings.noChoices() ? QUIZ_SETTINGS.noChoicesCount : this.settings.count(),
   );
@@ -31,9 +33,34 @@ export class QuizService implements OnDestroy {
   readonly correctCountry = computed(() => this.countries()[this.correctAnswerIndex()] ?? null);
 
   constructor() {
+    this.loadCatalog();
     effect(() => {
       this.language.messages();
       if (this.countries().length > 0) this.updateMainButton();
+    });
+  }
+
+  retry(): void {
+    if (this.status() !== 'error') return;
+    this.loadCatalog();
+  }
+
+  private loadCatalog(): void {
+    this.status.set('loading');
+    this.catalogService.countries.pipe(takeUntilDestroyed(this.destroyRef)).subscribe({
+      next: (countries) => {
+        if (!Array.isArray(countries) || countries.length < this.count()) {
+          this.status.set('error');
+          return;
+        }
+        this.catalog.set(countries);
+        this.status.set('ready');
+        if (this.pendingQuestion) this.nextQuestion();
+      },
+      error: () => this.status.set('error'),
+      complete: () => {
+        if (this.status() === 'loading') this.status.set('error');
+      },
     });
   }
 
@@ -53,7 +80,11 @@ export class QuizService implements OnDestroy {
 
   nextQuestion(): void {
     const countryCatalog = this.catalog();
-    if (countryCatalog.length === 0) return;
+    if (countryCatalog.length === 0) {
+      this.pendingQuestion = true;
+      return;
+    }
+    this.pendingQuestion = false;
     const question = createQuestion(this.count(), Math.random, countryCatalog);
     this.countries.set(question.countries);
     this.correctAnswerIndex.set(question.correctAnswerIndex);

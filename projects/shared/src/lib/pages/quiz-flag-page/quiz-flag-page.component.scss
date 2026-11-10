@@ -58,23 +58,6 @@
   padding: 20px 0;
 }
 
-.quiz-action-bar {
-  position: fixed;
-  z-index: 10;
-  right: 0;
-  bottom: 0;
-  left: 0;
-  display: flex;
-  justify-content: center;
-  padding: 12px 20px calc(12px + env(safe-area-inset-bottom));
-  border-top: 1px solid color-mix(in srgb, var(--text-color) 14%, transparent);
-  background: var(--bg-color);
-}
-
-.quiz-action-bar app-button {
-  width: min(100%, 520px);
-}
-
 .quiz-page.web-quiz {
   min-height: calc(100dvh - 80px);
   padding-bottom: calc(100px + env(safe-area-inset-bottom));

@@ -25,6 +25,14 @@ MINIAPP_URL=обязательный_HTTPS-адрес
 npm start
 ```
 
+Для тестирования Mini App через публичный HTTPS-адрес установи `cloudflared` и запусти в отдельном терминале:
+
+```bash
+npm run miniapp:tunnel
+```
+
+Скопируй выданный `https://….trycloudflare.com` адрес в Telegram Mini App. Dev-сервер должен оставаться запущенным (`npm start`). Это временный адрес Quick Tunnel: он меняется при каждом запуске и доступен извне, поэтому не используй его для конфиденциальных данных.
+
 ## Сайт
 
 ```bash
@@ -104,5 +112,6 @@ RCLONE_CONFIG_GARAGE_FORCE_PATH_STYLE=true
 
 ```bash
 npm test
-npm run test:domain
 ```
+
+Команда собирает общий пакет и запускает тесты Angular, domain и бота. Отдельные наборы: `npm run test:shared`, `npm run test:domain`, `npm run test:bot`.

@@ -1,10 +1,17 @@
 <div
   class="wrapper quiz-page"
-  [class.telegram-layout]="quizService.usesTelegramMainButton"
-  [class.web-quiz]="!quizService.usesTelegramMainButton"
+  [class.telegram-layout]="quizService.usesTelegramMainButton()"
+  [class.web-quiz]="!quizService.usesTelegramMainButton()"
 >
-  @if (quizService.correctCountry(); as country) {
-    <div class="quiz-layout" [class.quiz-layout--web]="!quizService.usesTelegramMainButton">
+  @if (quizService.status() === 'loading') {
+    <p role="status">{{ messages().loadingQuiz }}</p>
+  } @else if (quizService.status() === 'error') {
+    <div role="alert">
+      <p>{{ messages().quizError }}</p>
+      <button type="button" (click)="quizService.retry()">{{ messages().retry }}</button>
+    </div>
+  } @else if (quizService.correctCountry(); as country) {
+    <div class="quiz-layout" [class.quiz-layout--web]="!quizService.usesTelegramMainButton()">
       <section class="question-panel" [attr.aria-label]="messages().guessCountryByFlag">
         <app-flag
           [image]="country.flag"
@@ -31,9 +38,9 @@
             </p>
           }
           <div class="countries country-options">
-            @for (option of quizService.countries(); track option.name.en; let index = $index) {
+            @for (option of quizService.countries(); track option.code; let index = $index) {
               <app-button
-                #answerButton
+                #answerOption
                 [country]="true"
                 [answerOption]="true"
                 [success]="quizService.hasAnswered() && index === quizService.correctAnswerIndex()"
@@ -53,23 +60,6 @@
       </section>
     </div>
 
-    @if (!quizService.usesTelegramMainButton) {
-      <div class="quiz-action-bar">
-        <app-button
-          #actionButton
-          [country]="true"
-          [disabled]="!quizService.noChoices() && !quizService.hasAnswered()"
-          (clicked)="activateAction()"
-        >
-          @if (quizService.noChoices() && !quizService.hasAnswered()) {
-            {{ messages().showAnswer }}
-          } @else if (quizService.hasAnswered()) {
-            {{ messages().next }}
-          } @else {
-            {{ messages().chooseAnswer }}
-          }
-        </app-button>
-      </div>
-    }
+    <app-quiz-action (activated)="activateAction()"></app-quiz-action>
   }
 </div>

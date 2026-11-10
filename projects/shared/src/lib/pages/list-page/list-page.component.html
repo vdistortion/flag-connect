@@ -1,6 +1,14 @@
 <div class="wrapper">
+  @if (status() === 'loading') {
+    <p role="status">{{ messages().loadingCountries }}</p>
+  } @else if (status() === 'error') {
+    <div role="alert">
+      <p>{{ messages().countriesError }}</p>
+      <button type="button" (click)="retry()">{{ messages().retry }}</button>
+    </div>
+  }
   <div class="flags">
-    @for (country of countries(); track country.name.en) {
+    @for (country of countries(); track country.code) {
       <div>
         <h2 class="name">{{ country.name[language()] }}</h2>
         <app-flag

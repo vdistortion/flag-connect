@@ -1,3 +1,6 @@
+export const COUNTRY_CATALOG_URL =
+  'https://cdn.jsdelivr.net/gh/vdistortion/country-flags@0.1.0/countries.json';
+
 export interface Country {
   /** ISO 3166-1 alpha-2; Kosovo uses the user-assigned code XK. */
   readonly code: string;
@@ -6,6 +9,42 @@ export interface Country {
     readonly ru: string;
   };
   readonly flag: readonly string[];
+}
+
+/** Parse the JSON catalog received from the CDN. */
+export function parseCountryCatalog(data: unknown): readonly Country[] {
+  if (!Array.isArray(data)) throw new Error('Country catalog must be an array');
+  if (data.length < 10) throw new Error('Country catalog must contain at least 10 countries');
+  const codes = new Set<string>();
+  for (const entry of data) {
+    if (
+      !entry ||
+      typeof entry !== 'object' ||
+      !entry.name ||
+      typeof entry.name !== 'object' ||
+      typeof entry.name.en !== 'string' ||
+      !entry.name.en.trim() ||
+      typeof entry.name.ru !== 'string' ||
+      !entry.name.ru.trim()
+    ) {
+      throw new Error('Invalid country name');
+    }
+    if (typeof entry.code !== 'string' || !/^[A-Z]{2}$/.test(entry.code) || codes.has(entry.code)) {
+      throw new Error('Invalid or duplicate country code');
+    }
+    codes.add(entry.code);
+    if (
+      !Array.isArray(entry.flag) ||
+      entry.flag.length === 0 ||
+      !entry.flag.every(
+        (filename: unknown) =>
+          typeof filename === 'string' && /^[A-Za-z0-9_-]+\.svg$/.test(filename),
+      )
+    ) {
+      throw new Error(`Invalid SVG flag filenames for ${entry.code}`);
+    }
+  }
+  return data as readonly Country[];
 }
 
 export interface QuizQuestion {

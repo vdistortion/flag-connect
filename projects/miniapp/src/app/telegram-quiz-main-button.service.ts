@@ -1,4 +1,4 @@
-import { Injectable, OnDestroy } from '@angular/core';
+import { Injectable, OnDestroy, signal } from '@angular/core';
 import { TelegramApiService } from '@verse-bot/miniapp/angular';
 import type { QuizMainButton } from 'shared';
 
@@ -25,12 +25,12 @@ interface TelegramWindow extends Window {
 export class TelegramQuizMainButtonService implements QuizMainButton, OnDestroy {
   private state: MainButtonState | null = null;
   private removeClickListener: VoidFunction | null = null;
-  private active = false;
+  readonly available = signal(false);
 
   constructor(private readonly telegram: TelegramApiService) {}
 
   activate(): void {
-    this.active = this.telegram.isApp();
+    this.available.set(this.telegram.isApp());
     this.apply();
   }
 
@@ -46,11 +46,11 @@ export class TelegramQuizMainButtonService implements QuizMainButton, OnDestroy 
 
   ngOnDestroy(): void {
     this.hide();
-    this.active = false;
+    this.available.set(false);
   }
 
   private apply(): void {
-    if (!this.active) return;
+    if (!this.available()) return;
 
     this.removeClickListener?.();
     this.removeClickListener = null;

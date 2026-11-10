@@ -4,13 +4,54 @@ import { SettingsService } from './settings.service';
 import { WebStorageService } from './webstorage.service';
 import { CountryCatalogService } from './country-catalog.service';
 import type { Country } from '@flag-connect/flag-domain';
-import { of } from 'rxjs';
+import { defer, of, Subject, throwError } from 'rxjs';
 
 const countries: readonly Country[] = Array.from({ length: 10 }, (_, index) => ({
   code: `C${index}`,
   name: { en: `Country ${index}`, ru: `Страна ${index}` },
   flag: [`c${index}.svg`],
 }));
+
+describe('QuizService asynchronous catalog', () => {
+  afterEach(() => TestBed.resetTestingModule());
+  it('creates the requested first question when the catalog arrives', () => {
+    const catalog = new Subject<readonly Country[]>();
+    TestBed.configureTestingModule({
+      providers: [
+        QuizService,
+        { provide: CountryCatalogService, useValue: { countries: catalog } },
+      ],
+    });
+    const quiz = TestBed.inject(QuizService);
+    quiz.nextQuestion();
+    expect(quiz.countries()).toHaveLength(0);
+    catalog.next(countries);
+    expect(quiz.correctCountry()).not.toBeNull();
+  });
+
+  it('reports an error and retries the failed catalog request', () => {
+    const retry = new Subject<readonly Country[]>();
+    let attempts = 0;
+    const catalog = defer(() =>
+      ++attempts === 1 ? throwError(() => new Error('offline')) : retry,
+    );
+    TestBed.configureTestingModule({
+      providers: [
+        QuizService,
+        { provide: CountryCatalogService, useValue: { countries: catalog } },
+      ],
+    });
+    const quiz = TestBed.inject(QuizService);
+    quiz.nextQuestion();
+    expect(quiz.status()).toBe('error');
+    quiz.retry();
+    expect(quiz.status()).toBe('loading');
+    retry.next(countries);
+    expect(quiz.status()).toBe('ready');
+    expect(quiz.correctCountry()).not.toBeNull();
+    expect(attempts).toBe(2);
+  });
+});
 
 describe('QuizService without answer choices', () => {
   beforeEach(() => {

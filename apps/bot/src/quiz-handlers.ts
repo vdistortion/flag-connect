@@ -1,0 +1,334 @@
+import { randomUUID } from 'node:crypto';
+import { join } from 'node:path';
+import type { UniversalContext, UniversalKeyboardButton } from '@verse-bot/core';
+import { createQuestion, type Country, type QuizQuestion } from '@flag-connect/flag-domain';
+import { createNumberedFlagImage } from './country-flag-composite.js';
+import { versionedFlagUrl } from './flag-asset-url.js';
+import {
+  bold,
+  button,
+  buttonRow,
+  type BlockNode,
+  doc,
+  list,
+  paragraph,
+  photo,
+  type InputRichMessage,
+  type RichDocument,
+} from 'tg-rich-messages';
+
+type QuizMode = 'flag' | 'country';
+
+interface TelegramRichApi {
+  sendRichMessage(chatId: number, message: InputRichMessage): Promise<unknown>;
+}
+
+export interface QuizConfig {
+  countries: readonly Country[];
+  flagsUrl: string;
+  generatedFlagsUrl: string;
+  flagsDirectory: string;
+  generatedFlagsDirectory: string;
+}
+
+export function createQuizHandlers(config: QuizConfig) {
+  const { countries, flagsUrl, generatedFlagsUrl, flagsDirectory, generatedFlagsDirectory } =
+    config;
+  const COUNTRY_CHOICE_GROUP_SIZE = 2;
+  const counts = new Map<string, number>();
+  interface QuizRound {
+    ownerId: string;
+    mode: QuizMode;
+    choiceCount: number;
+    correctCountryIndex: number;
+    countryIndexes: readonly number[];
+    answered: boolean;
+  }
+
+  const rounds = new Map<string, QuizRound>();
+  const pendingRounds = new Map<string, Promise<void>>();
+  const countFor = (ctx: UniversalContext) => counts.get(ctx.userId) ?? 4;
+
+  const inline = (label: string, callbackData: string): UniversalKeyboardButton => ({
+    label,
+    command: callbackData,
+  });
+
+  function richChoiceRows(roundId: string, indexes: number[]) {
+    const buttons = indexes.map((countryIndex, choiceIndex) =>
+      button(String(choiceIndex + 1), {
+        type: 'callback_data',
+        data: `answer:${roundId}:${countryIndex}`,
+        style: 'primary',
+      }),
+    );
+
+    return Array.from({ length: Math.ceil(buttons.length / 5) }, (_, row) =>
+      buttonRow(buttons.slice(row * 5, row * 5 + 5)),
+    );
+  }
+
+  function followUpButtons(mode: QuizMode, roundId: string) {
+    return buttonRow([
+      button('⚙️ Настройки', {
+        type: 'callback_data',
+        data: `settings:${roundId}`,
+      }),
+      button('Продолжить', { type: 'callback_data', data: `more:${roundId}` }),
+    ]);
+  }
+
+  async function countryChoiceBlocks(question: QuizQuestion, count: number): Promise<BlockNode[]> {
+    const blocks: BlockNode[] = [];
+
+    for (let offset = 0; offset < count; offset += COUNTRY_CHOICE_GROUP_SIZE) {
+      const indexes = question.countryIndexes.slice(offset, offset + COUNTRY_CHOICE_GROUP_SIZE);
+      const firstNumber = offset + 1;
+      const numberedFlags = indexes.map((index, itemIndex) => ({
+        code: countries[index].code,
+        filename: countries[index].flag[0],
+        number: firstNumber + itemIndex,
+      }));
+      const compositeFilename = await createNumberedFlagImage(
+        numberedFlags,
+        join(flagsDirectory, 'bot'),
+        generatedFlagsDirectory,
+      );
+      blocks.push(photo(`${generatedFlagsUrl}${encodeURIComponent(compositeFilename)}`));
+    }
+
+    return blocks;
+  }
+
+  async function replyRich(ctx: UniversalContext, message: RichDocument): Promise<void> {
+    const api = ctx.platformApi as TelegramRichApi | undefined;
+    if (!api || typeof api.sendRichMessage !== 'function') {
+      throw new Error('Telegram Rich Messages API is unavailable');
+    }
+
+    await api.sendRichMessage(
+      ctx.peerId,
+      message.toInputRichMessage({ skipEntityDetection: true }),
+    );
+  }
+
+  async function askQuestion(ctx: UniversalContext, mode: QuizMode): Promise<void> {
+    const count = countFor(ctx);
+    const question = createQuestion(count, Math.random, countries);
+    const correctCountry = question.countries[question.correctAnswerIndex];
+    const correctCountryIndex = question.countryIndexes[question.correctAnswerIndex];
+    const roundId = randomUUID();
+    const profile = ctx.chatType === 'private' ? null : await ctx.getUserProfile();
+    const ownerName = profile
+      ? [profile.firstName, profile.lastName].filter(Boolean).join(' ')
+      : undefined;
+    const addressedPrompt =
+      ctx.chatType === 'private'
+        ? []
+        : [paragraph(`Вопрос для ${ownerName || `участника ${ctx.userId}`}.`)];
+    const hasChoices = count > 1;
+    const questionPrompt = () =>
+      paragraph(
+        hasChoices
+          ? [bold('Найди флаг страны: '), correctCountry.name.ru]
+          : bold(`Как выглядит флаг страны «${correctCountry.name.ru}»?`),
+      );
+    const choices =
+      mode === 'flag'
+        ? [
+            ...addressedPrompt,
+            photo(
+              await versionedFlagUrl(flagsUrl, join(flagsDirectory, 'bot'), correctCountry.flag[0]),
+              {
+                caption: 'Как называется страна на флаге?',
+              },
+            ),
+            ...(hasChoices
+              ? [
+                  list(
+                    question.countries.map((country) => country.name.ru),
+                    { ordered: true },
+                  ),
+                ]
+              : []),
+          ]
+        : [
+            ...addressedPrompt,
+            questionPrompt(),
+            ...(hasChoices ? await countryChoiceBlocks(question, count) : []),
+          ];
+    const repeatedPrompt = mode === 'country' && hasChoices ? [questionPrompt()] : [];
+    const trailingButtons = hasChoices
+      ? richChoiceRows(roundId, question.countryIndexes)
+      : [
+          buttonRow([
+            button('Показать ответ', {
+              type: 'callback_data',
+              data: `reveal:${roundId}`,
+              style: 'primary',
+            }),
+          ]),
+        ];
+
+    if (rounds.size >= 5_000) {
+      const oldestRoundId = rounds.keys().next().value;
+      if (oldestRoundId) rounds.delete(oldestRoundId);
+    }
+    // The API can accept a message even if its response is lost. Keep the round
+    // so buttons in an ambiguously delivered question remain usable.
+    rounds.set(roundId, {
+      ownerId: ctx.userId,
+      mode,
+      choiceCount: count,
+      correctCountryIndex,
+      countryIndexes: question.countryIndexes,
+      answered: false,
+    });
+    const delivery = replyRich(ctx, doc(...choices, ...repeatedPrompt, ...trailingButtons));
+    pendingRounds.set(roundId, delivery);
+    try {
+      await delivery;
+    } finally {
+      pendingRounds.delete(roundId);
+    }
+  }
+
+  async function showSettings(
+    ctx: UniversalContext,
+    mode: QuizMode,
+    roundId: string,
+  ): Promise<void> {
+    const countsButtons = [
+      ...Array.from({ length: 9 }, (_, index) =>
+        inline(String(index + 2), `count:${roundId}:${index + 2}`),
+      ),
+      inline('Без вариантов', `count:${roundId}:1`),
+    ];
+
+    await ctx.reply('Сколько должно быть вариантов ответа?', {
+      inlineKeyboard: [countsButtons.slice(0, 9), countsButtons.slice(9)],
+    });
+  }
+
+  async function handleCallback(ctx: UniversalContext, data: string): Promise<void> {
+    const [action, ...parts] = data.split(':');
+    const pending = pendingRounds.get(parts[0]);
+    if (pending) await pending.catch(() => {});
+
+    if (action === 'reveal') {
+      const [roundId] = parts;
+      const round = rounds.get(roundId);
+      if (!round || round.choiceCount !== 1) {
+        await ctx.reply('Вопрос устарел. Начни новый раунд через /flags или /country.');
+        return;
+      }
+      if (round.ownerId !== ctx.userId) {
+        await ctx.reply('Этот вопрос предназначен другому участнику.');
+        return;
+      }
+      if (round.answered) {
+        await ctx.reply('Раунд завершён. Начни новый через /flags или /country.');
+        return;
+      }
+
+      round.answered = true;
+      try {
+        const country = countries[round.correctCountryIndex];
+        const answer =
+          round.mode === 'flag'
+            ? paragraph([bold('Ответ: '), country.name.ru])
+            : photo(
+                await versionedFlagUrl(flagsUrl, join(flagsDirectory, 'bot'), country.flag[0]),
+                {
+                  caption: `Правильный флаг страны ${country.name.ru}`,
+                },
+              );
+        await replyRich(ctx, doc(answer, followUpButtons(round.mode, roundId)));
+      } catch (error) {
+        round.answered = false;
+        throw error;
+      }
+      return;
+    }
+
+    if (action === 'answer') {
+      const [roundId, chosenValue] = parts;
+      const round = rounds.get(roundId);
+      const chosen = Number(chosenValue);
+      if (
+        !round ||
+        round.choiceCount === 1 ||
+        !/^\d+$/.test(chosenValue ?? '') ||
+        !Number.isInteger(chosen) ||
+        !round.countryIndexes.includes(chosen)
+      ) {
+        await ctx.reply('Вопрос устарел. Начни новый раунд через /flags или /country.');
+        return;
+      }
+      if (round.ownerId !== ctx.userId) {
+        await ctx.reply('Этот вопрос предназначен другому участнику.');
+        return;
+      }
+      if (round.answered) {
+        await ctx.reply('Раунд завершён. Начни новый через /flags или /country.');
+        return;
+      }
+      round.answered = true;
+
+      const correctName = countries[round.correctCountryIndex].name.ru;
+      const chosenName = countries[chosen].name.ru;
+      const result =
+        chosen === round.correctCountryIndex
+          ? round.choiceCount === 1
+            ? `Это ${correctName}`
+            : `☑️ Правильно, это ${correctName}`
+          : round.mode === 'flag'
+            ? `Вы ответили ${chosenName}.\n❌ Неправильно, это ${correctName}`
+            : '❌ Вы выбрали неверный флаг.';
+
+      try {
+        await replyRich(ctx, doc(paragraph(result), followUpButtons(round.mode, roundId)));
+      } catch (error) {
+        round.answered = false;
+        throw error;
+      }
+      return;
+    }
+
+    if (action === 'more' || action === 'settings') {
+      const [roundId] = parts;
+      const round = rounds.get(roundId);
+      if (!round) {
+        await ctx.reply('Вопрос устарел. Начни новый раунд через /flags или /country.');
+        return;
+      }
+      if (round.ownerId !== ctx.userId) {
+        await ctx.reply('Эти кнопки предназначены участнику, запустившему раунд.');
+        return;
+      }
+
+      if (action === 'more') await askQuestion(ctx, round.mode);
+      else await showSettings(ctx, round.mode, roundId);
+      return;
+    }
+
+    if (action === 'count') {
+      const [roundId, countValue] = parts;
+      const round = rounds.get(roundId);
+      const count = Number(countValue);
+      if (!round || !Number.isInteger(count) || count < 1 || count > 10) return;
+      if (round.ownerId !== ctx.userId) {
+        await ctx.reply('Эти настройки принадлежат участнику, запустившему раунд.');
+        return;
+      }
+
+      counts.set(ctx.userId, count);
+      await askQuestion(ctx, round.mode);
+      return;
+    }
+
+    await ctx.reply('Не удалось обработать нажатие. Начни новый раунд через /flags или /country.');
+  }
+
+  return { askQuestion, handleCallback };
+}

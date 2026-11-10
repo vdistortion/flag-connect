@@ -1,6 +1,7 @@
-import { InjectionToken } from '@angular/core';
+import { InjectionToken, Signal } from '@angular/core';
 
 export interface QuizMainButton {
+  readonly available: Signal<boolean>;
   set(text: string, enabled: boolean, onClick: () => void): void;
   hide(): void;
 }
