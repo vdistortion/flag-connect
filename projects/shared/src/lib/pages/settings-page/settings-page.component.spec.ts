@@ -1,8 +1,10 @@
 import { TestBed } from '@angular/core/testing';
 import { SettingsService } from '../../services/settings.service';
 import { SettingsPageComponent } from './settings-page.component';
+import { provideTestStorage } from '../../testing/provide-test-storage';
 
 describe('SettingsPageComponent', () => {
+  beforeEach(() => TestBed.configureTestingModule({ providers: [provideTestStorage()] }));
   it('labels the page and explains automatically saved settings', () => {
     const fixture = TestBed.createComponent(SettingsPageComponent);
     fixture.detectChanges();

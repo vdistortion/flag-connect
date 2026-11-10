@@ -6,6 +6,7 @@ import { QUIZ_MAIN_BUTTON } from '../services/quiz-main-button';
 import { CountryCatalogService, COUNTRY_CATALOG_URL } from '../services/country-catalog.service';
 import { SettingsService } from '../services/settings.service';
 import { QuizService } from '../services/quiz.service';
+import { provideTestStorage } from '../testing/provide-test-storage';
 import { QuizFlagPageComponent } from './quiz-flag-page/quiz-flag-page.component';
 import { QuizCountryPageComponent } from './quiz-country-page/quiz-country-page.component';
 
@@ -23,7 +24,7 @@ describe.each(
 )('$name quiz presentation and interaction', ({ Page }) => {
   beforeEach(() =>
     TestBed.configureTestingModule({
-      providers: [provideHttpClient(), provideHttpClientTesting()],
+      providers: [provideHttpClient(), provideHttpClientTesting(), provideTestStorage()],
     }),
   );
   afterEach(() => TestBed.resetTestingModule());

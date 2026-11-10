@@ -5,6 +5,7 @@ import { WebStorageService } from './webstorage.service';
 import { CountryCatalogService } from './country-catalog.service';
 import type { Country } from '@flag-connect/flag-domain';
 import { defer, of, Subject, throwError } from 'rxjs';
+import { provideTestStorage } from '../testing/provide-test-storage';
 
 const countries: readonly Country[] = Array.from({ length: 10 }, (_, index) => ({
   code: `C${index}`,
@@ -13,6 +14,7 @@ const countries: readonly Country[] = Array.from({ length: 10 }, (_, index) => (
 }));
 
 describe('QuizService asynchronous catalog', () => {
+  beforeEach(() => TestBed.configureTestingModule({ providers: [provideTestStorage()] }));
   afterEach(() => TestBed.resetTestingModule());
   it('creates the requested first question when the catalog arrives', () => {
     const catalog = new Subject<readonly Country[]>();
