@@ -10,7 +10,11 @@
       <p>{{ messages().quizError }}</p>
       <button type="button" (click)="quizService.retry()">{{ messages().retry }}</button>
     </div>
+  } @else if (quizService.completed()) {
+    <app-quiz-session />
+    <app-quiz-results (restart)="restartSession()" (repeat)="repeatMistakes()" />
   } @else if (quizService.correctCountry(); as country) {
+    <app-quiz-session />
     <header class="quiz-question">
       <p class="quiz-eyebrow">{{ messages().guessCountryByFlag }}</p>
       <h1>{{ messages().identifyCountry }}</h1>

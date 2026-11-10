@@ -1,4 +1,15 @@
+<a class="miniapp-skip-link" href="#main-content">{{
+  language() === 'ru' ? 'К содержимому' : 'Skip to content'
+}}</a>
 @if (!tg.isApp()) {
-  <app-header></app-header>
+  <nav
+    class="miniapp-browser-nav"
+    [attr.aria-label]="language() === 'ru' ? 'Навигация' : 'Navigation'"
+  >
+    <a routerLink="/">FlagConnect</a>
+    <a routerLink="/settings">{{ language() === 'ru' ? 'Настройки' : 'Settings' }}</a>
+  </nav>
 }
-<router-outlet />
+<main id="main-content" tabindex="-1">
+  <router-outlet />
+</main>

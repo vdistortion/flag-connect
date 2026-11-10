@@ -7,6 +7,10 @@ export const QUIZ_SETTINGS = {
   minCount: 2,
   maxCount: 10,
 } as const;
+export type SessionMode = 'zen' | 'round';
+const SESSION_MODE_STORAGE_KEY = 'fc-session-mode';
+const ROUND_LENGTH_STORAGE_KEY = 'fc-round-length';
+export const ROUND_LENGTHS = [10, 15, 20, 25, 30, 35, 40];
 const STORAGE_KEY = 'fc-count';
 const NO_CHOICES_STORAGE_KEY = 'fc-no-choices';
 
@@ -18,6 +22,28 @@ export class SettingsService {
   private readonly savedCount = this.storage.get<unknown>(STORAGE_KEY);
   readonly count = signal(this.readChoiceCount(this.savedCount));
   readonly noChoices = signal(this.readNoChoices(this.savedCount));
+  readonly sessionMode = signal<SessionMode>(
+    this.storage.get<unknown>(SESSION_MODE_STORAGE_KEY) === 'round' ? 'round' : 'zen',
+  );
+
+  private readonly savedRoundLength = this.storage.get<unknown>(ROUND_LENGTH_STORAGE_KEY);
+  readonly roundLength = signal<number>(
+    typeof this.savedRoundLength === 'number' && ROUND_LENGTHS.includes(this.savedRoundLength)
+      ? this.savedRoundLength
+      : 10,
+  );
+
+  setRoundLength(value: number): void {
+    if (!ROUND_LENGTHS.includes(value)) return;
+    this.roundLength.set(value);
+    this.storage.set(ROUND_LENGTH_STORAGE_KEY, value);
+  }
+
+  setSessionMode(value: SessionMode): void {
+    if (value !== 'zen' && value !== 'round') return;
+    this.sessionMode.set(value);
+    this.storage.set(SESSION_MODE_STORAGE_KEY, value);
+  }
 
   setCount(value: number): void {
     if (

@@ -1,5 +1,6 @@
 import {
   afterNextRender,
+  effect,
   Directive,
   ElementRef,
   HostListener,
@@ -24,6 +25,37 @@ export abstract class QuizPageBase implements OnInit {
   protected readonly messages = inject(LanguageService).messages;
   private readonly answers = viewChildren<ButtonComponent | FlagComponent>('answerOption');
   private readonly actionButton = viewChild(QuizActionComponent);
+
+  constructor() {
+    effect(() => {
+      if (this.quizService.completed()) {
+        afterNextRender(
+          () => this.element.nativeElement.querySelector<HTMLElement>('.round-results h1')?.focus(),
+          { injector: this.injector },
+        );
+      }
+    });
+  }
+
+  protected restartSession(): void {
+    this.quizService.restart();
+    this.focusFirstAnswer();
+  }
+
+  protected repeatMistakes(): void {
+    this.quizService.repeatMistakes();
+    this.focusFirstAnswer();
+  }
+
+  private focusFirstAnswer(): void {
+    afterNextRender(
+      () => {
+        if (this.quizService.noChoices()) this.actionButton()?.focus();
+        else this.answers()[0]?.focus();
+      },
+      { injector: this.injector },
+    );
+  }
 
   ngOnInit(): void {
     this.quizService.nextQuestion();
@@ -92,6 +124,10 @@ export abstract class QuizPageBase implements OnInit {
   }
 
   protected activateAction(): void {
+    if (this.quizService.completed()) {
+      this.restartSession();
+      return;
+    }
     if (
       this.quizService.status() !== 'ready' ||
       (!this.quizService.noChoices() && !this.quizService.hasAnswered())

@@ -6,11 +6,73 @@
   <p class="intro">
     {{
       language() === 'ru'
-        ? 'Настройте тренировку под себя. Изменения применятся к следующему вопросу.'
-        : 'Make practice your own. Changes apply to the next question.'
+        ? 'Настройте тренировку под себя. Изменения применятся к новой игре.'
+        : 'Make practice your own. Changes apply to a new game.'
     }}
   </p>
   <section class="settings-card" [attr.aria-label]="messages().settings">
+    <fieldset class="setting-row session-modes">
+      <legend>{{ language() === 'ru' ? 'Формат игры' : 'Game mode' }}</legend>
+      <label
+        ><input
+          type="radio"
+          name="session-mode"
+          value="zen"
+          [checked]="settings.sessionMode() === 'zen'"
+          (change)="setSessionMode('zen')"
+        />
+        <span
+          >{{ language() === 'ru' ? 'Дзен' : 'Zen'
+          }}<small>{{
+            language() === 'ru' ? 'Победа не предусмотрена' : 'Victory is not part of the plan'
+          }}</small></span
+        >
+      </label>
+      <label
+        ><input
+          type="radio"
+          name="session-mode"
+          value="round"
+          [checked]="settings.sessionMode() === 'round'"
+          (change)="setSessionMode('round')"
+        />
+        <span
+          >{{ language() === 'ru' ? 'Раунд' : 'Round'
+          }}<small>{{
+            language() === 'ru'
+              ? 'Вопросы, результат и работа над ошибками'
+              : 'Questions, results and mistake review'
+          }}</small></span
+        >
+      </label>
+    </fieldset>
+    <div class="setting-row">
+      <label for="round-length">{{ language() === 'ru' ? 'Длина раунда' : 'Round length' }}</label>
+      <p id="round-length-help">
+        {{
+          language() === 'ru'
+            ? 'От 10 до 40 вопросов с шагом 5. В дзене ограничений нет.'
+            : '10 to 40 questions in steps of 5. Zen has no limit.'
+        }}
+      </p>
+      <div class="answer-count-control">
+        <input
+          id="round-length"
+          type="range"
+          min="0"
+          [max]="roundLengths.length - 1"
+          step="1"
+          [value]="roundLengths.indexOf(settings.roundLength())"
+          [attr.aria-valuetext]="
+            settings.roundLength() + (language() === 'ru' ? ' вопросов' : ' questions')
+          "
+          aria-describedby="round-length-help"
+          [disabled]="settings.sessionMode() === 'zen'"
+          (input)="setRoundLength($event)"
+        />
+        <output for="round-length">{{ settings.roundLength() }}</output>
+      </div>
+    </div>
     <div class="setting-row">
       <label for="answer-count">{{ messages().answerCountLabel }}</label>
       <p id="answer-count-help">

@@ -18,7 +18,13 @@ import { ButtonComponent } from '../ui/button/button.component';
           @if (quiz.noChoices() && !quiz.hasAnswered()) {
             {{ messages().showAnswer }}
           } @else if (quiz.hasAnswered()) {
-            {{ messages().next }}
+            {{
+              quiz.sessionMode() === 'round' && quiz.results().length >= quiz.roundLength()
+                ? language() === 'ru'
+                  ? 'Результат'
+                  : 'Results'
+                : messages().next
+            }}
           } @else {
             {{ messages().chooseAnswer }}
           }
@@ -50,6 +56,7 @@ import { ButtonComponent } from '../ui/button/button.component';
 export class QuizActionComponent {
   protected readonly quiz = inject(QuizService);
   protected readonly messages = inject(LanguageService).messages;
+  protected readonly language = inject(LanguageService).language;
   readonly activated = output<void>();
   private readonly button = viewChild<ButtonComponent>('button');
   focus(): void {

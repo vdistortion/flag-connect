@@ -1,5 +1,5 @@
 import { Component, inject, signal } from '@angular/core';
-import { QUIZ_SETTINGS, SettingsService } from '../../services/settings.service';
+import { QUIZ_SETTINGS, ROUND_LENGTHS, SettingsService } from '../../services/settings.service';
 import { LanguageService } from '../../services/language.service';
 
 @Component({
@@ -8,6 +8,17 @@ import { LanguageService } from '../../services/language.service';
   styleUrl: './settings-page.component.scss',
 })
 export class SettingsPageComponent {
+  protected readonly roundLengths = ROUND_LENGTHS;
+  protected setSessionMode(mode: 'zen' | 'round'): void {
+    this.settings.setSessionMode(mode);
+    this.saved.set(true);
+  }
+  protected setRoundLength(event: Event): void {
+    const input = event.target;
+    if (!(input instanceof HTMLInputElement)) return;
+    this.settings.setRoundLength(this.roundLengths[Number(input.value)]);
+    this.saved.set(true);
+  }
   protected readonly settings = inject(SettingsService);
   protected readonly messages = inject(LanguageService).messages;
   protected readonly language = inject(LanguageService).language;

@@ -5,10 +5,19 @@ import { FlagComponent } from '../../ui/flag/flag.component';
 import { QuizPageBase } from '../quiz-page-base';
 import { QuizActionComponent } from '../quiz-action.component';
 import { QuizFeedbackComponent } from '../quiz-feedback.component';
+import { QuizSessionComponent } from '../quiz-session.component';
+import { QuizResultsComponent } from '../quiz-results.component';
 
 @Component({
   selector: 'app-quiz-flag-page',
-  imports: [ButtonComponent, FlagComponent, QuizActionComponent, QuizFeedbackComponent],
+  imports: [
+    ButtonComponent,
+    FlagComponent,
+    QuizActionComponent,
+    QuizFeedbackComponent,
+    QuizSessionComponent,
+    QuizResultsComponent,
+  ],
   templateUrl: './quiz-flag-page.component.html',
   styleUrl: './quiz-flag-page.component.scss',
   providers: [QuizService],

@@ -1,10 +1,344 @@
-:root.telegram-miniapp {
-  --app-bg-color: var(--tg-theme-bg-color);
-  --app-flag-color: var(--tg-theme-secondary-bg-color, var(--tg-theme-bg-color));
-  --app-text-color: var(--tg-theme-text-color);
-  --app-text-color-hover: var(--tg-theme-accent-text-color, var(--tg-theme-link-color));
-  --app-button-color: var(--tg-theme-button-color);
-  --app-button-text-color: var(--tg-theme-button-text-color);
-  --app-error-color: var(--tg-theme-destructive-text-color, #ec3942);
-  --app-success-color: var(--tg-theme-accent-text-color, var(--tg-theme-button-color));
+/* MiniApp owns this theme, including standalone browser preview. Never loaded by web. */
+:root {
+  --app-bg-color: var(--miniapp-theme-secondary-bg-color, #f0f2f5);
+  --app-flag-color: var(--miniapp-theme-section-bg-color, var(--miniapp-theme-bg-color, #fff));
+  --app-text-color: var(--miniapp-theme-text-color, #17212b);
+  --app-text-color-hover: var(
+    --miniapp-theme-accent-text-color,
+    var(--miniapp-theme-link-color, #1969aa)
+  );
+  --app-button-color: var(--miniapp-theme-button-color, #1969aa);
+  --app-button-text-color: var(--miniapp-theme-button-text-color, #fff);
+  /* Telegram has no success token. Do not reuse the accent (which may be red). */
+  --app-success-color: #168348;
+  --app-error-color: #ce3345;
+  --surface-color: var(--miniapp-theme-section-bg-color, var(--miniapp-theme-bg-color, #fff));
+  --surface-raised: var(--miniapp-theme-bg-color, #fff);
+  --muted-color: var(--miniapp-theme-subtitle-text-color, var(--miniapp-theme-hint-color, #626d7a));
+  --border-color: var(
+    --miniapp-theme-section-separator-color,
+    color-mix(in srgb, var(--text-color) 15%, transparent)
+  );
+  --miniapp-inset-left: calc(
+    max(env(safe-area-inset-left, 0px), var(--miniapp-safe-left, 0px)) +
+      var(--miniapp-content-safe-left, 0px)
+  );
+  --miniapp-inset-right: calc(
+    max(env(safe-area-inset-right, 0px), var(--miniapp-safe-right, 0px)) +
+      var(--miniapp-content-safe-right, 0px)
+  );
+  --miniapp-inset-top: calc(
+    max(env(safe-area-inset-top, 0px), var(--miniapp-safe-top, 0px)) +
+      var(--miniapp-content-safe-top, 0px)
+  );
+  --miniapp-inset-bottom: calc(
+    max(env(safe-area-inset-bottom, 0px), var(--miniapp-safe-bottom, 0px)) +
+      var(--miniapp-content-safe-bottom, 0px)
+  );
+}
+
+body {
+  margin: 0;
+  min-width: 280px;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  -webkit-text-size-adjust: 100%;
+}
+app-root {
+  display: block;
+  min-height: var(--miniapp-viewport-height, 100dvh);
+  padding-top: var(--miniapp-inset-top);
+  padding-bottom: var(--miniapp-inset-bottom);
+  padding-left: var(--miniapp-inset-left);
+  padding-right: var(--miniapp-inset-right);
+}
+#main-content {
+  display: block;
+  padding: 16px 0 24px;
+}
+#main-content .wrapper {
+  width: 100%;
+  max-width: 680px;
+  padding-inline: 16px;
+}
+.miniapp-skip-link {
+  position: fixed;
+  z-index: 1000;
+  top: 0;
+  left: 16px;
+  transform: translateY(-150%);
+  padding: 12px 16px;
+  background: var(--button-color);
+  color: var(--button-text-color);
+  border-radius: 10px;
+}
+.miniapp-skip-link:focus {
+  transform: translateY(0);
+}
+.miniapp-browser-nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  max-width: 680px;
+  margin-inline: auto;
+  padding: 8px 16px;
+  border-bottom: 1px solid var(--border-color);
+}
+.miniapp-browser-nav a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  color: var(--text-color-hover);
+  text-decoration: none;
+  font-size: 14px;
+  font-weight: 600;
+}
+.miniapp-wordmark {
+  margin: 8px 0 20px;
+  color: var(--muted-color);
+  font-size: 13px;
+  font-weight: 600;
+}
+.miniapp-home h1 {
+  margin: 0;
+  font-size: 26px;
+  letter-spacing: -0.025em;
+}
+.miniapp-home-intro {
+  margin: 8px 0 24px;
+  color: var(--muted-color);
+  font-size: 14px;
+  line-height: 1.5;
+}
+.miniapp-menu {
+  display: grid;
+  gap: 10px;
+}
+.miniapp-menu-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-height: 76px;
+  padding: 14px;
+  border: 1px solid var(--border-color);
+  border-radius: 14px;
+  background: var(--surface-color);
+  color: var(--text-color);
+  text-decoration: none;
+}
+.miniapp-menu-item > span:nth-child(2) {
+  min-width: 0;
+  flex: 1;
+}
+.miniapp-menu-item strong {
+  display: block;
+  font-size: 16px;
+  font-weight: 600;
+}
+.miniapp-menu-item small {
+  display: block;
+  margin-top: 5px;
+  color: var(--muted-color);
+  font-size: 12px;
+  line-height: 1.4;
+}
+.miniapp-menu-icon {
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+  width: 40px;
+  height: 40px;
+  border-radius: 11px;
+  background: color-mix(in srgb, var(--button-color) 12%, var(--surface-color));
+  color: var(--text-color-hover);
+  font-size: 25px;
+}
+.miniapp-chevron {
+  color: var(--muted-color);
+  font-size: 26px;
+}
+.miniapp-menu-item--play {
+  min-height: 88px;
+}
+.miniapp-menu-item:active {
+  background: color-mix(in srgb, var(--button-color) 10%, var(--surface-color));
+}
+
+/* Specificity intentionally exceeds shared component encapsulation selectors. */
+#main-content .quiz-page,
+#main-content .quiz-page.telegram-layout,
+#main-content .quiz-page.web-quiz {
+  display: block;
+  min-height: 0;
+  height: auto;
+  padding-bottom: 24px;
+}
+#main-content .quiz-page .quiz-question {
+  padding: 4px 0 12px;
+  text-align: start;
+}
+#main-content .quiz-page .quiz-eyebrow {
+  margin-bottom: 8px;
+  font-size: 11px;
+  letter-spacing: 0.04em;
+}
+#main-content .quiz-page h1 {
+  font-size: 26px;
+  line-height: 1.2;
+  letter-spacing: -0.025em;
+}
+#main-content .quiz-page .quiz-prompt {
+  font-size: 14px;
+  line-height: 1.5;
+}
+#main-content .quiz-page .quiz-layout {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 12px;
+}
+#main-content .quiz-page .answer-panel {
+  margin-top: 0;
+}
+#main-content .question-panel app-flag {
+  width: 100%;
+  max-width: min(360px, 42dvh);
+}
+#main-content .quiz-page .countries {
+  margin: 12px 0 0;
+  padding: 0;
+  gap: 10px;
+}
+#main-content .quiz-page .country-options {
+  grid-template-columns: minmax(0, 1fr);
+}
+#main-content .quiz-page .flag-options {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+#main-content app-button button {
+  min-height: 52px;
+  border-radius: 12px;
+  font-size: 16px;
+}
+#main-content app-button button.answer-option {
+  min-height: 52px;
+  padding: 12px;
+}
+#main-content app-flag .flag {
+  border-radius: 12px;
+  box-shadow: none;
+}
+#main-content app-flag .flag__wrapper {
+  padding: 14px;
+}
+#main-content app-flag .flag__variant-button {
+  min-width: 44px;
+  min-height: 44px;
+}
+#main-content .flag-options .flag {
+  min-width: 0;
+}
+#main-content .flag-options .flag__image-button {
+  min-height: 64px;
+}
+#main-content .keyboard-hint,
+#main-content .keyboard-hints {
+  display: none;
+}
+#main-content .settings-page h1,
+#main-content .catalog-heading h1 {
+  font-size: 26px;
+}
+#main-content .settings-page .intro {
+  margin-bottom: 20px;
+  font-size: 14px;
+  line-height: 1.5;
+}
+#main-content .settings-card {
+  padding: 4px 16px;
+  border-radius: 14px;
+}
+#main-content .setting-row {
+  padding-block: 18px;
+}
+#main-content .settings-page select {
+  min-height: 44px;
+  color: var(--text-color);
+  background: var(--surface-color);
+  border: 1px solid var(--border-color);
+  border-radius: 10px;
+  padding: 8px;
+}
+#main-content .flags {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+}
+#main-content .country-card {
+  padding: 10px;
+  border-radius: 12px;
+}
+#main-content .country-card__heading {
+  flex-wrap: wrap;
+  gap: 4px;
+}
+#main-content .country-card .name {
+  font-size: 14px;
+}
+#main-content .session-heading {
+  margin: 0 0 16px;
+  padding: 12px;
+  background: var(--surface-color);
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+}
+#main-content .score-strip {
+  height: 6px;
+  border-radius: 6px;
+}
+#main-content .score-caption {
+  font-size: 12px;
+  line-height: 1.5;
+}
+#main-content .round-results {
+  padding: 20px 16px;
+  background: var(--surface-color);
+  border: 1px solid var(--border-color);
+  border-radius: 16px;
+}
+#main-content .round-results h1 {
+  font-size: 26px;
+}
+#main-content .result-actions {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 10px;
+}
+#main-content .quiz-action-bar {
+  position: static;
+  margin-top: 20px;
+  padding: 12px 0 0;
+  border: 0;
+  background: transparent;
+  box-shadow: none;
+}
+#main-content .popup {
+  left: var(--miniapp-inset-left);
+  right: var(--miniapp-inset-right);
+}
+#main-content .popup__content {
+  top: calc(var(--miniapp-inset-top) + 12px);
+  transform: translateX(-50%);
+  height: calc(
+    var(--miniapp-viewport-height, 100dvh) - var(--miniapp-inset-top) - var(
+        --miniapp-inset-bottom
+      ) -
+      24px
+  );
+  max-height: 850px;
+  padding: 16px;
+  border-radius: 16px;
+}
+@media (max-width: 340px) {
+  #main-content .flags {
+    grid-template-columns: 1fr;
+  }
 }

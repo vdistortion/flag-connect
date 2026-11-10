@@ -4,7 +4,7 @@
     <meta charset="utf-8" />
     <title>FlagConnect — flag quiz</title>
     <base href="/" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="theme-color" content="#17212b" />
     <style>
@@ -12,7 +12,8 @@
         margin: 0;
       }
 
-      html.telegram-miniapp app-header {
+      html.telegram-miniapp app-header,
+      html.telegram-miniapp .miniapp-browser-nav {
         display: none;
       }
 
@@ -24,7 +25,13 @@
     <script>
       (() => {
         const webApp = window.Telegram?.WebApp;
-        const telegramLanguage = webApp?.initDataUnsafe?.user?.language_code?.toLowerCase();
+        // The JS SDK exists in ordinary browsers too; it is not launch evidence.
+        const isTelegram = Boolean(
+          webApp?.initData || (webApp?.platform && webApp.platform !== 'unknown'),
+        );
+        const telegramLanguage = isTelegram
+          ? webApp?.initDataUnsafe?.user?.language_code?.toLowerCase()
+          : undefined;
         const browserLanguage = (navigator.languages[0] ?? navigator.language).toLowerCase();
         const language = telegramLanguage
           ? telegramLanguage.startsWith('ru')
@@ -38,13 +45,20 @@
         if (root.lang !== language) root.classList.add('locale-pending');
         root.lang = language;
 
-        if (!webApp) return;
+        root.classList.add('miniapp');
+        if (!isTelegram) return;
 
+        const themeProperties = new Set();
         const applyTheme = () => {
           root.classList.add('telegram-miniapp');
+          // Verse also binds --tg-theme-*; keep our complete snapshot independent.
+          themeProperties.forEach((property) => root.style.removeProperty(property));
+          themeProperties.clear();
           for (const [key, value] of Object.entries(webApp.themeParams ?? {})) {
             if (typeof value === 'string') {
-              root.style.setProperty(`--tg-theme-${key.replaceAll('_', '-')}`, value);
+              const property = `--miniapp-theme-${key.replaceAll('_', '-')}`;
+              root.style.setProperty(property, value);
+              themeProperties.add(property);
             }
           }
           root.style.colorScheme = webApp.colorScheme;
@@ -54,8 +68,45 @@
           }
         };
 
-        applyTheme();
-        webApp.onEvent('themeChanged', applyTheme);
+        const applyViewport = () => {
+          for (const [property, value] of [
+            ['--miniapp-viewport-height', webApp.viewportHeight],
+            ['--miniapp-viewport-stable-height', webApp.viewportStableHeight],
+          ]) {
+            if (Number.isFinite(value) && value > 0) root.style.setProperty(property, `${value}px`);
+          }
+          for (const [prefix, insets] of [
+            ['safe', webApp.safeAreaInset],
+            ['content-safe', webApp.contentSafeAreaInset],
+          ]) {
+            for (const edge of ['top', 'right', 'bottom', 'left']) {
+              root.style.setProperty(
+                `--miniapp-${prefix}-${edge}`,
+                `${Math.max(0, insets?.[edge] ?? 0)}px`,
+              );
+            }
+          }
+        };
+        const listeners = [
+          ['themeChanged', applyTheme],
+          ['viewportChanged', applyViewport],
+          ['safeAreaChanged', applyViewport],
+          ['contentSafeAreaChanged', applyViewport],
+        ];
+        let active = false;
+        window.initTelegramEnvironment = () => {
+          if (active) return;
+          active = true;
+          applyTheme();
+          applyViewport();
+          listeners.forEach(([event, listener]) => webApp.onEvent(event, listener));
+        };
+        window.cleanupTelegramEnvironment = () => {
+          if (!active) return;
+          active = false;
+          listeners.forEach(([event, listener]) => webApp.offEvent(event, listener));
+        };
+        window.initTelegramEnvironment();
       })();
     </script>
   </head>

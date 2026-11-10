@@ -9,8 +9,13 @@ interface MainButtonState {
 }
 
 interface TelegramMainButtonApi {
+  setText(text: string): unknown;
+  show(): unknown;
+  hide(): unknown;
   enable(): void;
   disable(): void;
+  onClick(listener: VoidFunction): unknown;
+  offClick(listener: VoidFunction): unknown;
 }
 
 interface TelegramWindow extends Window {
@@ -26,11 +31,16 @@ export class TelegramQuizMainButtonService implements QuizMainButton, OnDestroy 
   private state: MainButtonState | null = null;
   private removeClickListener: VoidFunction | null = null;
   readonly available = signal(false);
+  private nativeButton: TelegramMainButtonApi | null = null;
 
   constructor(private readonly telegram: TelegramApiService) {}
 
   activate(): void {
-    this.available.set(this.telegram.isApp());
+    this.nativeButton =
+      typeof window === 'undefined'
+        ? null
+        : ((window as TelegramWindow).Telegram?.WebApp?.MainButton ?? null);
+    this.available.set(this.telegram.isApp() && this.nativeButton !== null);
     this.apply();
   }
 
@@ -56,18 +66,21 @@ export class TelegramQuizMainButtonService implements QuizMainButton, OnDestroy 
     this.removeClickListener = null;
 
     if (!this.state) {
-      this.telegram.mainButton.hide();
+      this.nativeButton!.hide();
       return;
     }
 
     const state = this.state;
-    this.telegram.mainButton.show(state.text);
-    const nativeButton = (window as TelegramWindow).Telegram?.WebApp?.MainButton;
-    if (state.enabled) nativeButton?.enable();
-    else nativeButton?.disable();
+    const nativeButton = this.nativeButton!;
+    nativeButton.setText(state.text);
+    nativeButton.show();
+    if (state.enabled) nativeButton.enable();
+    else nativeButton.disable();
 
-    this.removeClickListener = this.telegram.mainButton.onClick(() => {
-      if (this.state?.enabled) this.state.onClick();
-    });
+    const listener = () => {
+      if (this.available() && this.state === state && state.enabled) state.onClick();
+    };
+    nativeButton.onClick(listener);
+    this.removeClickListener = () => nativeButton.offClick(listener);
   }
 }

@@ -19,7 +19,13 @@ import { LanguageService } from '../services/language.service';
       <span
         ><kbd>Enter</kbd>
         {{
-          quiz.noChoices() && !quiz.hasAnswered() ? messages().showAnswer : messages().next
+          quiz.noChoices() && !quiz.hasAnswered()
+            ? messages().showAnswer
+            : quiz.sessionMode() === 'round' && quiz.results().length >= quiz.roundLength()
+              ? language() === 'ru'
+                ? 'Результат'
+                : 'Results'
+              : messages().next
         }}</span
       >
     </p>
