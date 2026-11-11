@@ -38,6 +38,7 @@ export function createQuizHandlers(config: QuizConfig) {
   const counts = new Map<string, number>();
   interface QuizRound {
     ownerId: string;
+    peerId: number;
     mode: QuizMode;
     choiceCount: number;
     correctCountryIndex: number;
@@ -184,6 +185,7 @@ export function createQuizHandlers(config: QuizConfig) {
     // so buttons in an ambiguously delivered question remain usable.
     rounds.set(roundId, {
       ownerId: ctx.userId,
+      peerId: ctx.peerId,
       mode,
       choiceCount: count,
       correctCountryIndex,
@@ -221,6 +223,11 @@ export function createQuizHandlers(config: QuizConfig) {
 
   async function handleCallback(ctx: UniversalContext, data: string): Promise<void> {
     const [action, ...parts] = data.split(':');
+    const origin = rounds.get(parts[0]);
+    if (origin && origin.peerId !== ctx.peerId) {
+      await ctx.reply('Этот вопрос запущен в другом чате. Начни новый через /flags или /country.');
+      return;
+    }
     const pending = pendingRounds.get(parts[0]);
     if (pending) await pending.catch(() => {});
     const source = rounds.get(parts[0]);

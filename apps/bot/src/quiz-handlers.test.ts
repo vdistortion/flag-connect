@@ -144,6 +144,33 @@ test('another user cannot answer or use follow-up buttons', async () => {
   assert.equal(rich.length, 2);
 });
 
+test('round controls cannot be used by the same owner in a different chat', async () => {
+  const { handlers, ctx, rich, replies } = setup();
+  await handlers.askQuestion(ctx, 'flag');
+  const choice = choices(rich[0])[0];
+  const otherChat = { ...ctx, peerId: -100 } as UniversalContext;
+  for (const callback of [
+    choice.data,
+    `more:${choice.round}`,
+    `settings:${choice.round}`,
+    `count:${choice.round}:1`,
+  ]) {
+    await handlers.handleCallback(otherChat, callback);
+  }
+  assert.equal(rich.length, 1);
+  assert.equal(replies.length, 4);
+  assert.ok(replies.every((reply) => /другом чате/.test(reply)));
+  await handlers.handleCallback(ctx, choice.data);
+  assert.equal(rich.length, 2);
+  await handlers.handleCallback(ctx, `count:${choice.round}:1`);
+  const reveal = rich.at(-1)!.match(/data="(reveal:[^"]+)"/)![1];
+  await handlers.handleCallback(otherChat, reveal);
+  assert.equal(rich.length, 3);
+  assert.match(replies.at(-1)!, /другом чате/);
+  await handlers.handleCallback(ctx, reveal);
+  assert.equal(rich.length, 4);
+});
+
 test('a callback received before question delivery resolves waits for the question', async () => {
   const { handlers, ctx, rich, replies } = setup();
   const api = ctx.platformApi as { sendRichMessage: (...args: any[]) => Promise<unknown> };
