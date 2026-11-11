@@ -77,6 +77,27 @@ describe('QuizService sessions', () => {
     expect(quiz.primaryAction().kind).toBe('reveal');
   });
 
+  it('exposes question state as read-only signals while commands still update it', () => {
+    const quiz = round();
+    for (const state of [
+      quiz.status,
+      quiz.countries,
+      quiz.correctAnswerIndex,
+      quiz.answerIndex,
+      quiz.answerRevealed,
+    ]) {
+      expect(state).not.toHaveProperty('set');
+      expect(state).not.toHaveProperty('update');
+    }
+    quiz.selectAnswer(quiz.correctAnswerIndex());
+    expect(quiz.hasAnswered()).toBe(true);
+    expect(quiz.correctCount()).toBe(1);
+    quiz.restart();
+    expect(quiz.answerIndex()).toBe(-1);
+    expect(quiz.hasAnswered()).toBe(false);
+    expect(quiz.correctCount()).toBe(0);
+  });
+
   it('does not skip an unanswered question or accept invalid answer indexes', () => {
     const quiz = round();
     const country = quiz.correctCountry();

@@ -44,7 +44,8 @@ export class QuizService implements OnDestroy {
   readonly questionNumber = computed(() =>
     this.countries().length ? this.answeredCount() + (this.hasAnswered() ? 0 : 1) : 0,
   );
-  readonly status = signal<'loading' | 'ready' | 'error'>('loading');
+  private readonly statusState = signal<'loading' | 'ready' | 'error'>('loading');
+  readonly status = this.statusState.asReadonly();
   readonly usesTelegramMainButton = computed(() => this.mainButton?.available() ?? false);
   private readonly sessionStarted = signal(false);
   private readonly choiceSettings = signal({
@@ -61,10 +62,14 @@ export class QuizService implements OnDestroy {
   readonly noChoices = computed(() =>
     this.sessionStarted() ? this.choiceSettings().noChoices : this.settings.noChoices(),
   );
-  readonly countries = signal<readonly Country[]>([]);
-  readonly correctAnswerIndex = signal(-1);
-  readonly answerIndex = signal(-1);
-  readonly answerRevealed = signal(false);
+  private readonly countriesState = signal<readonly Country[]>([]);
+  private readonly correctAnswerIndexState = signal(-1);
+  private readonly answerIndexState = signal(-1);
+  private readonly answerRevealedState = signal(false);
+  readonly countries = this.countriesState.asReadonly();
+  readonly correctAnswerIndex = this.correctAnswerIndexState.asReadonly();
+  readonly answerIndex = this.answerIndexState.asReadonly();
+  readonly answerRevealed = this.answerRevealedState.asReadonly();
   readonly hasAnswered = computed(() =>
     this.noChoices() ? this.answerRevealed() : this.answerIndex() >= 0,
   );
@@ -103,20 +108,20 @@ export class QuizService implements OnDestroy {
   }
 
   private loadCatalog(): void {
-    this.status.set('loading');
+    this.statusState.set('loading');
     this.catalogService.countries.pipe(takeUntilDestroyed(this.destroyRef)).subscribe({
       next: (countries) => {
         if (!Array.isArray(countries) || countries.length < this.count()) {
-          this.status.set('error');
+          this.statusState.set('error');
           return;
         }
         this.catalog.set(countries);
-        this.status.set('ready');
+        this.statusState.set('ready');
         if (this.pendingQuestion) this.nextQuestion();
       },
-      error: () => this.status.set('error'),
+      error: () => this.statusState.set('error'),
       complete: () => {
-        if (this.status() === 'loading') this.status.set('error');
+        if (this.status() === 'loading') this.statusState.set('error');
       },
     });
   }
@@ -132,7 +137,7 @@ export class QuizService implements OnDestroy {
     ) {
       return;
     }
-    this.answerIndex.set(index);
+    this.answerIndexState.set(index);
     const country = this.correctCountry()!;
     this.recordAnswer(country, index === this.correctAnswerIndex());
     this.updateMainButton();
@@ -141,7 +146,7 @@ export class QuizService implements OnDestroy {
   revealAnswer(): void {
     if (this.completed() || !this.correctCountry() || !this.noChoices() || this.answerRevealed())
       return;
-    this.answerRevealed.set(true);
+    this.answerRevealedState.set(true);
     const country = this.correctCountry()!;
     this.recordAnswer(country, null);
     this.updateMainButton();
@@ -183,10 +188,10 @@ export class QuizService implements OnDestroy {
     this.completedState.set(false);
     this.resultsState.set([]);
     this.score.set({ correct: 0, incorrect: 0, revealed: 0 });
-    this.countries.set([]);
-    this.correctAnswerIndex.set(-1);
-    this.answerIndex.set(-1);
-    this.answerRevealed.set(false);
+    this.countriesState.set([]);
+    this.correctAnswerIndexState.set(-1);
+    this.answerIndexState.set(-1);
+    this.answerRevealedState.set(false);
     this.nextQuestion();
   }
 
@@ -219,10 +224,10 @@ export class QuizService implements OnDestroy {
     const targetIndex = Math.floor(Math.random() * this.targetDeck.length);
     const [target] = this.targetDeck.splice(targetIndex, 1);
     const question = createQuestion(this.count(), Math.random, countryCatalog, target.code);
-    this.countries.set(question.countries);
-    this.correctAnswerIndex.set(question.correctAnswerIndex);
-    this.answerIndex.set(-1);
-    this.answerRevealed.set(false);
+    this.countriesState.set(question.countries);
+    this.correctAnswerIndexState.set(question.correctAnswerIndex);
+    this.answerIndexState.set(-1);
+    this.answerRevealedState.set(false);
     this.updateMainButton();
   }
 
