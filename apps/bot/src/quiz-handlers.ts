@@ -43,6 +43,8 @@ export function createQuizHandlers(config: QuizConfig) {
     correctCountryIndex: number;
     countryIndexes: readonly number[];
     answered: boolean;
+    advancing: boolean;
+    advanced: boolean;
   }
 
   const rounds = new Map<string, QuizRound>();
@@ -112,7 +114,11 @@ export function createQuizHandlers(config: QuizConfig) {
     );
   }
 
-  async function askQuestion(ctx: UniversalContext, mode: QuizMode): Promise<void> {
+  async function askQuestion(
+    ctx: UniversalContext,
+    mode: QuizMode,
+    onPublished?: () => void,
+  ): Promise<void> {
     const count = countFor(ctx);
     const question = createQuestion(count, Math.random, countries);
     const correctCountry = question.countries[question.correctAnswerIndex];
@@ -183,7 +189,10 @@ export function createQuizHandlers(config: QuizConfig) {
       correctCountryIndex,
       countryIndexes: question.countryIndexes,
       answered: false,
+      advancing: false,
+      advanced: false,
     });
+    onPublished?.();
     const delivery = replyRich(ctx, doc(...choices, ...repeatedPrompt, ...trailingButtons));
     pendingRounds.set(roundId, delivery);
     try {
@@ -214,6 +223,11 @@ export function createQuizHandlers(config: QuizConfig) {
     const [action, ...parts] = data.split(':');
     const pending = pendingRounds.get(parts[0]);
     if (pending) await pending.catch(() => {});
+    const source = rounds.get(parts[0]);
+    if (source && (source.advancing || source.advanced)) {
+      await ctx.reply('Вопрос устарел. Начни новый раунд через /flags или /country.');
+      return;
+    }
 
     if (action === 'reveal') {
       const [roundId] = parts;
@@ -307,7 +321,7 @@ export function createQuizHandlers(config: QuizConfig) {
         return;
       }
 
-      if (action === 'more') await askQuestion(ctx, round.mode);
+      if (action === 'more') await advanceRound(ctx, round);
       else await showSettings(ctx, round.mode, roundId);
       return;
     }
@@ -322,13 +336,32 @@ export function createQuizHandlers(config: QuizConfig) {
         return;
       }
 
-      counts.set(ctx.userId, count);
-      await askQuestion(ctx, round.mode);
+      await advanceRound(ctx, round, count);
       return;
     }
 
     await ctx.reply('Не удалось обработать нажатие. Начни новый раунд через /flags или /country.');
   }
 
-  return { askQuestion, handleCallback };
+  async function advanceRound(
+    ctx: UniversalContext,
+    round: QuizRound,
+    count?: number,
+  ): Promise<void> {
+    round.advancing = true;
+    if (count !== undefined) counts.set(ctx.userId, count);
+    try {
+      await askQuestion(ctx, round.mode, () => {
+        // Once sending starts, a lost API response cannot safely reopen old controls.
+        round.advanced = true;
+      });
+    } finally {
+      round.advancing = false;
+    }
+  }
+
+  return {
+    askQuestion: (ctx: UniversalContext, mode: QuizMode) => askQuestion(ctx, mode),
+    handleCallback,
+  };
 }

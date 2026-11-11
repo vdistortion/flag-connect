@@ -236,6 +236,71 @@ test('settings offer counts and start a new round with the selected count', asyn
   assert.equal(choices(rich.at(-1)!).length, 2);
 });
 
+test('competing follow-up actions create only one successor and invalidate old controls', async () => {
+  for (const action of ['more', 'count']) {
+    const { handlers, ctx, rich, replies } = setup();
+    await handlers.askQuestion(ctx, 'flag');
+    const choice = choices(rich[0])[0];
+    await handlers.handleCallback(ctx, choice.data);
+    const callback = action === 'more' ? `more:${choice.round}` : `count:${choice.round}:2`;
+    await Promise.all([
+      handlers.handleCallback(ctx, callback),
+      handlers.handleCallback(ctx, callback),
+      handlers.handleCallback(ctx, `count:${choice.round}:3`),
+    ]);
+    assert.equal(rich.length, 3);
+    const before = replies.length;
+    await handlers.handleCallback(ctx, `settings:${choice.round}`);
+    await handlers.handleCallback(ctx, `more:${choice.round}`);
+    await handlers.handleCallback(ctx, `count:${choice.round}:1`);
+    assert.equal(rich.length, 3);
+    assert.ok(replies.slice(before).every((reply) => /устарел/.test(reply)));
+    await handlers.askQuestion(ctx, 'flag');
+    assert.equal(choices(rich.at(-1)!).length, action === 'more' ? 4 : 2);
+  }
+});
+
+test('a failed successor delivery cannot reopen old buttons and the delivered question works', async () => {
+  const { handlers, ctx, rich, replies } = setup();
+  await handlers.askQuestion(ctx, 'flag');
+  const original = choices(rich[0])[0];
+  const api = ctx.platformApi as {
+    sendRichMessage: (id: number, message: { html: string }) => Promise<unknown>;
+  };
+  const send = api.sendRichMessage;
+  api.sendRichMessage = async (id, message) => {
+    await send(id, message);
+    throw new Error('response lost');
+  };
+  await assert.rejects(handlers.handleCallback(ctx, `more:${original.round}`), /response lost/);
+  api.sendRichMessage = send;
+  const successor = choices(rich.at(-1)!)[0];
+  await handlers.handleCallback(ctx, `more:${original.round}`);
+  assert.equal(rich.length, 2);
+  assert.match(replies.at(-1)!, /устарел/);
+  await handlers.handleCallback(ctx, successor.data);
+  assert.equal(rich.length, 3);
+});
+
+test('a successor preparation failure leaves the source controls retryable', async () => {
+  const { handlers, ctx, rich } = setup();
+  await handlers.askQuestion(ctx, 'flag');
+  const original = choices(rich[0])[0];
+  const group = {
+    ...ctx,
+    chatType: 'group',
+    getUserProfile: async () => {
+      throw new Error('profile unavailable');
+    },
+  } as UniversalContext;
+  await assert.rejects(
+    handlers.handleCallback(group, `more:${original.round}`),
+    /profile unavailable/,
+  );
+  await handlers.handleCallback(ctx, `more:${original.round}`);
+  assert.equal(rich.length, 2);
+});
+
 test('settings show every choice count once', async () => {
   const { handlers, ctx, rich } = setup();
   const keyboards: Array<Array<{ label: string; command: string }>>[] = [];
