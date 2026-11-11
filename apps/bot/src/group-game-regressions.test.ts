@@ -97,6 +97,131 @@ function setup() {
   };
 }
 
+test('lobby expiry rejects callbacks during a stalled render and serializes cleanup before a replacement', async () => {
+  const s = setup();
+  const gate = deferred();
+  const entered = deferred();
+  try {
+    await s.game.command(s.ctx);
+    await s.flush();
+    const oldJoin = s.button('join');
+    const oldStart = s.button('start');
+    const timer = s.timers.at(-1)!;
+    const edit = s.api.editMessageCaption;
+    s.api.editMessageCaption = async (...args) => {
+      entered.resolve();
+      await gate.promise;
+      return edit(...args);
+    };
+    await s.callback('b', oldJoin);
+    await entered.promise;
+    s.setNow(300_000);
+    timer.fn();
+    await s.callback('a', oldStart);
+    await s.game.command(s.ctx); // Polling must return while the old edit is stalled.
+    await new Promise<void>((resolve) => setImmediate(resolve));
+    assert.equal(s.acks.at(-1), 'Игра устарела');
+    assert.equal(timer.cancelled, true);
+    assert.equal(s.captions.length, 1);
+    gate.resolve();
+    await s.flush();
+    assert.match(s.captions.at(-2)!, /Лобби истекло/);
+    assert.match(s.captions.at(-1)!, /Групповая игра • Лобби/);
+    const freshJoin = s.button('join');
+    assert.notEqual(freshJoin, oldJoin);
+    timer.fn();
+    await s.callback('b', oldJoin);
+    await s.flush();
+    assert.equal(s.acks.at(-1), 'Игра устарела');
+    await s.callback('b', freshJoin);
+    await s.flush();
+    assert.equal(s.acks.at(-1), 'Вы в игре');
+    assert.deepEqual(s.errors, []);
+  } finally {
+    gate.resolve();
+    s.game.dispose();
+  }
+});
+
+test('starting just before lobby expiry cancels it and a stale timer cannot stop the match', async () => {
+  const s = setup();
+  try {
+    await s.game.command(s.ctx);
+    await s.flush();
+    const timer = s.timers.at(-1)!;
+    await s.callback('b', s.button('join'));
+    await s.flush();
+    s.setNow(299_999);
+    await s.callback('a', s.button('start'));
+    assert.equal(timer.cancelled, true);
+    s.setNow(300_000);
+    timer.fn();
+    await s.flush();
+    assert.equal(s.acks.at(-1), 'Игра началась');
+    assert.match(s.captions.at(-1)!, /Вопрос 1\/10/);
+    await s.callback('a', s.button('answer'));
+    await s.flush();
+    assert.equal(s.acks.at(-1), 'Ответ принят');
+  } finally {
+    s.game.dispose();
+  }
+});
+
+test('stop and dispose cancel lobby expiry and stale timers cannot touch a fresh session', async () => {
+  for (const action of ['stop', 'dispose']) {
+    const s = setup();
+    try {
+      await s.game.command(s.ctx);
+      await s.flush();
+      const timer = s.timers.at(-1)!;
+      if (action === 'stop') {
+        await s.callback('a', s.button('stop'));
+        await s.flush();
+        s.setNow(1); // The replacement's deadline must be later than the old lobby's.
+        await s.game.command(s.ctx);
+        await s.flush();
+      } else s.game.dispose();
+      assert.equal(timer.cancelled, true, action);
+      const count = s.captions.length;
+      s.setNow(300_000);
+      timer.fn();
+      await s.flush();
+      assert.equal(s.captions.length, count, action);
+      if (action === 'stop') {
+        await s.callback('b', s.button('join'));
+        await s.flush();
+        assert.equal(s.acks.at(-1), 'Вы в игре');
+      }
+    } finally {
+      s.game.dispose();
+    }
+  }
+});
+
+test('failed expiry publication still releases the chat and rejects the old controls', async () => {
+  const s = setup();
+  try {
+    await s.game.command(s.ctx);
+    await s.flush();
+    const oldJoin = s.button('join');
+    s.api.editMessageCaption = async () => {
+      throw new Error('offline');
+    };
+    s.setNow(300_000);
+    s.timers.at(-1)!.fn();
+    await s.flush();
+    assert.match(String(s.errors.at(-1)), /offline/);
+    await s.game.command(s.ctx);
+    await s.flush();
+    assert.notEqual(s.button('join'), oldJoin);
+    await s.callback('b', oldJoin);
+    await s.flush();
+    assert.equal(s.acks.at(-1), 'Игра устарела');
+  } finally {
+    s.game.dispose();
+  }
+});
+
 test('command polling completion does not wait for profile lookup or publication', async () => {
   const s = setup();
   const gate = deferred();

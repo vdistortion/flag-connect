@@ -59,6 +59,9 @@ export function createGroupGame(config: GameConfig) {
     deadline?: number;
     timedRound?: number;
     cancel?: () => void;
+    lobbyDeadline: number;
+    cancelLobby?: () => void;
+    expired?: boolean;
   }
   const sessions = new Map<number, Session>();
   const queues = new Map<number, Promise<void>>();
@@ -81,7 +84,10 @@ export function createGroupGame(config: GameConfig) {
     let caption: string;
     let rows: Markup['inline_keyboard'];
     let country = config.countries[0];
-    if (m.phase === 'lobby') {
+    if (s.expired) {
+      caption = 'Лобби истекло: игра не началась за 5 минут.\nНовая игра: /game';
+      rows = [];
+    } else if (m.phase === 'lobby') {
       caption = `Групповая игра • Лобби\n10 вопросов, 4 варианта, 30 секунд. Минимум два игрока.\n${[...m.players.values()].map((p) => p.name).join(', ')}\nНачать и остановить может создатель.`;
       rows = [
         [b('Вступить', 'join'), b('Выйти', 'leave')],
@@ -110,7 +116,8 @@ export function createGroupGame(config: GameConfig) {
       join(config.flagsDirectory, 'bot'),
       country.flag[0],
     );
-    if (disposed || sessions.get(s.chatId) !== s) return;
+    // Expiry releases the slot before this queued terminal render; it only touches the old message.
+    if (disposed || (sessions.get(s.chatId) !== s && !s.expired)) return;
     const reply_markup = { inline_keyboard: rows };
     if (s.messageId === undefined) {
       const sent = await s.api.sendPhoto(s.chatId, photo, { caption, reply_markup });
@@ -146,12 +153,29 @@ export function createGroupGame(config: GameConfig) {
     s.photo = photo;
   }
   function syncRound(s: Session): void {
+    if (s.match.phase !== 'lobby') {
+      s.cancelLobby?.();
+      s.cancelLobby = undefined;
+    }
     if (s.match.phase !== 'playing' || s.timedRound !== s.match.round) {
       s.cancel?.();
       s.cancel = undefined;
       s.deadline = undefined;
       s.timedRound = undefined;
     }
+  }
+  function expireLobby(s: Session): void {
+    if (disposed || sessions.get(s.chatId) !== s || s.match.phase !== 'lobby') return;
+    if (now() < s.lobbyDeadline) {
+      s.cancelLobby?.();
+      s.cancelLobby = schedule(() => expireLobby(s), s.lobbyDeadline - now());
+      return;
+    }
+    s.match.stop(s.match.creatorId);
+    s.expired = true;
+    syncRound(s);
+    sessions.delete(s.chatId);
+    void enqueue(s.chatId, () => render(s));
   }
   function arm(s: Session): void {
     s.cancel?.();
@@ -211,6 +235,12 @@ export function createGroupGame(config: GameConfig) {
     }
     void enqueue(ctx.peerId, async () => {
       let s = sessions.get(ctx.peerId);
+      if (s?.match.phase === 'lobby' && now() >= s.lobbyDeadline) {
+        expireLobby(s);
+        // Queue the fresh command after the old message's terminal render.
+        void command(ctx);
+        return;
+      }
       if (!s) {
         const profile = await ctx.getUserProfile();
         if (disposed) return;
@@ -219,8 +249,11 @@ export function createGroupGame(config: GameConfig) {
           match: new GroupMatch(randomBytes(6).toString('hex'), ctx.userId, name, config.countries),
           api: ctx.platformApi as GameApi,
           chatId: ctx.peerId,
+          lobbyDeadline: now() + 300_000,
         };
         sessions.set(ctx.peerId, s);
+        const lobby = s;
+        s.cancelLobby = schedule(() => expireLobby(lobby), s.lobbyDeadline - now());
       }
       await update(s);
     });
@@ -239,6 +272,11 @@ export function createGroupGame(config: GameConfig) {
       return;
     }
     const m = s.match;
+    if (m.phase === 'lobby' && receivedAt >= s.lobbyDeadline) {
+      expireLobby(s);
+      acknowledge(ctx, 'Игра устарела');
+      return;
+    }
     if (m.phase === 'playing' && s.deadline !== undefined && receivedAt >= s.deadline) {
       m.expire(m.round);
       syncRound(s);
@@ -288,7 +326,10 @@ export function createGroupGame(config: GameConfig) {
   }
   function dispose(): void {
     disposed = true;
-    for (const s of sessions.values()) s.cancel?.();
+    for (const s of sessions.values()) {
+      s.cancel?.();
+      s.cancelLobby?.();
+    }
     sessions.clear();
   }
   return { command, callback, dispose, flush };

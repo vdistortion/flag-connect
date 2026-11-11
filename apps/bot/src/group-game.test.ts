@@ -99,6 +99,85 @@ function setup() {
   };
 }
 
+test('abandoned lobby expires after 5 minutes, clears controls and releases the chat', async () => {
+  const s = setup();
+  await s.game.command(s.ctx);
+  const oldJoin = s.button('join');
+  const timer = s.timers.at(-1);
+  assert.ok(timer, 'lobby must have an expiry timer');
+  assert.equal(timer.ms, 300_000);
+  s.advance(300_000);
+  timer.fn();
+  await s.game.flush();
+  assert.match(JSON.stringify(s.calls.at(-1)!.args), /Лобби истекло/);
+  assert.deepEqual(
+    (s.calls.at(-1)!.args[2] as { reply_markup: Markup }).reply_markup.inline_keyboard,
+    [],
+  );
+  assert.ok(s.timers.every((t) => t.cancelled));
+  await s.game.command(s.ctx);
+  assert.equal(s.calls.filter((c) => c.method === 'sendPhoto').length, 2);
+  assert.notEqual(s.button('join'), oldJoin);
+  await s.callback('b', oldJoin);
+  assert.equal(s.acks.at(-1), 'Игра устарела');
+  s.game.dispose();
+});
+
+test('lobby lifetime is absolute and a start at its deadline loses even before the timer runs', async () => {
+  const s = setup();
+  await s.game.command(s.ctx);
+  const timer = s.timers.at(-1)!;
+  const start = s.button('start');
+  s.advance(299_999);
+  await s.callback('b', s.button('join'));
+  await s.game.command(s.ctx);
+  assert.equal(s.timers.at(-1), timer, 'activity must not reset the lobby lifetime');
+  assert.equal(timer.cancelled, false);
+  s.advance(1);
+  await s.callback('a', start);
+  assert.equal(s.acks.at(-1), 'Игра устарела');
+  assert.match(JSON.stringify(s.calls.at(-1)!.args), /Лобби истекло/);
+  timer.fn();
+  await s.game.command(s.ctx);
+  assert.equal(s.calls.filter((c) => c.method === 'sendPhoto').length, 2);
+  s.game.dispose();
+});
+
+test('/game replaces an overdue lobby even when its timer has not fired', async () => {
+  const s = setup();
+  await s.game.command(s.ctx);
+  const oldJoin = s.button('join');
+  const timer = s.timers.at(-1)!;
+  s.advance(300_000);
+  await s.game.command(s.ctx);
+  assert.equal(s.calls.filter((c) => c.method === 'sendPhoto').length, 2);
+  assert.notEqual(s.button('join'), oldJoin);
+  const freshJoin = s.button('join');
+  timer.fn();
+  await s.game.flush();
+  await s.callback('b', freshJoin);
+  assert.equal(s.acks.at(-1), 'Вы в игре');
+  s.game.dispose();
+});
+
+test('an early lobby timer never expires before the absolute deadline', async () => {
+  const s = setup();
+  await s.game.command(s.ctx);
+  const join = s.button('join');
+  s.advance(299_999);
+  s.timers.at(-1)!.fn();
+  await s.game.flush();
+  await s.callback('b', join);
+  assert.equal(s.acks.at(-1), 'Вы в игре');
+  const remainder = s.timers.at(-1)!;
+  assert.equal(remainder.ms, 1);
+  s.advance(1);
+  remainder.fn();
+  await s.game.flush();
+  assert.match(JSON.stringify(s.calls.at(-1)!.args), /Лобби истекло/);
+  s.game.dispose();
+});
+
 test('scheduled timeout advances without incoming updates; countdown and failed renders keep timer alive', async () => {
   const s = setup();
   await s.game.command(s.ctx);
