@@ -193,16 +193,7 @@ export class QuizService implements OnDestroy {
     if (this.targetDeck.length === 0) this.targetDeck = [...countryCatalog];
     const targetIndex = Math.floor(Math.random() * this.targetDeck.length);
     const [target] = this.targetDeck.splice(targetIndex, 1);
-    const question = createQuestion(this.count(), Math.random, countryCatalog);
-    const existingIndex = question.countries.findIndex((country) => country.code === target.code);
-    if (existingIndex >= 0) {
-      [question.countries[existingIndex], question.countries[question.correctAnswerIndex]] = [
-        question.countries[question.correctAnswerIndex],
-        question.countries[existingIndex],
-      ];
-    } else {
-      question.countries[question.correctAnswerIndex] = target;
-    }
+    const question = createQuestion(this.count(), Math.random, countryCatalog, target.code);
     this.countries.set(question.countries);
     this.correctAnswerIndex.set(question.correctAnswerIndex);
     this.answerIndex.set(-1);

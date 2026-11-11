@@ -57,11 +57,12 @@ function randomIndex(length: number, random: () => number): number {
   return Math.min(Math.floor(random() * length), length - 1);
 }
 
-/** Creates a quiz question without repeating countries. */
+/** Creates unique choices, optionally placing a specific catalog country as the answer. */
 export function createQuestion(
   count = 4,
   random = Math.random,
   catalog: readonly Country[],
+  targetCode?: string,
 ): QuizQuestion {
   if (!Number.isInteger(count) || count < 1 || count > 10) {
     throw new RangeError('Question choice count must be an integer between 1 and 10');
@@ -78,9 +79,23 @@ export function createQuestion(
   }
 
   const countryIndexes = indexes.slice(0, count);
+  const correctAnswerIndex = randomIndex(count, random);
+  if (targetCode !== undefined) {
+    const targetIndex = catalog.findIndex((country) => country.code === targetCode);
+    if (targetIndex < 0) throw new RangeError(`Unknown target country: ${targetCode}`);
+    const existingIndex = countryIndexes.indexOf(targetIndex);
+    if (existingIndex >= 0) {
+      [countryIndexes[existingIndex], countryIndexes[correctAnswerIndex]] = [
+        countryIndexes[correctAnswerIndex],
+        countryIndexes[existingIndex],
+      ];
+    } else {
+      countryIndexes[correctAnswerIndex] = targetIndex;
+    }
+  }
   return {
     countryIndexes,
     countries: countryIndexes.map((index) => catalog[index]),
-    correctAnswerIndex: randomIndex(count, random),
+    correctAnswerIndex,
   };
 }

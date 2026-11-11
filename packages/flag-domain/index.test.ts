@@ -91,6 +91,22 @@ describe('parseCountryCatalog', () => {
 });
 
 describe('createQuestion', () => {
+  it('places a requested target at the correct answer and keeps catalog indexes aligned', () => {
+    for (const target of countries) {
+      for (const count of [1, 4, 10]) {
+        for (const randomValue of [0, 0.5, 0.99]) {
+          const question = createQuestion(count, () => randomValue, countries, target.code);
+
+          expect(question.countries[question.correctAnswerIndex]).toBe(target);
+          expect(new Set(question.countryIndexes).size).toBe(count);
+          expect(question.countries).toEqual(
+            question.countryIndexes.map((index) => countries[index]),
+          );
+        }
+      }
+    }
+  });
+
   it('creates a question with unique countries and a valid correct answer', () => {
     const question = createQuestion(5, () => 0.5, countries);
 
@@ -108,6 +124,10 @@ describe('createQuestion', () => {
 
     expect(question.countries).toHaveLength(1);
     expect(question.correctAnswerIndex).toBe(0);
+  });
+
+  it('rejects a target country outside the catalog', () => {
+    expect(() => createQuestion(4, () => 0, countries, 'UNKNOWN')).toThrow(RangeError);
   });
 
   it('can create questions from a separate catalog', () => {
