@@ -52,15 +52,7 @@ services:
       - asset-sync
     restart: 'no'
     entrypoint: ['rclone']
-    command:
-      [
-        'sync',
-        'garage:flag-connect-assets',
-        '/flags',
-        '--delete-before',
-        '--exclude',
-        'generated/**',
-      ]
+    command: ['copy', 'garage:flag-connect-assets', '/flags', '--exclude', 'generated/**']
     env_file:
       - .env.garage
     volumes:

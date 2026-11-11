@@ -25,6 +25,7 @@
     "test:shared": "ng test shared --watch=false",
     "test:domain": "npm test --workspace=@flag-connect/flag-domain",
     "test:bot": "npm test --workspace=flag-connect-bot",
+    "test:deploy": "node --test deploy/*.test.mjs",
     "prepare": "cp -n apps/bot/.env.example apps/bot/.env",
     "bot:dev": "npm run dev --workspace=flag-connect-bot",
     "prebot:dev": "npm run build --workspace=@flag-connect/flag-domain",

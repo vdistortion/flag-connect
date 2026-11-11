@@ -111,7 +111,7 @@ RCLONE_CONFIG_GARAGE_REGION=garage
 RCLONE_CONFIG_GARAGE_FORCE_PATH_STYLE=true
 ```
 
-Ограничь доступ к файлу: `chmod 600 ~/projects/flag-connect/deploy/.env.garage`. Он не коммитится и не передаётся в GitHub Actions. Actions запускает Rclone для синхронизации bucket в Docker volume. Web, Mini App и бот загружают `countries.json` из закреплённого релиза [country-flags 0.1.0](https://cdn.jsdelivr.net/gh/vdistortion/country-flags@0.1.0/). Web и Mini App показывают CDN SVG; бот преобразует имена `.svg` в `.webp` и использует синхронизированные в Docker volume WebP до 440 px из `/images/flags/bot/`, добавляя к URL SHA-256 версии содержимого для обхода клиентского кэша. В режиме угадывания бот композитит по два пронумерованных флага в изображение без отдельных подписей, повторяет вопрос перед общей группой кнопок и кэширует composites в отдельном Docker volume, раздаваемом Mini App по `/images/generated/`. Для запуска бота нужен доступ к CDN при старте.
+Ограничь доступ к файлу: `chmod 600 ~/projects/flag-connect/deploy/.env.garage`. Он не коммитится и не передаётся в GitHub Actions. Actions запускает Rclone для копирования bucket в Docker volume без удаления файлов предыдущей версии. Это сохраняет старые ссылки при обновлении; перенос не является атомарным переключением набора ассетов. Удаление устаревших файлов выполняется отдельно после проверки, что работающая версия их больше не использует. Web, Mini App и бот загружают `countries.json` из закреплённого релиза [country-flags 0.1.0](https://cdn.jsdelivr.net/gh/vdistortion/country-flags@0.1.0/). Web и Mini App показывают CDN SVG; бот преобразует имена `.svg` в `.webp` и использует скопированные в Docker volume WebP до 440 px из `/images/flags/bot/`, добавляя к URL SHA-256 версии содержимого для обхода клиентского кэша. В режиме угадывания бот композитит по два пронумерованных флага в изображение без отдельных подписей, повторяет вопрос перед общей группой кнопок и кэширует composites в отдельном Docker volume, раздаваемом Mini App по `/images/generated/`. Для запуска бота нужен доступ к CDN при старте.
 
 ## Общий пакет
 
@@ -126,3 +126,5 @@ npm test
 ```
 
 Команда собирает общий пакет и запускает тесты Angular, domain и бота. Отдельные наборы: `npm run test:shared`, `npm run test:domain`, `npm run test:bot`.
+
+`npm run test:deploy` отдельно проверяет перенос ассетов на временных локальных каталогах; нужен `rclone` в PATH (или путь к нему в `RCLONE_BIN`). Тест не обращается к Garage, Docker volumes или production-настройкам.
