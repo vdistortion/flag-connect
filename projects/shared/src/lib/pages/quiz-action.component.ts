@@ -1,6 +1,5 @@
 import { Component, inject, output, viewChild } from '@angular/core';
 import { QuizService } from '../services/quiz.service';
-import { LanguageService } from '../services/language.service';
 import { ButtonComponent } from '../ui/button/button.component';
 
 @Component({
@@ -12,22 +11,10 @@ import { ButtonComponent } from '../ui/button/button.component';
         <app-button
           #button
           [country]="true"
-          [disabled]="!quiz.noChoices() && !quiz.hasAnswered()"
+          [disabled]="!quiz.primaryAction().enabled"
           (clicked)="activated.emit()"
         >
-          @if (quiz.noChoices() && !quiz.hasAnswered()) {
-            {{ messages().showAnswer }}
-          } @else if (quiz.hasAnswered()) {
-            {{
-              quiz.sessionMode() === 'round' && quiz.results().length >= quiz.roundLength()
-                ? language() === 'ru'
-                  ? 'Результат'
-                  : 'Results'
-                : messages().next
-            }}
-          } @else {
-            {{ messages().chooseAnswer }}
-          }
+          {{ quiz.primaryAction().text }}
         </app-button>
       </div>
     }
@@ -55,8 +42,6 @@ import { ButtonComponent } from '../ui/button/button.component';
 })
 export class QuizActionComponent {
   protected readonly quiz = inject(QuizService);
-  protected readonly messages = inject(LanguageService).messages;
-  protected readonly language = inject(LanguageService).language;
   readonly activated = output<void>();
   private readonly button = viewChild<ButtonComponent>('button');
   focus(): void {

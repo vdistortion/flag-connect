@@ -124,29 +124,15 @@ export abstract class QuizPageBase implements OnInit {
   }
 
   protected activateAction(): void {
-    if (this.quizService.completed()) {
-      this.restartSession();
-      return;
-    }
-    if (
-      this.quizService.status() !== 'ready' ||
-      (!this.quizService.noChoices() && !this.quizService.hasAnswered())
-    )
-      return;
-    if (this.quizService.noChoices() && !this.quizService.hasAnswered()) {
-      this.quizService.revealAnswer();
+    const action = this.quizService.primaryAction();
+    if (this.quizService.status() !== 'ready' || !action.enabled) return;
+    this.quizService.activatePrimaryAction();
+    if (action.kind === 'reveal') {
       this.focusActionButton();
       return;
     }
-    this.quizService.nextQuestion();
     if (this.quizService.usesTelegramMainButton()) return;
-    afterNextRender(
-      () => {
-        if (this.quizService.noChoices()) this.actionButton()?.focus();
-        else this.answers()[0]?.focus();
-      },
-      { injector: this.injector },
-    );
+    this.focusFirstAnswer();
   }
 
   private focusActionButton(): void {

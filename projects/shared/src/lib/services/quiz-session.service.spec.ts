@@ -35,6 +35,48 @@ describe('QuizService sessions', () => {
     return quiz;
   }
 
+  it('exposes one localized primary action through the complete round lifecycle', () => {
+    const quiz = round();
+    const action = quiz.primaryAction;
+    const language = TestBed.inject(LanguageService);
+    language.language.set('en');
+    expect(action()).toEqual({ kind: 'choose', text: 'Choose an answer', enabled: false });
+    quiz.activatePrimaryAction();
+    expect(quiz.questionNumber()).toBe(1);
+    expect(quiz.hasAnswered()).toBe(false);
+    quiz.selectAnswer(quiz.correctAnswerIndex());
+    expect(action()).toEqual({ kind: 'next', text: 'Next', enabled: true });
+    for (let index = 0; index < 9; index++) {
+      quiz.activatePrimaryAction();
+      quiz.selectAnswer(quiz.correctAnswerIndex());
+    }
+    expect(action()).toEqual({ kind: 'results', text: 'Results', enabled: true });
+    language.language.set('ru');
+    expect(action()).toEqual({ kind: 'results', text: 'Результат', enabled: true });
+    quiz.activatePrimaryAction();
+    expect(action()).toEqual({ kind: 'restart', text: 'Ещё раз', enabled: true });
+    quiz.activatePrimaryAction();
+    expect(quiz.questionNumber()).toBe(1);
+    expect(quiz.completed()).toBe(false);
+  });
+
+  it('dispatches reveal, next, results and restart for a self-study round', () => {
+    TestBed.inject(SettingsService).setNoChoices(true);
+    const quiz = round();
+    for (let index = 0; index < 10; index++) {
+      expect(quiz.primaryAction().kind).toBe('reveal');
+      quiz.activatePrimaryAction();
+      expect(quiz.revealedCount()).toBe(index + 1);
+      expect(quiz.primaryAction().kind).toBe(index === 9 ? 'results' : 'next');
+      quiz.activatePrimaryAction();
+    }
+    expect(quiz.completed()).toBe(true);
+    expect(quiz.primaryAction().kind).toBe('restart');
+    quiz.activatePrimaryAction();
+    expect(quiz.revealedCount()).toBe(0);
+    expect(quiz.primaryAction().kind).toBe('reveal');
+  });
+
   it('does not skip an unanswered question or accept invalid answer indexes', () => {
     const quiz = round();
     const country = quiz.correctCountry();

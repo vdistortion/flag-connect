@@ -6,6 +6,12 @@ import { QUIZ_MAIN_BUTTON } from './quiz-main-button';
 import { LanguageService } from './language.service';
 import { CountryCatalogService } from './country-catalog.service';
 
+interface QuizPrimaryAction {
+  readonly kind: 'choose' | 'reveal' | 'next' | 'results' | 'restart';
+  readonly text: string;
+  readonly enabled: boolean;
+}
+
 @Injectable({
   providedIn: 'root',
 })
@@ -63,6 +69,25 @@ export class QuizService implements OnDestroy {
     this.noChoices() ? this.answerRevealed() : this.answerIndex() >= 0,
   );
   readonly correctCountry = computed(() => this.countries()[this.correctAnswerIndex()] ?? null);
+  readonly primaryAction = computed<QuizPrimaryAction>(() => {
+    const messages = this.language.messages();
+    if (this.completed()) {
+      return { kind: 'restart', text: messages.playAgain, enabled: true };
+    }
+    if (this.noChoices() && !this.hasAnswered()) {
+      return { kind: 'reveal', text: messages.showAnswer, enabled: !!this.correctCountry() };
+    }
+    if (!this.hasAnswered()) {
+      return { kind: 'choose', text: messages.chooseAnswer, enabled: false };
+    }
+    const finalAnswer =
+      this.sessionMode() === 'round' && this.answeredCount() >= this.roundLength();
+    return {
+      kind: finalAnswer ? 'results' : 'next',
+      text: finalAnswer ? messages.results : messages.next,
+      enabled: true,
+    };
+  });
 
   constructor() {
     this.loadCatalog();
@@ -203,37 +228,28 @@ export class QuizService implements OnDestroy {
 
   private mainButtonVersion = 0;
 
+  activatePrimaryAction(): void {
+    const action = this.primaryAction();
+    if (!action.enabled || this.status() !== 'ready') return;
+    switch (action.kind) {
+      case 'restart':
+        this.restart();
+        break;
+      case 'reveal':
+        this.revealAnswer();
+        break;
+      case 'next':
+      case 'results':
+        this.nextQuestion();
+    }
+  }
+
   private updateMainButton(): void {
     const version = ++this.mainButtonVersion;
-    const noChoices = this.noChoices();
-    const answered = this.hasAnswered();
-    const messages = this.language.messages();
-    const russian = this.language.language() === 'ru';
-    const setButton = (text: string, enabled: boolean, action: () => void) => {
-      this.mainButton?.set(text, enabled, () => {
-        if (version === this.mainButtonVersion && enabled) action();
-      });
-    };
-
-    if (this.completed()) {
-      setButton(russian ? 'Ещё раз' : 'Play again', true, () => this.restart());
-    } else if (noChoices && !answered) {
-      setButton(messages.showAnswer, !!this.correctCountry(), () => this.revealAnswer());
-    } else {
-      const finalAnswer =
-        answered && this.sessionMode() === 'round' && this.answeredCount() >= this.roundLength();
-      setButton(
-        finalAnswer
-          ? russian
-            ? 'Результат'
-            : 'Results'
-          : answered
-            ? messages.next
-            : messages.chooseAnswer,
-        answered,
-        () => this.nextQuestion(),
-      );
-    }
+    const action = this.primaryAction();
+    this.mainButton?.set(action.text, action.enabled, () => {
+      if (version === this.mainButtonVersion) this.activatePrimaryAction();
+    });
   }
 
   ngOnDestroy(): void {
