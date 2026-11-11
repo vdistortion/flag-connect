@@ -336,8 +336,8 @@ export function createQuizHandlers(config: QuizConfig) {
     if (action === 'count') {
       const [roundId, countValue] = parts;
       const round = rounds.get(roundId);
+      if (!round || parts.length !== 2 || !/^(?:[1-9]|10)$/.test(countValue ?? '')) return;
       const count = Number(countValue);
-      if (!round || !Number.isInteger(count) || count < 1 || count > 10) return;
       if (round.ownerId !== ctx.userId) {
         await ctx.reply('Эти настройки принадлежат участнику, запустившему раунд.');
         return;

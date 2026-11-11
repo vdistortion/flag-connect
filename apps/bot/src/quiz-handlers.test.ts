@@ -263,6 +263,20 @@ test('settings offer counts and start a new round with the selected count', asyn
   assert.equal(choices(rich.at(-1)!).length, 2);
 });
 
+test('malformed count callbacks cannot change settings or consume source controls', async () => {
+  const { handlers, ctx, rich } = setup();
+  await handlers.askQuestion(ctx, 'flag');
+  const round = choices(rich[0])[0].round;
+  for (const value of ['0x2', '2e0', '2.0', '+2', ' 2', '2 ', '02', '2:extra', '', '11', '0']) {
+    await handlers.handleCallback(ctx, `count:${round}:${value}`);
+    assert.equal(rich.length, 1, `accepted malformed count: ${JSON.stringify(value)}`);
+  }
+  await handlers.askQuestion(ctx, 'flag');
+  assert.equal(choices(rich.at(-1)!).length, 4);
+  await handlers.handleCallback(ctx, `count:${round}:10`);
+  assert.equal(choices(rich.at(-1)!).length, 10);
+});
+
 test('competing follow-up actions create only one successor and invalidate old controls', async () => {
   for (const action of ['more', 'count']) {
     const { handlers, ctx, rich, replies } = setup();
