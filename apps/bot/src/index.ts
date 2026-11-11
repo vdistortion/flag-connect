@@ -3,6 +3,8 @@ import { createUniversalTelegramBot } from '@verse-bot/telegram';
 import { bold, doc, paragraph } from 'tg-rich-messages';
 import { loadCountryCatalog } from './country-catalog.js';
 import { createQuizHandlers } from './quiz-handlers.js';
+import { createGroupGame } from './group-game.js';
+import { installGroupCallbacks } from './group-callbacks.js';
 
 const token = process.env.TELEGRAM_BOT_TOKEN;
 if (!token) throw new Error('TELEGRAM_BOT_TOKEN is required');
@@ -13,8 +15,14 @@ if (!configuredMiniAppUrl) throw new Error('MINIAPP_URL is required');
 const parsedMiniAppUrl = new URL(configuredMiniAppUrl);
 if (parsedMiniAppUrl.protocol !== 'https:') throw new Error('MINIAPP_URL must use HTTPS');
 const miniAppUrl = configuredMiniAppUrl.replace(/\/+$/, '');
+const countries = await loadCountryCatalog();
+const groupGame = createGroupGame({
+  countries,
+  flagsUrl: `${miniAppUrl}/images/flags/bot/`,
+  flagsDirectory: process.env.FLAG_ASSETS_DIR ?? '/flags',
+});
 const { askQuestion, handleCallback } = createQuizHandlers({
-  countries: await loadCountryCatalog(),
+  countries,
   flagsUrl: `${miniAppUrl}/images/flags/bot/`,
   generatedFlagsUrl: `${miniAppUrl}/images/generated/`,
   flagsDirectory: process.env.FLAG_ASSETS_DIR ?? '/flags',
@@ -33,10 +41,13 @@ const bot = createUniversalTelegramBot({
         ),
       );
     },
+    game: groupGame.command,
     flags: (ctx) => askQuestion(ctx, 'flag'),
     country: (ctx) => askQuestion(ctx, 'country'),
     help: async (ctx) =>
-      ctx.reply('Команды: /flags — угадать страну по флагу; /country — угадать флаг по стране.'),
+      ctx.reply(
+        'Команды: /flags — угадать страну по флагу; /country — угадать флаг по стране; /game — групповая игра с лобби.',
+      ),
   },
   buttons: [
     { command: 'flags', label: '🌍 По флагу' },
@@ -53,11 +64,20 @@ const bot = createUniversalTelegramBot({
   },
 });
 
+installGroupCallbacks(bot, groupGame);
+for (const signal of ['SIGINT', 'SIGTERM'] as const) {
+  process.once(signal, () => {
+    groupGame.dispose();
+    if (bot.isRunning()) void bot.stop();
+  });
+}
+
 const api = bot.api;
 await api.setMyCommands([
   { command: 'start', description: 'Запустить бота' },
   { command: 'flags', description: 'Угадать страну по флагу' },
   { command: 'country', description: 'Угадать флаг по стране' },
+  { command: 'game', description: 'Групповая игра с лобби' },
   { command: 'help', description: 'Справка' },
 ]);
 await api.setChatMenuButton({
