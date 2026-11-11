@@ -1,7 +1,7 @@
 <div
   class="wrapper quiz-page"
-  [class.telegram-layout]="quizService.usesTelegramMainButton()"
-  [class.web-quiz]="!quizService.usesTelegramMainButton()"
+  [class.telegram-layout]="miniappLayout"
+  [class.web-quiz]="!miniappLayout"
 >
   @if (quizService.status() === 'loading') {
     <p role="status">{{ messages().loadingQuiz }}</p>

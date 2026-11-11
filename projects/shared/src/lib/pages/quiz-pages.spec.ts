@@ -2,7 +2,7 @@ import { provideHttpClient } from '@angular/common/http';
 import { HttpTestingController, provideHttpClientTesting } from '@angular/common/http/testing';
 import { TestBed } from '@angular/core/testing';
 import { signal, Type } from '@angular/core';
-import { QUIZ_MAIN_BUTTON } from '../services/quiz-main-button';
+import { QUIZ_LAYOUT, QUIZ_MAIN_BUTTON } from '../services/quiz-main-button';
 import { CountryCatalogService, COUNTRY_CATALOG_URL } from '../services/country-catalog.service';
 import { SettingsService } from '../services/settings.service';
 import { QuizService } from '../services/quiz.service';
@@ -296,6 +296,28 @@ describe.each(
     expect(fixture.nativeElement.querySelector('.quiz-action-bar')).not.toBeNull();
     available.set(true);
     fixture.detectChanges();
+    expect(fixture.nativeElement.querySelector('.quiz-action-bar')).toBeNull();
+  });
+
+  it('keeps the miniapp layout independent of native button availability', () => {
+    const available = signal(false);
+    TestBed.configureTestingModule({
+      providers: [
+        { provide: QUIZ_LAYOUT, useValue: 'miniapp' },
+        { provide: QUIZ_MAIN_BUTTON, useValue: { available, set: () => {}, hide: () => {} } },
+      ],
+    });
+    const fixture = TestBed.createComponent(Page);
+    fixture.detectChanges();
+    TestBed.inject(HttpTestingController).expectOne(COUNTRY_CATALOG_URL).flush(countries);
+    fixture.detectChanges();
+    const wrapper: HTMLElement = fixture.nativeElement.querySelector('.quiz-page');
+    expect(wrapper.classList.contains('telegram-layout')).toBe(true);
+    expect(wrapper.classList.contains('web-quiz')).toBe(false);
+    expect(fixture.nativeElement.querySelector('.quiz-action-bar')).not.toBeNull();
+    available.set(true);
+    fixture.detectChanges();
+    expect(wrapper.classList.contains('telegram-layout')).toBe(true);
     expect(fixture.nativeElement.querySelector('.quiz-action-bar')).toBeNull();
   });
 

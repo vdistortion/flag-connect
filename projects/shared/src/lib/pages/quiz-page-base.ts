@@ -15,12 +15,14 @@ import { LanguageService } from '../services/language.service';
 import { ButtonComponent } from '../ui/button/button.component';
 import { FlagComponent } from '../ui/flag/flag.component';
 import { QuizActionComponent } from './quiz-action.component';
+import { QUIZ_LAYOUT } from '../services/quiz-main-button';
 
 @Directive()
 export abstract class QuizPageBase implements OnInit {
   private readonly injector = inject(Injector);
   private readonly element = inject<ElementRef<HTMLElement>>(ElementRef);
   protected readonly quizService = inject(QuizService);
+  protected readonly miniappLayout = inject(QUIZ_LAYOUT) === 'miniapp';
   protected readonly language = inject(LanguageService).language;
   protected readonly messages = inject(LanguageService).messages;
   private readonly answers = viewChildren<ButtonComponent | FlagComponent>('answerOption');

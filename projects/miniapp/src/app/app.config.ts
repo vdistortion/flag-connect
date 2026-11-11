@@ -4,7 +4,7 @@ import { provideTelegramApi } from '@verse-bot/miniapp/angular';
 import { routes } from './app.routes';
 import { provideClientHydration } from '@angular/platform-browser';
 import { provideHttpClient, withFetch } from '@angular/common/http';
-import { QUIZ_MAIN_BUTTON, SHOW_HOME_SETTINGS } from 'shared';
+import { QUIZ_LAYOUT, QUIZ_MAIN_BUTTON, SHOW_HOME_SETTINGS } from 'shared';
 import { TelegramQuizMainButtonService } from './telegram-quiz-main-button.service';
 
 export const appConfig: ApplicationConfig = {
@@ -16,6 +16,7 @@ export const appConfig: ApplicationConfig = {
     provideTelegramApi(),
     TelegramQuizMainButtonService,
     { provide: QUIZ_MAIN_BUTTON, useExisting: TelegramQuizMainButtonService },
+    { provide: QUIZ_LAYOUT, useValue: 'miniapp' },
     { provide: SHOW_HOME_SETTINGS, useValue: false },
   ],
 };
