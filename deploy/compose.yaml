@@ -8,7 +8,6 @@ services:
       target: miniapp
     restart: unless-stopped
     volumes:
-      - flag-connect-flags:/usr/share/nginx/html/images/flags:ro
       - flag-connect-generated:/usr/share/nginx/html/images/generated:ro
     networks:
       - caddy
@@ -43,31 +42,12 @@ services:
       FLAG_ASSETS_DIR: /flags
       GENERATED_FLAGS_DIR: /generated
     volumes:
-      - flag-connect-flags:/flags:ro
       - flag-connect-generated:/generated
-
-  flags-sync:
-    image: rclone/rclone:latest
-    profiles:
-      - asset-sync
-    restart: 'no'
-    entrypoint: ['rclone']
-    command: ['copy', 'garage:flag-connect-assets', '/flags', '--exclude', 'generated/**']
-    env_file:
-      - .env.garage
-    volumes:
-      - flag-connect-flags:/flags
-    networks:
-      - garage
 
 networks:
   caddy:
     external: true
-  garage:
-    external: true
 
 volumes:
-  flag-connect-flags:
-    name: flag-connect-flags
   flag-connect-generated:
     name: flag-connect-generated

@@ -12,12 +12,13 @@ RUN npm ci
 
 COPY . .
 
-RUN npm run build && npm run bot:build
+RUN npm run assets:build && npm run build && npm run bot:build
 
 FROM nginx:alpine AS miniapp
 
 COPY deploy/nginx.conf /etc/nginx/conf.d/default.conf
 COPY --from=builder /app/dist/miniapp/browser /usr/share/nginx/html
+COPY --from=builder /app/dist/bot-assets /usr/share/nginx/html/images/flags
 
 EXPOSE 80
 
@@ -49,6 +50,7 @@ FROM bot-dependencies AS bot
 
 ENV NODE_ENV=production
 
+COPY --from=builder /app/dist/bot-assets /flags
 COPY --from=builder /app/apps/bot/dist ./apps/bot/dist
 COPY --from=builder /app/packages/flag-domain/dist ./packages/flag-domain/dist
 

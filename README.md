@@ -61,7 +61,9 @@ npm run build
 ## Telegram-бот
 
 ```bash
-npm run bot:dev
+npm run assets:build
+npm run assets:check
+FLAG_ASSETS_DIR="$PWD/dist/bot-assets" GENERATED_FLAGS_DIR="$PWD/dist/bot-generated" npm run bot:dev
 ```
 
 В боте доступны `/flags` (угадать страну по флагу), `/country` (угадать флаг по стране) и `/game` — общая игра в группе/супергруппе. Личные викторины и их настройки независимы от групповой игры.
@@ -73,7 +75,7 @@ npm run bot:dev
 - 10 разных целевых стран, по 4 варианта, режим «страна по флагу». Один ответ на вопрос; callback лично подтверждает «Ответ принят», не показывая правильность. Очков за скорость нет. Следующий вопрос — после всех ответов активных игроков либо через 30 секунд; счётчик времени обновляется примерно каждые 5 секунд и при действиях.
 - «Выйти» убирает игрока из ожидания; после 3 пропусков подряд игрок становится неактивным. «Вернуться» доступно только исходному составу, пока игра продолжается. Если активных не осталось, игра заканчивается. Пропущенные завершённые вопросы (включая вопросы во время отсутствия) считаются отдельно от ошибок. При остановке учитывается и текущий вопрос.
 - Итоги — персональные строки `правильно / ошибки / пропуски` в общем сообщении, без скоростного рейтинга. История ответов/повторение ошибок и доставка результатов в личку пока отсутствуют.
-- Лобби сразу отправляется как одиночное фото, чтобы дальше менять медиа, подпись и inline-кнопки одного сообщения. Используются реальные grammY API: `sendPhoto(chatId, url, options)`, `editMessageMedia(chatId, messageId, { type: 'photo', media, caption }, { reply_markup })`, `editMessageCaption(chatId, messageId, { caption, reply_markup })`. Не используется `editMessageText` для фото. Фото берутся через `versionedFlagUrl`; подписи без parse mode, имена ограничены 24 символами для лимита caption 1024.
+- Лобби сразу отправляется с PNG-баннером из `assets/brand/readme-banner.svg`; вопросы показывают настоящие флаги, итоги и истечение лобби снова используют баннер. Медиа, подпись и inline-кнопки меняются в одном сообщении. Используются реальные grammY API: `sendPhoto(chatId, url, options)`, `editMessageMedia(chatId, messageId, { type: 'photo', media, caption }, { reply_markup })`, `editMessageCaption(chatId, messageId, { caption, reply_markup })`. Не используется `editMessageText` для фото. Фото берутся через `versionedFlagUrl`; подписи без parse mode, имена ограничены 24 символами для лимита caption 1024.
 - Только при подтверждённом `message to edit not found` / `message can't be edited` отправляется новое фото. `message is not modified` считается успехом. Другие ошибки редактирования повторяются один раз, затем логируются; таймер продолжает работать, `/game` позволяет повторить отображение. Неудачная итоговая публикация сохраняет завершённую игру для восстановления через `/game`. Первичная отправка не повторяется автоматически: Telegram мог принять фото до потери ответа, поэтому после ручного повтора возможен дубль.
 - Verse UniversalContext не содержит callback ID и автоматически подтверждает callback без текста. Узкий raw-middleware `group-callbacks.ts` перехватывает только `g:` перед Verse, вызывая `answerCallbackQuery` ровно один раз; личные callbacks идут прежним маршрутом. Это покрыто offline-тестами с настоящим Verse/grammY и перехватом API, без Telegram-запросов.
 - MVP хранит игры только в памяти одного процесса: рестарт сбрасывает лобби/игры; несколько bot replicas не поддерживаются. При сбое публикации истечения ошибка логируется, чат всё равно освобождается и старые кнопки больше не действуют, но могут остаться видимыми: надёжной очереди повторной доставки нет. Нужен доступ бота к отправке фото и публичным URL флагов; текстового fallback без картинки намеренно нет. Долгий сбой Telegram может съесть время вопроса. SIGINT/SIGTERM освобождают таймеры. Матч и user IDs отделены от Telegram chat ID; других транспортов/дуэлей сейчас нет.
@@ -81,8 +83,9 @@ npm run bot:dev
 Сборка и production-запуск:
 
 ```bash
+npm run assets:build
 npm run bot:build
-npm run bot:start
+FLAG_ASSETS_DIR="$PWD/dist/bot-assets" GENERATED_FLAGS_DIR="$PWD/dist/bot-generated" npm run bot:start
 ```
 
 ## Развёртывание на VPS
@@ -101,29 +104,30 @@ npm run bot:start
 
 Workflow **Deploy to VPS** создаёт `~/projects`, клонирует репозиторий в `~/projects/flag-connect` или обновляет существующую `main`, передаёт Telegram-настройки в защищённый `deploy/.env.bot` и пересобирает контейнеры. При переписывании GitHub-истории workflow обновит чистый checkout; если на VPS есть незакоммиченные изменения, он остановится, не затирая их. Не редактируй файлы проекта вручную на VPS. Последовательная сборка повторно использует Angular build stage; Caddy автоматически настраивает HTTPS для сайта и Mini App, бот работает через polling без публичных портов.
 
-### Флаги в Garage
-
-Картинки хранятся в bucket `flag-connect-assets` общего Garage. Для первой настройки на VPS создай bucket и отдельный **read-only** ключ:
+### Воспроизводимые ассеты бота
 
 ```bash
-docker exec garage /garage bucket create flag-connect-assets
-docker exec garage /garage key create flag-connect-assets-read
-docker exec garage /garage bucket allow flag-connect-assets --key flag-connect-assets-read --read
+npm run assets:build  # необходим перед локальным запуском бота
+npm run assets:check  # полная повторная конвертация и побайтовая проверка, нужен CDN
 ```
 
-Сохрани показанные `Key ID` и `Secret key` в `~/projects/flag-connect/deploy/.env.garage`:
+Обе команды используют единственную закреплённую ссылку `COUNTRY_CATALOG_URL` из `flag-domain`: каталог `country-flags@0.1.0` и все его SVG-варианты в `flags/`. Web и Mini App продолжают показывать CDN SVG. Sharp (уже объявлен в bot workspace) сохраняет пропорции, уменьшает флаги до ширины 440 px без увеличения небольших оригиналов и пишет lossless WebP. Локальный README-баннер преобразуется в PNG шириной до 1440 px, без изменения дизайна.
 
-```dotenv
-RCLONE_CONFIG_GARAGE_TYPE=s3
-RCLONE_CONFIG_GARAGE_PROVIDER=Other
-RCLONE_CONFIG_GARAGE_ACCESS_KEY_ID=...
-RCLONE_CONFIG_GARAGE_SECRET_ACCESS_KEY=...
-RCLONE_CONFIG_GARAGE_ENDPOINT=http://garage:3900
-RCLONE_CONFIG_GARAGE_REGION=garage
-RCLONE_CONFIG_GARAGE_FORCE_PATH_STYLE=true
-```
+Единственное генерируемое дерево `dist/bot-assets/` игнорируется Git:
 
-Ограничь доступ к файлу: `chmod 600 ~/projects/flag-connect/deploy/.env.garage`. Он не коммитится и не передаётся в GitHub Actions. Actions запускает Rclone для копирования bucket в Docker volume без удаления файлов предыдущей версии. Это сохраняет старые ссылки при обновлении; перенос не является атомарным переключением набора ассетов. Удаление устаревших файлов выполняется отдельно после проверки, что работающая версия их больше не использует. Web, Mini App и бот загружают `countries.json` из закреплённого релиза [country-flags 0.1.0](https://cdn.jsdelivr.net/gh/vdistortion/country-flags@0.1.0/). Web и Mini App показывают CDN SVG; бот преобразует имена `.svg` в `.webp` и использует скопированные в Docker volume WebP до 440 px из `/images/flags/bot/`, добавляя к URL SHA-256 версии содержимого для обхода клиентского кэша. В режиме угадывания бот композитит по два пронумерованных флага в изображение без отдельных подписей, повторяет вопрос перед общей группой кнопок и кэширует composites в отдельном Docker volume, раздаваемом Mini App по `/images/generated/`. Для запуска бота нужен доступ к CDN при старте.
+- `bot/*.webp` — все уникальные варианты каталога;
+- `brand/readme-banner.png` — баннер лобби/итогов/истечения;
+- `manifest.json` — закреплённые URL, SHA-256 каталога, исходников и результатов, исходные/итоговые размеры, версии Sharp/libvips; без времени генерации.
+
+Генератор использует 4 сетевых worker-а и таймаут 30 секунд на запрос, включая тело ответа. SVG-конвертации выполняются последовательно: конкурентный разбор повреждённого SVG может аварийно завершить нативный стек Sharp/libvips. HTTP-ошибка, невалидный каталог/SVG или ошибка декодирования останавливают сборку; неполный набор не публикуется, предыдущий набор остаётся на месте. При публикации предыдущий каталог временно переименовывается в резервный; при ошибке переименования нового набора выполняется откат. Если откат тоже не удался, резервная копия сохраняется, её путь указан в ошибке. Это не атомарная замена при остановке процесса/системы: между переименованиями каталог может отсутствовать, а после аварийного завершения может потребоваться ручное восстановление из `.backup-*/previous`. Не запускай несколько публикаций в один каталог одновременно. `assets:check` заново скачивает и конвертирует **весь** набор, проверяет читаемость/размеры, точный список файлов, манифест и байты (включая контрольные суммы); не исправляет результат молча. Для побайтового сравнения используй одинаковые lockfile, Sharp/libvips и окружение сборки. Offline fixture-тесты запускаются через `npm run test:assets` и входят в `npm test`.
+
+Docker builder генерирует дерево один раз; одинаковые файлы копируются в bot `/flags` и Nginx `/usr/share/nginx/html/images/flags`. Старый flags-volume больше не монтируется и не скрывает файлы образов. URL: `/images/flags/bot/<имя>.webp` и `/images/flags/brand/readme-banner.png`, с SHA-256 содержимого в query. При разработке `FLAG_ASSETS_DIR` указывает на локальное `dist/bot-assets`, а `MINIAPP_URL` должен публично раздавать то же дерево по `/images/flags/` (одной локальной генерации для Telegram недостаточно).
+
+Парные quiz-composites по-прежнему создаются во время работы в отдельном volume `flag-connect-generated`, доступном боту для записи как `/generated`, а Nginx — только для чтения как `/images/generated/`. Его не заменяют и не очищают при генерации ассетов. Для запуска бота по-прежнему нужен CDN-каталог при старте.
+
+Ручной workflow `Deploy to VPS` запускает offline-тесты, полные `assets:build` / `assets:check`, сборки приложений и бота, сохраняет проверенное дерево как Actions artifact на 7 дней. На VPS Docker повторяет генерацию из закреплённых источников и повторно использует общий builder между целями; перенос CI-бинарников между платформами не требуется. Новых triggers нет.
+
+**Garage больше не требуется приложению:** sync-service и шаги Rclone выведены из Compose/workflow. Существующие bucket `flag-connect-assets`, ключи, `deploy/.env.garage`, сеть Garage и прежний Docker volume `flag-connect-flags` не удаляются и не изменяются. Их ручная очистка отложена до проверки развёрнутого релиза; не запускай `docker compose down -v`/volume prune ради миграции. Старые URL удалённых вариантов после обновления не гарантируются; не удаляй внешнюю резервную копию до решения о сроке хранения.
 
 ## Общий пакет
 
@@ -139,4 +143,4 @@ npm test
 
 Команда собирает общий пакет и запускает тесты Angular, domain и бота. Отдельные наборы: `npm run test:shared`, `npm run test:domain`, `npm run test:bot`.
 
-`npm run test:deploy` отдельно проверяет перенос ассетов на временных локальных каталогах; нужен `rclone` в PATH (или путь к нему в `RCLONE_BIN`). Тест не обращается к Garage, Docker volumes или production-настройкам.
+`npm run test:deploy` проверяет согласованность Docker/Compose/workflow: генерацию в общем builder, отсутствие маскирующего flags-volume и сохранение отдельного generated-volume. Rclone и Garage не нужны; тест не обращается к production. Полная сетевая проверка ассетов — `npm run assets:build && npm run assets:check`.
