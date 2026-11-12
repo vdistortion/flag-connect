@@ -1,5 +1,9 @@
 import assert from 'node:assert/strict';
 import test from 'node:test';
+import { createHash } from 'node:crypto';
+import { mkdtemp, mkdir, rm, writeFile } from 'node:fs/promises';
+import { tmpdir } from 'node:os';
+import { join } from 'node:path';
 import type { UniversalContext } from '@verse-bot/core';
 import { createGroupGame, type GameApi, type Markup } from './group-game.js';
 
@@ -99,6 +103,44 @@ function setup() {
   };
 }
 
+test('production-shaped asset paths read and version the local banner without a flag fallback', async () => {
+  const directory = await mkdtemp(join(tmpdir(), 'group-brand-'));
+  const banner = Buffer.from('local banner bytes for URL checksum');
+  let photo = '';
+  await mkdir(join(directory, 'brand'));
+  await writeFile(join(directory, 'brand/readme-banner.png'), banner);
+  const game = createGroupGame({
+    countries,
+    flagsUrl: 'https://miniapp.test/images/flags/bot/',
+    flagsDirectory: directory,
+    onError: (error) => {
+      throw error;
+    },
+  });
+  try {
+    const s = setup();
+    await game.command({
+      ...s.ctx,
+      platformApi: {
+        ...s.api,
+        sendPhoto: async (_chat: number, url: string) => {
+          photo = url;
+          return { message_id: 42 };
+        },
+      },
+    } as unknown as UniversalContext);
+    await game.flush();
+    assert.equal(
+      photo,
+      `https://miniapp.test/images/flags/brand/readme-banner.png?v=${createHash('sha256').update(banner).digest('hex').slice(0, 16)}`,
+    );
+    s.game.dispose();
+  } finally {
+    game.dispose();
+    await rm(directory, { recursive: true, force: true });
+  }
+});
+
 test('abandoned lobby expires after 5 minutes, clears controls and releases the chat', async () => {
   const s = setup();
   await s.game.command(s.ctx);
@@ -114,6 +156,8 @@ test('abandoned lobby expires after 5 minutes, clears controls and releases the 
     (s.calls.at(-1)!.args[2] as { reply_markup: Markup }).reply_markup.inline_keyboard,
     [],
   );
+  assert.match(String(s.calls[0].args[1]), /\/brand\/readme-banner.png\?v=/);
+  assert.equal(s.calls.at(-1)!.method, 'editMessageCaption');
   assert.ok(s.timers.every((t) => t.cancelled));
   await s.game.command(s.ctx);
   assert.equal(s.calls.filter((c) => c.method === 'sendPhoto').length, 2);
@@ -267,6 +311,15 @@ test('all ten questions finish in same message with per-player wrong/skip result
   assert.match(final, /Игра завершена/);
   assert.match(final, /Правильно \/ Ошибки \/ Пропуски/);
   assert.match(final, /inline_keyboard/);
+  assert.equal(s.calls.at(-1)!.method, 'editMessageMedia');
+  assert.equal((s.calls.at(-1)!.args[2] as { media: string }).media, s.calls[0].args[1]);
+  const questionMedia = s.calls.filter((c) => c.method === 'editMessageMedia').slice(0, -1);
+  assert.equal(questionMedia.length, 10);
+  assert.ok(
+    questionMedia.every((c) =>
+      /^https:\/\/flags.test\/f\d+.webp\?v=/.test((c.args[2] as { media: string }).media),
+    ),
+  );
   assert.ok(s.timers.every((t) => t.cancelled));
   assert.equal(s.calls.filter((c) => c.method === 'sendPhoto').length, 1);
   await s.game.command(s.ctx);
@@ -383,7 +436,7 @@ test('group-only /game creates one photo lobby; real match joins, starts and edi
   await s.game.command(s.ctx);
   assert.equal(s.calls[0].method, 'sendPhoto');
   assert.equal(s.calls[0].args[0], -100);
-  assert.match(String(s.calls[0].args[1]), /^https:\/\/flags.test\/f\d+.webp\?v=/);
+  assert.match(String(s.calls[0].args[1]), /^https:\/\/flags.test\/brand\/readme-banner.png\?v=/);
   await s.game.command(s.ctx);
   assert.equal(s.calls.filter((c) => c.method === 'sendPhoto').length, 1);
   await s.callback('b', s.button('join'));

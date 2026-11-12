@@ -83,7 +83,7 @@ export function createGroupGame(config: GameConfig) {
     const b = (text: string, action: string) => ({ text, callback_data: data(action) });
     let caption: string;
     let rows: Markup['inline_keyboard'];
-    let country = config.countries[0];
+    let country: Country | undefined;
     if (s.expired) {
       caption = 'Лобби истекло: игра не началась за 5 минут.\nНовая игра: /game';
       rows = [];
@@ -111,11 +111,13 @@ export function createGroupGame(config: GameConfig) {
   }
   async function render(s: Session): Promise<void> {
     const { caption, rows, country } = view(s);
-    const photo = await versionedFlagUrl(
-      config.flagsUrl,
-      join(config.flagsDirectory, 'bot'),
-      country.flag[0],
-    );
+    const photo = country
+      ? await versionedFlagUrl(config.flagsUrl, join(config.flagsDirectory, 'bot'), country.flag[0])
+      : await versionedFlagUrl(
+          new URL('brand/', new URL('../', config.flagsUrl)).href,
+          join(config.flagsDirectory, 'brand'),
+          'readme-banner.png',
+        );
     // Expiry releases the slot before this queued terminal render; it only touches the old message.
     if (disposed || (sessions.get(s.chatId) !== s && !s.expired)) return;
     const reply_markup = { inline_keyboard: rows };
