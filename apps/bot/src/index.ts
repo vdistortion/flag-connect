@@ -21,7 +21,11 @@ const groupGame = createGroupGame({
   flagsUrl: `${miniAppUrl}/images/flags/bot/`,
   flagsDirectory: process.env.FLAG_ASSETS_DIR ?? '/flags',
 });
-const { askQuestion, handleCallback } = createQuizHandlers({
+const {
+  askQuestion,
+  handleCallback,
+  dispose: disposeQuiz,
+} = createQuizHandlers({
   countries,
   flagsUrl: `${miniAppUrl}/images/flags/bot/`,
   generatedFlagsUrl: `${miniAppUrl}/images/generated/`,
@@ -68,6 +72,7 @@ installGroupCallbacks(bot, groupGame);
 for (const signal of ['SIGINT', 'SIGTERM'] as const) {
   process.once(signal, () => {
     groupGame.dispose();
+    disposeQuiz();
     if (bot.isRunning()) void bot.stop();
   });
 }

@@ -2,10 +2,11 @@ import { randomBytes } from 'node:crypto';
 import { join } from 'node:path';
 import { GroupMatch } from './group-match.js';
 import { versionedFlagUrl } from './flag-asset-url.js';
+import { createChatActions, type ChatActionApi } from './chat-action.js';
 import type { UniversalContext } from '@verse-bot/core';
 import type { Country } from '@flag-connect/flag-domain';
 
-export interface GameApi {
+export interface GameApi extends ChatActionApi {
   sendPhoto(
     chatId: number,
     photo: string,
@@ -41,6 +42,7 @@ export interface GameCallback {
   acknowledge: (text: string) => Promise<unknown>;
 }
 export function createGroupGame(config: GameConfig) {
+  const chatActions = createChatActions(config);
   const now = config.now ?? Date.now;
   const report = config.onError ?? ((error: unknown) => console.error('Group game:', error));
   const schedule =
@@ -56,6 +58,7 @@ export function createGroupGame(config: GameConfig) {
     chatId: number;
     messageId?: number;
     photo?: string;
+    renderedRound?: number;
     deadline?: number;
     timedRound?: number;
     cancel?: () => void;
@@ -110,6 +113,16 @@ export function createGroupGame(config: GameConfig) {
     return { caption, rows, country };
   }
   async function render(s: Session): Promise<void> {
+    const round = s.match.phase === 'playing' ? s.match.round : undefined;
+    const operation = () => renderMedia(s);
+    if (s.messageId === undefined || (round !== undefined && s.renderedRound !== round)) {
+      await chatActions.run(s.api, s.chatId, 'upload_photo', operation);
+    } else {
+      await operation();
+    }
+    s.renderedRound = round;
+  }
+  async function renderMedia(s: Session): Promise<void> {
     const { caption, rows, country } = view(s);
     const photo = country
       ? await versionedFlagUrl(config.flagsUrl, join(config.flagsDirectory, 'bot'), country.flag[0])
@@ -328,6 +341,7 @@ export function createGroupGame(config: GameConfig) {
   }
   function dispose(): void {
     disposed = true;
+    chatActions.dispose();
     for (const s of sessions.values()) {
       s.cancel?.();
       s.cancelLobby?.();

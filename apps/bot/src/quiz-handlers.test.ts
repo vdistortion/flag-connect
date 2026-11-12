@@ -47,6 +47,65 @@ function choices(html: string) {
   }));
 }
 
+test('question preparation indicates photo upload without delaying delivery', async () => {
+  const { handlers, ctx, rich } = setup();
+  const actions: unknown[][] = [];
+  Object.assign(ctx.platformApi!, {
+    sendChatAction: (...args: unknown[]) => {
+      actions.push(args);
+      return new Promise(() => {});
+    },
+  });
+  await handlers.askQuestion(ctx, 'flag');
+  assert.deepEqual(actions, [[1, 'upload_photo']]);
+  assert.equal(rich.length, 1);
+});
+
+test('action failure cannot prevent a question reply', async () => {
+  const { handlers, ctx, rich } = setup();
+  // Use the injected reporter rather than logging expected failures to the test output.
+  const errors: unknown[] = [];
+  const quiz = createQuizHandlers({
+    countries,
+    flagsUrl: 'https://example.test/',
+    generatedFlagsUrl: 'https://example.test/',
+    flagsDirectory: '/missing',
+    generatedFlagsDirectory: '/missing',
+    onError: (error) => {
+      errors.push(error);
+    },
+  });
+  Object.assign(ctx.platformApi!, {
+    sendChatAction: async () => {
+      throw new Error('action unavailable');
+    },
+  });
+  await quiz.askQuestion(ctx, 'flag');
+  assert.equal(rich.length, 1);
+  assert.equal(errors.length, 1);
+  quiz.dispose();
+  handlers.dispose();
+});
+
+test('text-only country questions use typing and revealing their flag uses upload_photo', async () => {
+  const { handlers, ctx, rich } = setup();
+  const actions: string[] = [];
+  Object.assign(ctx.platformApi!, {
+    sendChatAction: async (_id: number, action: string) => {
+      actions.push(action);
+    },
+  });
+  await handlers.askQuestion(ctx, 'flag');
+  const round = choices(rich[0])[0].round;
+  await handlers.handleCallback(ctx, `count:${round}:1`);
+  // Switch the follow-up question to country mode with the same saved choice count.
+  await handlers.askQuestion(ctx, 'country');
+  const countryReveal = rich.at(-1)!.match(/data="(reveal:[^"]+)"/)![1];
+  assert.equal(actions.at(-1), 'typing');
+  await handlers.handleCallback(ctx, countryReveal);
+  assert.equal(actions.at(-1), 'upload_photo');
+});
+
 test('a country not in the offered choices cannot consume a round', async () => {
   const { handlers, ctx, rich, replies } = setup();
   await handlers.askQuestion(ctx, 'flag');

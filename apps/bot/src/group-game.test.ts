@@ -103,6 +103,63 @@ function setup() {
   };
 }
 
+test('disposing during a slow lobby upload clears feedback despite a stuck action request', async () => {
+  const s = setup();
+  const actions: unknown[][] = [];
+  let release!: (value: { message_id: number }) => void;
+  let uploading!: () => void;
+  const started = new Promise<void>((resolve) => {
+    uploading = resolve;
+  });
+  s.api.sendPhoto = () => {
+    uploading();
+    return new Promise((resolve) => {
+      release = resolve;
+    });
+  };
+  Object.assign(s.api, {
+    sendChatAction: (...args: unknown[]) => {
+      actions.push(args);
+      return new Promise(() => {});
+    },
+  });
+  // Keep setup's effect-waiting wrapper pending until the upload is released.
+  const command = s.game.command(s.ctx);
+  await started;
+  assert.deepEqual(actions, [[-100, 'upload_photo']]);
+  const refresh = s.timers.find((timer) => timer.ms === 4_000 && !timer.cancelled)!;
+  assert.ok(refresh);
+  s.game.dispose();
+  assert.ok(s.timers.every((timer) => timer.cancelled));
+  refresh.fn();
+  assert.equal(actions.length, 1);
+  release({ message_id: 42 });
+  await command;
+});
+
+test('only lobby creation and new question media indicate upload, never caption updates', async () => {
+  const s = setup();
+  const actions: unknown[][] = [];
+  Object.assign(s.api, {
+    sendChatAction: async (...args: unknown[]) => {
+      actions.push(args);
+    },
+  });
+  await s.game.command(s.ctx);
+  assert.deepEqual(actions, [[-100, 'upload_photo']]);
+  await s.callback('b', s.button('join'));
+  await s.game.command(s.ctx);
+  assert.equal(actions.length, 1);
+  await s.callback('a', s.button('start'));
+  assert.equal(actions.length, 2);
+  await s.callback('a', s.button('answer'));
+  assert.equal(actions.length, 2);
+  await s.callback('b', s.button('answer'));
+  assert.equal(actions.length, 3);
+  s.game.dispose();
+  assert.ok(s.timers.every((timer) => timer.cancelled));
+});
+
 test('production-shaped asset paths read and version the local banner without a flag fallback', async () => {
   const directory = await mkdtemp(join(tmpdir(), 'group-brand-'));
   const banner = Buffer.from('local banner bytes for URL checksum');

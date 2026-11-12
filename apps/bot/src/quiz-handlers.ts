@@ -4,6 +4,7 @@ import type { UniversalContext, UniversalKeyboardButton } from '@verse-bot/core'
 import { createQuestion, type Country, type QuizQuestion } from '@flag-connect/flag-domain';
 import { createNumberedFlagImage } from './country-flag-composite.js';
 import { versionedFlagUrl } from './flag-asset-url.js';
+import { createChatActions, type ChatActionApi, type ChatActionOptions } from './chat-action.js';
 import {
   bold,
   button,
@@ -23,7 +24,7 @@ interface TelegramRichApi {
   sendRichMessage(chatId: number, message: InputRichMessage): Promise<unknown>;
 }
 
-export interface QuizConfig {
+export interface QuizConfig extends ChatActionOptions {
   countries: readonly Country[];
   flagsUrl: string;
   generatedFlagsUrl: string;
@@ -32,6 +33,7 @@ export interface QuizConfig {
 }
 
 export function createQuizHandlers(config: QuizConfig) {
+  const chatActions = createChatActions(config);
   const { countries, flagsUrl, generatedFlagsUrl, flagsDirectory, generatedFlagsDirectory } =
     config;
   const COUNTRY_CHOICE_GROUP_SIZE = 2;
@@ -116,6 +118,19 @@ export function createQuizHandlers(config: QuizConfig) {
   }
 
   async function askQuestion(
+    ctx: UniversalContext,
+    mode: QuizMode,
+    onPublished?: () => void,
+  ): Promise<void> {
+    return chatActions.run(
+      ctx.platformApi as ChatActionApi | undefined,
+      ctx.peerId,
+      mode === 'country' && countFor(ctx) === 1 ? 'typing' : 'upload_photo',
+      () => prepareQuestion(ctx, mode, onPublished),
+    );
+  }
+
+  async function prepareQuestion(
     ctx: UniversalContext,
     mode: QuizMode,
     onPublished?: () => void,
@@ -255,16 +270,28 @@ export function createQuizHandlers(config: QuizConfig) {
       round.answered = true;
       try {
         const country = countries[round.correctCountryIndex];
-        const answer =
-          round.mode === 'flag'
-            ? paragraph([bold('Ответ: '), country.name.ru])
-            : photo(
-                await versionedFlagUrl(flagsUrl, join(flagsDirectory, 'bot'), country.flag[0]),
-                {
-                  caption: `Правильный флаг страны ${country.name.ru}`,
-                },
-              );
-        await replyRich(ctx, doc(answer, followUpButtons(round.mode, roundId)));
+        const deliver = async () => {
+          const answer =
+            round.mode === 'flag'
+              ? paragraph([bold('Ответ: '), country.name.ru])
+              : photo(
+                  await versionedFlagUrl(flagsUrl, join(flagsDirectory, 'bot'), country.flag[0]),
+                  {
+                    caption: `Правильный флаг страны ${country.name.ru}`,
+                  },
+                );
+          await replyRich(ctx, doc(answer, followUpButtons(round.mode, roundId)));
+        };
+        if (round.mode === 'country') {
+          await chatActions.run(
+            ctx.platformApi as ChatActionApi | undefined,
+            ctx.peerId,
+            'upload_photo',
+            deliver,
+          );
+        } else {
+          await deliver();
+        }
       } catch (error) {
         round.answered = false;
         throw error;
@@ -370,5 +397,6 @@ export function createQuizHandlers(config: QuizConfig) {
   return {
     askQuestion: (ctx: UniversalContext, mode: QuizMode) => askQuestion(ctx, mode),
     handleCallback,
+    dispose: chatActions.dispose,
   };
 }

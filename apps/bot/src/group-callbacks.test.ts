@@ -91,6 +91,10 @@ test('real Verse API payloads run /game lobby through callback answers without n
     assert.equal(media.message_id, 42);
     assert.match((media.media as { caption: string }).caption, /Вопрос 2\/10/);
     const acknowledgements = calls.filter((c) => c.method === 'answerCallbackQuery');
+    assert.deepEqual(
+      calls.filter((c) => c.method === 'sendChatAction').map((c) => c.payload),
+      Array.from({ length: 3 }, () => ({ chat_id: -100, action: 'upload_photo' })),
+    );
     assert.equal(acknowledgements.length, 4);
     assert.deepEqual(acknowledgements.at(-1)!.payload, {
       callback_query_id: 'query-8',
