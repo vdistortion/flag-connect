@@ -29,6 +29,15 @@ test('composites retain their separate writable bot volume and read-only nginx v
   assert.match(compose, /name: flag-connect-generated/);
 });
 
+test('workflow uses Node 24 actions and an explicit Ubuntu image without migration overrides', () => {
+  assert.match(workflow, /actions\/checkout@v6/);
+  assert.match(workflow, /actions\/setup-node@v6/);
+  assert.match(workflow, /actions\/upload-artifact@v6/);
+  const runners = [...workflow.matchAll(/runs-on:\s*(\S+)/g)].map((match) => match[1]);
+  assert.deepEqual(runners, ['ubuntu-24.04', 'ubuntu-24.04']);
+  assert.doesNotMatch(workflow, /FORCE_JAVASCRIPT_ACTIONS|ALLOW_USE_UNSECURE_NODE/);
+});
+
 test('manual deployment verifies full conversion and no longer requires or syncs Garage', () => {
   assert.match(workflow, /workflow_dispatch:/);
   assert.doesNotMatch(workflow, /^  (push|pull_request):/m);
