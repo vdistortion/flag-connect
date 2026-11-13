@@ -416,6 +416,25 @@ test('settings show every choice count once', async () => {
   );
 });
 
+test('settings place 10 in the second row and select ten choices', async () => {
+  const { handlers, ctx, rich } = setup();
+  let keyboard: Array<Array<{ label: string; command: string }>> = [];
+  ctx.reply = async (_message, options) => {
+    keyboard = options!.inlineKeyboard as Array<Array<{ label: string; command: string }>>;
+  };
+  await handlers.askQuestion(ctx, 'flag');
+  await handlers.handleCallback(ctx, `settings:${choices(rich[0])[0].round}`);
+  assert.deepEqual(
+    keyboard.map((row) => row.map((item) => item.label)),
+    [
+      ['2', '3', '4', '5', '6', '7', '8', '9'],
+      ['Без вариантов', '10'],
+    ],
+  );
+  await handlers.handleCallback(ctx, keyboard[1][1].command);
+  assert.equal(choices(rich.at(-1)!).length, 10);
+});
+
 test('country mode sends real composite images and grades answers', async () => {
   const root = await mkdtemp(join(tmpdir(), 'quiz-country-'));
   try {

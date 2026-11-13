@@ -225,14 +225,15 @@ export function createQuizHandlers(config: QuizConfig) {
     roundId: string,
   ): Promise<void> {
     const countsButtons = [
-      ...Array.from({ length: 9 }, (_, index) =>
+      ...Array.from({ length: 8 }, (_, index) =>
         inline(String(index + 2), `count:${roundId}:${index + 2}`),
       ),
       inline('Без вариантов', `count:${roundId}:1`),
+      inline('10', `count:${roundId}:10`),
     ];
 
     await ctx.reply('Сколько должно быть вариантов ответа?', {
-      inlineKeyboard: [countsButtons.slice(0, 9), countsButtons.slice(9)],
+      inlineKeyboard: [countsButtons.slice(0, 8), countsButtons.slice(8)],
     });
   }
 
