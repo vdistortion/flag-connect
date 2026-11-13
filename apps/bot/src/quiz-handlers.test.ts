@@ -203,6 +203,150 @@ test('another user cannot answer or use follow-up buttons', async () => {
   assert.equal(rich.length, 2);
 });
 
+test('group players answer independently and continue without exposing the answer', async () => {
+  const { handlers, ctx, rich, replies } = setup();
+  const first = {
+    ...ctx,
+    peerId: -100,
+    chatType: 'group',
+    getUserProfile: async () => ({ firstName: 'First' }),
+  } as unknown as UniversalContext;
+  const second = {
+    ...first,
+    userId: '2',
+    getUserProfile: async () => ({ firstName: 'Second' }),
+  } as unknown as UniversalContext;
+  await handlers.askQuestion(first, 'flag');
+  const offered = choices(rich[0]);
+  const correct = Number(rich[0].match(/\/f(\d+)\.png/)![1]);
+  await handlers.handleCallback(first, offered.find((choice) => choice.index === correct)!.data);
+  assert.match(rich.at(-1)!, /Правильно/);
+  assert.match(rich.at(-1)!, /First/);
+  assert.doesNotMatch(rich.at(-1)!, /r\d+/);
+  await handlers.handleCallback(first, `more:${offered[0].round}`);
+  await handlers.handleCallback(second, offered.find((choice) => choice.index !== correct)!.data);
+  assert.match(rich.at(-1)!, /Неправильно/);
+  assert.match(rich.at(-1)!, /Second/);
+  assert.doesNotMatch(rich.at(-1)!, /r\d+/);
+  const afterAnswers = rich.length;
+  await handlers.handleCallback(second, offered[0].data);
+  assert.equal(rich.length, afterAnswers);
+  assert.match(replies.at(-1)!, /завершён|ответил/);
+  await handlers.handleCallback(second, `more:${offered[0].round}`);
+  assert.equal(rich.length, afterAnswers + 1);
+  assert.match(rich.at(-1)!, /Second/);
+});
+
+test('a lost group result response does not permit a second answer', async () => {
+  const { handlers, ctx, rich, replies } = setup();
+  const group = {
+    ...ctx,
+    peerId: -100,
+    chatType: 'group',
+    getUserProfile: async () => ({ firstName: 'First' }),
+  } as unknown as UniversalContext;
+  await handlers.askQuestion(group, 'flag');
+  const answer = choices(rich[0])[0].data;
+  const api = group.platformApi as {
+    sendRichMessage: (id: number, message: { html: string }) => Promise<unknown>;
+  };
+  const send = api.sendRichMessage;
+  api.sendRichMessage = async (id, message) => {
+    await send(id, message);
+    throw new Error('response lost');
+  };
+  await assert.rejects(handlers.handleCallback(group, answer), /response lost/);
+  api.sendRichMessage = send;
+  await handlers.handleCallback(group, answer);
+  assert.equal(rich.length, 2);
+  assert.match(replies.at(-1)!, /завершён/);
+});
+
+test('group users can answer concurrently while duplicate clicks are rejected per user', async () => {
+  const { handlers, ctx, rich, replies } = setup();
+  const first = {
+    ...ctx,
+    peerId: -100,
+    chatType: 'supergroup',
+    getUserProfile: async () => ({ firstName: 'First' }),
+  } as unknown as UniversalContext;
+  const second = { ...first, userId: '2' } as UniversalContext;
+  await handlers.askQuestion(first, 'flag');
+  const offered = choices(rich[0]);
+  const api = first.platformApi as { sendRichMessage: (...args: any[]) => Promise<unknown> };
+  const send = api.sendRichMessage;
+  let release!: () => void;
+  const gate = new Promise<void>((resolve) => {
+    release = resolve;
+  });
+  api.sendRichMessage = async (...args) => {
+    await gate;
+    return send(...args);
+  };
+  const firstAnswer = handlers.handleCallback(first, offered[0].data);
+  const secondAnswer = handlers.handleCallback(second, offered[1].data);
+  await handlers.handleCallback(first, offered[1].data);
+  assert.equal(rich.length, 1);
+  assert.match(replies.at(-1)!, /завершён/);
+  release();
+  await Promise.all([firstAnswer, secondAnswer]);
+  assert.equal(rich.length, 3);
+});
+
+test('group continuation locks each participant independently during publication', async () => {
+  const { handlers, ctx, rich, replies } = setup();
+  const first = {
+    ...ctx,
+    peerId: -100,
+    chatType: 'group',
+    getUserProfile: async () => ({ firstName: 'First' }),
+  } as unknown as UniversalContext;
+  const second = { ...first, userId: '2' } as UniversalContext;
+  await handlers.askQuestion(first, 'flag');
+  const round = choices(rich[0])[0].round;
+  let release!: () => void;
+  const gate = new Promise<void>((resolve) => {
+    release = resolve;
+  });
+  const slowFirst = {
+    ...first,
+    getUserProfile: async () => {
+      await gate;
+      return { firstName: 'First' };
+    },
+  } as unknown as UniversalContext;
+  const firstNext = handlers.handleCallback(slowFirst, `more:${round}`);
+  await handlers.handleCallback(first, `count:${round}:2`);
+  await handlers.handleCallback(second, `count:${round}:3`);
+  assert.equal(rich.length, 2);
+  assert.equal(choices(rich[1]).length, 3);
+  assert.match(replies.at(-1)!, /устарел/);
+  release();
+  await firstNext;
+  assert.equal(choices(rich[2]).length, 4);
+});
+
+test('group settings apply to the participant who selected them', async () => {
+  const { handlers, ctx, rich } = setup();
+  const first = {
+    ...ctx,
+    peerId: -100,
+    chatType: 'group',
+    getUserProfile: async () => ({ firstName: 'First' }),
+  } as unknown as UniversalContext;
+  const second = { ...first, userId: '2' } as UniversalContext;
+  await handlers.askQuestion(first, 'flag');
+  const round = choices(rich[0])[0].round;
+  await handlers.handleCallback(first, `count:${round}:2`);
+  await handlers.handleCallback(second, `count:${round}:3`);
+  assert.equal(choices(rich[1]).length, 2);
+  assert.equal(choices(rich[2]).length, 3);
+  await handlers.askQuestion(first, 'flag');
+  await handlers.askQuestion(second, 'flag');
+  assert.equal(choices(rich[3]).length, 2);
+  assert.equal(choices(rich[4]).length, 3);
+});
+
 test('round controls cannot be used by the same owner in a different chat', async () => {
   const { handlers, ctx, rich, replies } = setup();
   await handlers.askQuestion(ctx, 'flag');
@@ -465,6 +609,29 @@ test('country mode sends real composite images and grades answers', async () => 
       offered.find((choice) => countries[choice.index].name.ru !== correctName)!.data,
     );
     assert.match(rich.at(-1)!, /неверный флаг/);
+    const first = {
+      ...ctx,
+      peerId: -100,
+      chatType: 'group',
+      getUserProfile: async () => ({ firstName: 'First' }),
+    } as unknown as UniversalContext;
+    const second = { ...first, userId: '2' } as UniversalContext;
+    await handlers.askQuestion(first, 'country');
+    const groupQuestion = rich.at(-1)!;
+    const name = groupQuestion.match(/Найди флаг страны: <\/b>(r\d+)/)![1];
+    const groupChoices = choices(groupQuestion);
+    await handlers.handleCallback(
+      first,
+      groupChoices.find((choice) => countries[choice.index].name.ru === name)!.data,
+    );
+    assert.match(rich.at(-1)!, /Правильно/);
+    assert.doesNotMatch(rich.at(-1)!, /r\d+/);
+    await handlers.handleCallback(
+      second,
+      groupChoices.find((choice) => countries[choice.index].name.ru !== name)!.data,
+    );
+    assert.match(rich.at(-1)!, /Неправильно/);
+    assert.doesNotMatch(rich.at(-1)!, /r\d+/);
   } finally {
     await rm(root, { recursive: true, force: true });
   }

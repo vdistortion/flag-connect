@@ -38,16 +38,20 @@ export function createQuizHandlers(config: QuizConfig) {
     config;
   const COUNTRY_CHOICE_GROUP_SIZE = 2;
   const counts = new Map<string, number>();
+  interface ParticipantState {
+    answered: boolean;
+    advancing: boolean;
+    advanced: boolean;
+  }
   interface QuizRound {
     ownerId: string;
     peerId: number;
+    shared: boolean;
     mode: QuizMode;
     choiceCount: number;
     correctCountryIndex: number;
     countryIndexes: readonly number[];
-    answered: boolean;
-    advancing: boolean;
-    advanced: boolean;
+    participants: Map<string, ParticipantState>;
   }
 
   const rounds = new Map<string, QuizRound>();
@@ -147,7 +151,7 @@ export function createQuizHandlers(config: QuizConfig) {
     const addressedPrompt =
       ctx.chatType === 'private'
         ? []
-        : [paragraph(`Вопрос для ${ownerName || `участника ${ctx.userId}`}.`)];
+        : [paragraph(`Вопрос от ${ownerName || `участника ${ctx.userId}`}.`)];
     const hasChoices = count > 1;
     const questionPrompt = () =>
       paragraph(
@@ -201,13 +205,12 @@ export function createQuizHandlers(config: QuizConfig) {
     rounds.set(roundId, {
       ownerId: ctx.userId,
       peerId: ctx.peerId,
+      shared: ctx.chatType !== 'private',
       mode,
       choiceCount: count,
       correctCountryIndex,
       countryIndexes: question.countryIndexes,
-      answered: false,
-      advancing: false,
-      advanced: false,
+      participants: new Map(),
     });
     onPublished?.();
     const delivery = replyRich(ctx, doc(...choices, ...repeatedPrompt, ...trailingButtons));
@@ -247,7 +250,8 @@ export function createQuizHandlers(config: QuizConfig) {
     const pending = pendingRounds.get(parts[0]);
     if (pending) await pending.catch(() => {});
     const source = rounds.get(parts[0]);
-    if (source && (source.advancing || source.advanced)) {
+    const participantState = source?.participants.get(ctx.userId);
+    if (participantState && (participantState.advancing || participantState.advanced)) {
       await ctx.reply('Вопрос устарел. Начни новый раунд через /flags или /country.');
       return;
     }
@@ -259,16 +263,17 @@ export function createQuizHandlers(config: QuizConfig) {
         await ctx.reply('Вопрос устарел. Начни новый раунд через /flags или /country.');
         return;
       }
-      if (round.ownerId !== ctx.userId) {
+      if (!round.shared && round.ownerId !== ctx.userId) {
         await ctx.reply('Этот вопрос предназначен другому участнику.');
         return;
       }
-      if (round.answered) {
+      const participant = participantFor(round, ctx.userId);
+      if (participant.answered) {
         await ctx.reply('Раунд завершён. Начни новый через /flags или /country.');
         return;
       }
 
-      round.answered = true;
+      participant.answered = true;
       try {
         const country = countries[round.correctCountryIndex];
         const deliver = async () => {
@@ -294,7 +299,7 @@ export function createQuizHandlers(config: QuizConfig) {
           await deliver();
         }
       } catch (error) {
-        round.answered = false;
+        participant.answered = false;
         throw error;
       }
       return;
@@ -314,20 +319,24 @@ export function createQuizHandlers(config: QuizConfig) {
         await ctx.reply('Вопрос устарел. Начни новый раунд через /flags или /country.');
         return;
       }
-      if (round.ownerId !== ctx.userId) {
+      if (!round.shared && round.ownerId !== ctx.userId) {
         await ctx.reply('Этот вопрос предназначен другому участнику.');
         return;
       }
-      if (round.answered) {
+      const participant = participantFor(round, ctx.userId);
+      if (participant.answered) {
         await ctx.reply('Раунд завершён. Начни новый через /flags или /country.');
         return;
       }
-      round.answered = true;
+      participant.answered = true;
 
       const correctName = countries[round.correctCountryIndex].name.ru;
       const chosenName = countries[chosen].name.ru;
-      const result =
-        chosen === round.correctCountryIndex
+      const result = round.shared
+        ? chosen === round.correctCountryIndex
+          ? '☑️ Правильно'
+          : '❌ Неправильно'
+        : chosen === round.correctCountryIndex
           ? round.choiceCount === 1
             ? `Это ${correctName}`
             : `☑️ Правильно, это ${correctName}`
@@ -335,10 +344,15 @@ export function createQuizHandlers(config: QuizConfig) {
             ? `Вы ответили ${chosenName}.\n❌ Неправильно, это ${correctName}`
             : '❌ Вы выбрали неверный флаг.';
 
+      let sendingResult = false;
       try {
-        await replyRich(ctx, doc(paragraph(result), followUpButtons(round.mode, roundId)));
+        const profile = round.shared ? await ctx.getUserProfile() : null;
+        const name = profile ? [profile.firstName, profile.lastName].filter(Boolean).join(' ') : '';
+        const message = round.shared ? `${name || `Участник ${ctx.userId}`}: ${result}` : result;
+        sendingResult = true;
+        await replyRich(ctx, doc(paragraph(message), followUpButtons(round.mode, roundId)));
       } catch (error) {
-        round.answered = false;
+        if (!round.shared || !sendingResult) participant.answered = false;
         throw error;
       }
       return;
@@ -351,7 +365,7 @@ export function createQuizHandlers(config: QuizConfig) {
         await ctx.reply('Вопрос устарел. Начни новый раунд через /flags или /country.');
         return;
       }
-      if (round.ownerId !== ctx.userId) {
+      if (!round.shared && round.ownerId !== ctx.userId) {
         await ctx.reply('Эти кнопки предназначены участнику, запустившему раунд.');
         return;
       }
@@ -366,7 +380,7 @@ export function createQuizHandlers(config: QuizConfig) {
       const round = rounds.get(roundId);
       if (!round || parts.length !== 2 || !/^(?:[1-9]|10)$/.test(countValue ?? '')) return;
       const count = Number(countValue);
-      if (round.ownerId !== ctx.userId) {
+      if (!round.shared && round.ownerId !== ctx.userId) {
         await ctx.reply('Эти настройки принадлежат участнику, запустившему раунд.');
         return;
       }
@@ -378,20 +392,30 @@ export function createQuizHandlers(config: QuizConfig) {
     await ctx.reply('Не удалось обработать нажатие. Начни новый раунд через /flags или /country.');
   }
 
+  function participantFor(round: QuizRound, userId: string): ParticipantState {
+    let participant = round.participants.get(userId);
+    if (!participant) {
+      participant = { answered: false, advancing: false, advanced: false };
+      round.participants.set(userId, participant);
+    }
+    return participant;
+  }
+
   async function advanceRound(
     ctx: UniversalContext,
     round: QuizRound,
     count?: number,
   ): Promise<void> {
-    round.advancing = true;
+    const participant = participantFor(round, ctx.userId);
+    participant.advancing = true;
     if (count !== undefined) counts.set(ctx.userId, count);
     try {
       await askQuestion(ctx, round.mode, () => {
         // Once sending starts, a lost API response cannot safely reopen old controls.
-        round.advanced = true;
+        participant.advanced = true;
       });
     } finally {
-      round.advancing = false;
+      participant.advancing = false;
     }
   }
 
